@@ -8,7 +8,8 @@
     "experiment": "node scripts/experiment.js",
     "test:faults": "node scripts/faults.js",
     "format": "prettier --write public scripts",
-    "test:load": "node scripts/load.js"
+    "test:load": "node scripts/load.js",
+    "test:sustained": "node scripts/sustained.js"
   },
   "keywords": [],
   "author": "",

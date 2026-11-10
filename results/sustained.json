@@ -1,0 +1,1920 @@
+{
+  "date": "2026-11-10T14:40:14.429Z",
+  "revision": "1f05ec8245fecbc52e9f5d6a89ea745d65783289",
+  "clients": 32,
+  "stages": [
+    {
+      "kind": "rampa",
+      "rate": 10,
+      "seconds": 60,
+      "issued": 600,
+      "skipped": 0,
+      "accepted": 600,
+      "errors": {},
+      "apiMs": [
+        8,
+        13,
+        14
+      ],
+      "integrity": {
+        "total": 600,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 120,
+        "replyMs": [
+          38.191,
+          72.00034999999998,
+          79.34558999999999
+        ]
+      },
+      "atStop": {
+        "opened": 600,
+        "completed": 600,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 60.13
+      },
+      "final": {
+        "opened": 600,
+        "completed": 600,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 61.68
+      },
+      "samples": [
+        {
+          "opened": 1,
+          "completed": 1,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 0.08
+        },
+        {
+          "opened": 22,
+          "completed": 22,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 2.19
+        },
+        {
+          "opened": 43,
+          "completed": 43,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 4.3
+        },
+        {
+          "opened": 64,
+          "completed": 64,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 6.4
+        },
+        {
+          "opened": 85,
+          "completed": 85,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 8.51
+        },
+        {
+          "opened": 107,
+          "completed": 106,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 10.64
+        },
+        {
+          "opened": 128,
+          "completed": 127,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 12.76
+        },
+        {
+          "opened": 149,
+          "completed": 149,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 14.88
+        },
+        {
+          "opened": 170,
+          "completed": 170,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 17
+        },
+        {
+          "opened": 192,
+          "completed": 191,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 19.13
+        },
+        {
+          "opened": 213,
+          "completed": 212,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 21.25
+        },
+        {
+          "opened": 235,
+          "completed": 234,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 23.47
+        },
+        {
+          "opened": 256,
+          "completed": 256,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 25.59
+        },
+        {
+          "opened": 278,
+          "completed": 277,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 27.72
+        },
+        {
+          "opened": 299,
+          "completed": 298,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 29.85
+        },
+        {
+          "opened": 320,
+          "completed": 320,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 31.98
+        },
+        {
+          "opened": 341,
+          "completed": 341,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 34.09
+        },
+        {
+          "opened": 363,
+          "completed": 362,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 36.22
+        },
+        {
+          "opened": 384,
+          "completed": 383,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 38.35
+        },
+        {
+          "opened": 405,
+          "completed": 405,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 40.47
+        },
+        {
+          "opened": 426,
+          "completed": 426,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 42.58
+        },
+        {
+          "opened": 447,
+          "completed": 447,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 44.68
+        },
+        {
+          "opened": 468,
+          "completed": 468,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 46.8
+        },
+        {
+          "opened": 490,
+          "completed": 489,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 48.92
+        },
+        {
+          "opened": 511,
+          "completed": 510,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 51.05
+        },
+        {
+          "opened": 532,
+          "completed": 532,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 53.17
+        },
+        {
+          "opened": 553,
+          "completed": 552,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 55.27
+        },
+        {
+          "opened": 574,
+          "completed": 574,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 57.41
+        },
+        {
+          "opened": 596,
+          "completed": 596,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 59.54
+        }
+      ],
+      "pass": true
+    },
+    {
+      "kind": "rampa",
+      "rate": 25,
+      "seconds": 60,
+      "issued": 1500,
+      "skipped": 0,
+      "accepted": 1500,
+      "errors": {},
+      "apiMs": [
+        5,
+        10,
+        22
+      ],
+      "integrity": {
+        "total": 1500,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 300,
+        "replyMs": [
+          35.8635,
+          71.4155,
+          77.44577
+        ]
+      },
+      "atStop": {
+        "opened": 1500,
+        "completed": 1500,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 60.15
+      },
+      "final": {
+        "opened": 1500,
+        "completed": 1500,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 61.73
+      },
+      "samples": [
+        {
+          "opened": 2,
+          "completed": 1,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 0.09
+        },
+        {
+          "opened": 55,
+          "completed": 54,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 2.2
+        },
+        {
+          "opened": 108,
+          "completed": 108,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 4.3
+        },
+        {
+          "opened": 160,
+          "completed": 159,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 6.4
+        },
+        {
+          "opened": 214,
+          "completed": 213,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 8.55
+        },
+        {
+          "opened": 266,
+          "completed": 265,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 10.65
+        },
+        {
+          "opened": 319,
+          "completed": 317,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 12.75
+        },
+        {
+          "opened": 372,
+          "completed": 371,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 14.86
+        },
+        {
+          "opened": 425,
+          "completed": 423,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 16.99
+        },
+        {
+          "opened": 481,
+          "completed": 480,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 19.26
+        },
+        {
+          "opened": 535,
+          "completed": 534,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 21.39
+        },
+        {
+          "opened": 588,
+          "completed": 587,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 23.52
+        },
+        {
+          "opened": 641,
+          "completed": 640,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 25.64
+        },
+        {
+          "opened": 694,
+          "completed": 694,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 27.77
+        },
+        {
+          "opened": 747,
+          "completed": 747,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 29.87
+        },
+        {
+          "opened": 800,
+          "completed": 799,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 32
+        },
+        {
+          "opened": 853,
+          "completed": 853,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 34.14
+        },
+        {
+          "opened": 907,
+          "completed": 906,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 36.26
+        },
+        {
+          "opened": 959,
+          "completed": 959,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 38.38
+        },
+        {
+          "opened": 1013,
+          "completed": 1011,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 40.5
+        },
+        {
+          "opened": 1066,
+          "completed": 1064,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 42.63
+        },
+        {
+          "opened": 1119,
+          "completed": 1119,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 44.76
+        },
+        {
+          "opened": 1172,
+          "completed": 1172,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 46.89
+        },
+        {
+          "opened": 1225,
+          "completed": 1224,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 49.01
+        },
+        {
+          "opened": 1278,
+          "completed": 1277,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 51.13
+        },
+        {
+          "opened": 1332,
+          "completed": 1331,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 53.26
+        },
+        {
+          "opened": 1384,
+          "completed": 1383,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 55.35
+        },
+        {
+          "opened": 1437,
+          "completed": 1435,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 57.48
+        },
+        {
+          "opened": 1491,
+          "completed": 1490,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 59.63
+        }
+      ],
+      "pass": true
+    },
+    {
+      "kind": "rampa",
+      "rate": 50,
+      "seconds": 60,
+      "issued": 3000,
+      "skipped": 0,
+      "accepted": 3000,
+      "errors": {},
+      "apiMs": [
+        4,
+        6,
+        9
+      ],
+      "integrity": {
+        "total": 3000,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 600,
+        "replyMs": [
+          39.4435,
+          70.49865,
+          75.36249999999991
+        ]
+      },
+      "atStop": {
+        "opened": 3000,
+        "completed": 3000,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 60.1
+      },
+      "final": {
+        "opened": 3000,
+        "completed": 3000,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 61.36
+      },
+      "samples": [
+        {
+          "opened": 4,
+          "completed": 1,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 0.09
+        },
+        {
+          "opened": 110,
+          "completed": 107,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 2.21
+        },
+        {
+          "opened": 216,
+          "completed": 213,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 4.33
+        },
+        {
+          "opened": 322,
+          "completed": 319,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 6.44
+        },
+        {
+          "opened": 428,
+          "completed": 425,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 8.57
+        },
+        {
+          "opened": 534,
+          "completed": 532,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 10.69
+        },
+        {
+          "opened": 641,
+          "completed": 640,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 12.82
+        },
+        {
+          "opened": 745,
+          "completed": 745,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 14.91
+        },
+        {
+          "opened": 851,
+          "completed": 848,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 17.03
+        },
+        {
+          "opened": 956,
+          "completed": 955,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 19.12
+        },
+        {
+          "opened": 1061,
+          "completed": 1058,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 21.22
+        },
+        {
+          "opened": 1165,
+          "completed": 1164,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 23.31
+        },
+        {
+          "opened": 1272,
+          "completed": 1268,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 25.44
+        },
+        {
+          "opened": 1378,
+          "completed": 1375,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 27.56
+        },
+        {
+          "opened": 1482,
+          "completed": 1482,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 29.66
+        },
+        {
+          "opened": 1587,
+          "completed": 1585,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 31.75
+        },
+        {
+          "opened": 1692,
+          "completed": 1692,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 33.85
+        },
+        {
+          "opened": 1797,
+          "completed": 1795,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 35.96
+        },
+        {
+          "opened": 1903,
+          "completed": 1903,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 38.07
+        },
+        {
+          "opened": 2009,
+          "completed": 2009,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 40.19
+        },
+        {
+          "opened": 2115,
+          "completed": 2113,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 42.31
+        },
+        {
+          "opened": 2222,
+          "completed": 2220,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 44.45
+        },
+        {
+          "opened": 2327,
+          "completed": 2327,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 46.56
+        },
+        {
+          "opened": 2433,
+          "completed": 2430,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 48.67
+        },
+        {
+          "opened": 2539,
+          "completed": 2538,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 50.77
+        },
+        {
+          "opened": 2645,
+          "completed": 2642,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 52.9
+        },
+        {
+          "opened": 2749,
+          "completed": 2749,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 54.99
+        },
+        {
+          "opened": 2855,
+          "completed": 2853,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 57.11
+        },
+        {
+          "opened": 2961,
+          "completed": 2960,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 59.23
+        }
+      ],
+      "pass": true
+    },
+    {
+      "kind": "rampa",
+      "rate": 100,
+      "seconds": 60,
+      "issued": 6000,
+      "skipped": 0,
+      "accepted": 6000,
+      "errors": {},
+      "apiMs": [
+        3,
+        5,
+        7
+      ],
+      "integrity": {
+        "total": 6000,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 1200,
+        "replyMs": [
+          45.8645,
+          73.71905000000001,
+          79.97110000000002
+        ]
+      },
+      "atStop": {
+        "opened": 6000,
+        "completed": 6000,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 60.1
+      },
+      "final": {
+        "opened": 6000,
+        "completed": 6000,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 61.36
+      },
+      "samples": [
+        {
+          "opened": 8,
+          "completed": 4,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 0.09
+        },
+        {
+          "opened": 220,
+          "completed": 213,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 2.21
+        },
+        {
+          "opened": 429,
+          "completed": 427,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 4.3
+        },
+        {
+          "opened": 641,
+          "completed": 634,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 6.42
+        },
+        {
+          "opened": 851,
+          "completed": 846,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 8.52
+        },
+        {
+          "opened": 1060,
+          "completed": 1053,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 10.72
+        },
+        {
+          "opened": 1285,
+          "completed": 1279,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 12.87
+        },
+        {
+          "opened": 1494,
+          "completed": 1492,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 14.95
+        },
+        {
+          "opened": 1705,
+          "completed": 1703,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 17.06
+        },
+        {
+          "opened": 1915,
+          "completed": 1909,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 19.16
+        },
+        {
+          "opened": 2127,
+          "completed": 2123,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 21.28
+        },
+        {
+          "opened": 2337,
+          "completed": 2330,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 23.38
+        },
+        {
+          "opened": 2547,
+          "completed": 2545,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 25.48
+        },
+        {
+          "opened": 2757,
+          "completed": 2753,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 27.58
+        },
+        {
+          "opened": 2969,
+          "completed": 2961,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 29.7
+        },
+        {
+          "opened": 3179,
+          "completed": 3177,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 31.8
+        },
+        {
+          "opened": 3390,
+          "completed": 3385,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 33.91
+        },
+        {
+          "opened": 3601,
+          "completed": 3595,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 36.02
+        },
+        {
+          "opened": 3814,
+          "completed": 3807,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 38.15
+        },
+        {
+          "opened": 4023,
+          "completed": 4016,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 40.24
+        },
+        {
+          "opened": 4233,
+          "completed": 4231,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 42.35
+        },
+        {
+          "opened": 4446,
+          "completed": 4441,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 44.48
+        },
+        {
+          "opened": 4658,
+          "completed": 4653,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 46.59
+        },
+        {
+          "opened": 4870,
+          "completed": 4867,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 48.7
+        },
+        {
+          "opened": 5080,
+          "completed": 5075,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 50.81
+        },
+        {
+          "opened": 5289,
+          "completed": 5285,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 52.9
+        },
+        {
+          "opened": 5500,
+          "completed": 5494,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 55.01
+        },
+        {
+          "opened": 5711,
+          "completed": 5704,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 57.13
+        },
+        {
+          "opened": 5922,
+          "completed": 5918,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 59.23
+        }
+      ],
+      "pass": true
+    },
+    {
+      "kind": "rampa",
+      "rate": 200,
+      "seconds": 60,
+      "issued": 12000,
+      "skipped": 0,
+      "accepted": 12000,
+      "errors": {},
+      "apiMs": [
+        2,
+        5,
+        15
+      ],
+      "integrity": {
+        "total": 12000,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 2400,
+        "replyMs": [
+          51.9925,
+          75.28779999999999,
+          136.7066600000006
+        ]
+      },
+      "atStop": {
+        "opened": 12000,
+        "completed": 11997,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 60.1
+      },
+      "final": {
+        "opened": 12000,
+        "completed": 12000,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 61.1
+      },
+      "samples": [
+        {
+          "opened": 15,
+          "completed": 5,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 0.09
+        },
+        {
+          "opened": 435,
+          "completed": 420,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 2.19
+        },
+        {
+          "opened": 854,
+          "completed": 839,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 4.29
+        },
+        {
+          "opened": 1275,
+          "completed": 1262,
+          "outboxPending": 13,
+          "outboxFailed": 0,
+          "second": 6.38
+        },
+        {
+          "opened": 1694,
+          "completed": 1688,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 8.48
+        },
+        {
+          "opened": 2113,
+          "completed": 2104,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 10.58
+        },
+        {
+          "opened": 2533,
+          "completed": 2520,
+          "outboxPending": 13,
+          "outboxFailed": 0,
+          "second": 12.68
+        },
+        {
+          "opened": 2952,
+          "completed": 2944,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 14.77
+        },
+        {
+          "opened": 3370,
+          "completed": 3363,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 16.87
+        },
+        {
+          "opened": 3789,
+          "completed": 3777,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 18.96
+        },
+        {
+          "opened": 4211,
+          "completed": 4204,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 21.07
+        },
+        {
+          "opened": 4630,
+          "completed": 4613,
+          "outboxPending": 15,
+          "outboxFailed": 0,
+          "second": 23.16
+        },
+        {
+          "opened": 5048,
+          "completed": 5038,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 25.26
+        },
+        {
+          "opened": 5470,
+          "completed": 5460,
+          "outboxPending": 10,
+          "outboxFailed": 0,
+          "second": 27.37
+        },
+        {
+          "opened": 5892,
+          "completed": 5880,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 29.48
+        },
+        {
+          "opened": 6313,
+          "completed": 6305,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 31.58
+        },
+        {
+          "opened": 6738,
+          "completed": 6726,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 33.71
+        },
+        {
+          "opened": 7160,
+          "completed": 7152,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 35.81
+        },
+        {
+          "opened": 7582,
+          "completed": 7573,
+          "outboxPending": 9,
+          "outboxFailed": 0,
+          "second": 37.93
+        },
+        {
+          "opened": 8002,
+          "completed": 7987,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 40.03
+        },
+        {
+          "opened": 8423,
+          "completed": 8408,
+          "outboxPending": 14,
+          "outboxFailed": 0,
+          "second": 42.13
+        },
+        {
+          "opened": 8844,
+          "completed": 8837,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 44.24
+        },
+        {
+          "opened": 9264,
+          "completed": 9249,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 46.34
+        },
+        {
+          "opened": 9685,
+          "completed": 9676,
+          "outboxPending": 9,
+          "outboxFailed": 0,
+          "second": 48.44
+        },
+        {
+          "opened": 10108,
+          "completed": 10099,
+          "outboxPending": 9,
+          "outboxFailed": 0,
+          "second": 50.56
+        },
+        {
+          "opened": 10529,
+          "completed": 10517,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 52.66
+        },
+        {
+          "opened": 10951,
+          "completed": 10939,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 54.77
+        },
+        {
+          "opened": 11369,
+          "completed": 11357,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 56.86
+        },
+        {
+          "opened": 11794,
+          "completed": 11783,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 58.99
+        }
+      ],
+      "pass": true
+    },
+    {
+      "kind": "rampa",
+      "rate": 400,
+      "seconds": 60,
+      "issued": 24000,
+      "skipped": 0,
+      "accepted": 23873,
+      "errors": {
+        "HTTP 500": 127
+      },
+      "apiMs": [
+        4,
+        14,
+        149
+      ],
+      "integrity": {
+        "total": 23873,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 4775,
+        "replyMs": [
+          10026.441,
+          14251.895999999999,
+          14909.89608
+        ]
+      },
+      "atStop": {
+        "opened": 23873,
+        "completed": 18178,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 60.11
+      },
+      "final": {
+        "opened": 23873,
+        "completed": 23873,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 71.24
+      },
+      "samples": [
+        {
+          "opened": 26,
+          "completed": 3,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 0.09
+        },
+        {
+          "opened": 871,
+          "completed": 733,
+          "outboxPending": 22,
+          "outboxFailed": 0,
+          "second": 2.2
+        },
+        {
+          "opened": 1709,
+          "completed": 1433,
+          "outboxPending": 13,
+          "outboxFailed": 0,
+          "second": 4.3
+        },
+        {
+          "opened": 2555,
+          "completed": 2221,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 6.41
+        },
+        {
+          "opened": 3284,
+          "completed": 2463,
+          "outboxPending": 140,
+          "outboxFailed": 0,
+          "second": 8.58
+        },
+        {
+          "opened": 4144,
+          "completed": 2855,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 10.71
+        },
+        {
+          "opened": 5003,
+          "completed": 3542,
+          "outboxPending": 23,
+          "outboxFailed": 0,
+          "second": 12.85
+        },
+        {
+          "opened": 5850,
+          "completed": 4021,
+          "outboxPending": 9,
+          "outboxFailed": 0,
+          "second": 14.97
+        },
+        {
+          "opened": 6689,
+          "completed": 4681,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 17.07
+        },
+        {
+          "opened": 7531,
+          "completed": 5380,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 19.18
+        },
+        {
+          "opened": 8373,
+          "completed": 6016,
+          "outboxPending": 30,
+          "outboxFailed": 0,
+          "second": 21.28
+        },
+        {
+          "opened": 9217,
+          "completed": 6745,
+          "outboxPending": 10,
+          "outboxFailed": 0,
+          "second": 23.39
+        },
+        {
+          "opened": 10061,
+          "completed": 7277,
+          "outboxPending": 13,
+          "outboxFailed": 0,
+          "second": 25.5
+        },
+        {
+          "opened": 10902,
+          "completed": 7988,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 27.6
+        },
+        {
+          "opened": 11744,
+          "completed": 8583,
+          "outboxPending": 11,
+          "outboxFailed": 0,
+          "second": 29.71
+        },
+        {
+          "opened": 12591,
+          "completed": 9329,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 31.82
+        },
+        {
+          "opened": 13436,
+          "completed": 9948,
+          "outboxPending": 14,
+          "outboxFailed": 0,
+          "second": 33.93
+        },
+        {
+          "opened": 14276,
+          "completed": 10616,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 36.04
+        },
+        {
+          "opened": 15123,
+          "completed": 11290,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 38.15
+        },
+        {
+          "opened": 15964,
+          "completed": 11998,
+          "outboxPending": 17,
+          "outboxFailed": 0,
+          "second": 40.26
+        },
+        {
+          "opened": 16807,
+          "completed": 12606,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 42.37
+        },
+        {
+          "opened": 17654,
+          "completed": 13287,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 44.48
+        },
+        {
+          "opened": 18496,
+          "completed": 13915,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 46.58
+        },
+        {
+          "opened": 19343,
+          "completed": 14604,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 48.7
+        },
+        {
+          "opened": 20183,
+          "completed": 15272,
+          "outboxPending": 16,
+          "outboxFailed": 0,
+          "second": 50.81
+        },
+        {
+          "opened": 21026,
+          "completed": 15862,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 52.92
+        },
+        {
+          "opened": 21871,
+          "completed": 16549,
+          "outboxPending": 10,
+          "outboxFailed": 0,
+          "second": 55.03
+        },
+        {
+          "opened": 22722,
+          "completed": 17142,
+          "outboxPending": 17,
+          "outboxFailed": 0,
+          "second": 57.16
+        },
+        {
+          "opened": 23568,
+          "completed": 17889,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 59.27
+        }
+      ],
+      "pass": false
+    },
+    {
+      "kind": "confirmação",
+      "rate": 200,
+      "seconds": 120,
+      "issued": 24000,
+      "skipped": 0,
+      "accepted": 24000,
+      "errors": {},
+      "apiMs": [
+        2,
+        5,
+        28
+      ],
+      "integrity": {
+        "total": 24000,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 4800,
+        "replyMs": [
+          20.594,
+          73.65409999999997,
+          198.78517999999596
+        ]
+      },
+      "atStop": {
+        "opened": 24000,
+        "completed": 24000,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 120.12
+      },
+      "final": {
+        "opened": 24000,
+        "completed": 24000,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 120.54
+      },
+      "samples": [
+        {
+          "opened": 14,
+          "completed": 5,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 0.09
+        },
+        {
+          "opened": 435,
+          "completed": 433,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 2.2
+        },
+        {
+          "opened": 860,
+          "completed": 855,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 4.33
+        },
+        {
+          "opened": 1284,
+          "completed": 1282,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 6.44
+        },
+        {
+          "opened": 1704,
+          "completed": 1700,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 8.54
+        },
+        {
+          "opened": 2124,
+          "completed": 2123,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 10.65
+        },
+        {
+          "opened": 2546,
+          "completed": 2542,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 12.75
+        },
+        {
+          "opened": 2966,
+          "completed": 2958,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 14.86
+        },
+        {
+          "opened": 3388,
+          "completed": 3386,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 16.96
+        },
+        {
+          "opened": 3809,
+          "completed": 3807,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 19.07
+        },
+        {
+          "opened": 4231,
+          "completed": 4219,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 21.18
+        },
+        {
+          "opened": 4655,
+          "completed": 4643,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 23.3
+        },
+        {
+          "opened": 5077,
+          "completed": 5075,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 25.41
+        },
+        {
+          "opened": 5496,
+          "completed": 5493,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 27.51
+        },
+        {
+          "opened": 5917,
+          "completed": 5913,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 29.61
+        },
+        {
+          "opened": 6337,
+          "completed": 6335,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 31.71
+        },
+        {
+          "opened": 6757,
+          "completed": 6754,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 33.81
+        },
+        {
+          "opened": 7177,
+          "completed": 7173,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 35.91
+        },
+        {
+          "opened": 7596,
+          "completed": 7594,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 38
+        },
+        {
+          "opened": 8017,
+          "completed": 8014,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 40.1
+        },
+        {
+          "opened": 8436,
+          "completed": 8427,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 42.21
+        },
+        {
+          "opened": 8860,
+          "completed": 8858,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 44.33
+        },
+        {
+          "opened": 9283,
+          "completed": 9279,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 46.44
+        },
+        {
+          "opened": 9705,
+          "completed": 9690,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 48.56
+        },
+        {
+          "opened": 10126,
+          "completed": 10120,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 50.65
+        },
+        {
+          "opened": 10547,
+          "completed": 10542,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 52.76
+        },
+        {
+          "opened": 10968,
+          "completed": 10959,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 54.87
+        },
+        {
+          "opened": 11392,
+          "completed": 11360,
+          "outboxPending": 9,
+          "outboxFailed": 0,
+          "second": 57
+        },
+        {
+          "opened": 11840,
+          "completed": 11784,
+          "outboxPending": 30,
+          "outboxFailed": 0,
+          "second": 59.25
+        },
+        {
+          "opened": 12266,
+          "completed": 12260,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 61.36
+        },
+        {
+          "opened": 12692,
+          "completed": 12687,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 63.49
+        },
+        {
+          "opened": 13113,
+          "completed": 13106,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 65.6
+        },
+        {
+          "opened": 13535,
+          "completed": 13533,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 67.7
+        },
+        {
+          "opened": 13955,
+          "completed": 13939,
+          "outboxPending": 16,
+          "outboxFailed": 0,
+          "second": 69.8
+        },
+        {
+          "opened": 14377,
+          "completed": 14373,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 71.91
+        },
+        {
+          "opened": 14796,
+          "completed": 14780,
+          "outboxPending": 14,
+          "outboxFailed": 0,
+          "second": 74.01
+        },
+        {
+          "opened": 15215,
+          "completed": 15200,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 76.11
+        },
+        {
+          "opened": 15640,
+          "completed": 15634,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 78.23
+        },
+        {
+          "opened": 16062,
+          "completed": 16059,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 80.34
+        },
+        {
+          "opened": 16484,
+          "completed": 16479,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 82.45
+        },
+        {
+          "opened": 16904,
+          "completed": 16901,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 84.56
+        },
+        {
+          "opened": 17329,
+          "completed": 17321,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 86.68
+        },
+        {
+          "opened": 17750,
+          "completed": 17744,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 88.78
+        },
+        {
+          "opened": 18171,
+          "completed": 18166,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 90.89
+        },
+        {
+          "opened": 18594,
+          "completed": 18590,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 93
+        },
+        {
+          "opened": 19018,
+          "completed": 19012,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 95.14
+        },
+        {
+          "opened": 19446,
+          "completed": 19441,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 97.26
+        },
+        {
+          "opened": 19868,
+          "completed": 19863,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 99.37
+        },
+        {
+          "opened": 20290,
+          "completed": 20287,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 101.49
+        },
+        {
+          "opened": 20716,
+          "completed": 20708,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 103.64
+        },
+        {
+          "opened": 21145,
+          "completed": 21138,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 105.76
+        },
+        {
+          "opened": 21568,
+          "completed": 21563,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 107.87
+        },
+        {
+          "opened": 21988,
+          "completed": 21974,
+          "outboxPending": 14,
+          "outboxFailed": 0,
+          "second": 109.97
+        },
+        {
+          "opened": 22409,
+          "completed": 22401,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 112.08
+        },
+        {
+          "opened": 22831,
+          "completed": 22824,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 114.19
+        },
+        {
+          "opened": 23253,
+          "completed": 23239,
+          "outboxPending": 14,
+          "outboxFailed": 0,
+          "second": 116.3
+        },
+        {
+          "opened": 23676,
+          "completed": 23668,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 118.41
+        }
+      ],
+      "pass": true
+    }
+  ]
+}

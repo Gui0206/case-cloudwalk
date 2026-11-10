@@ -95,6 +95,8 @@ Se já executou o experimento e quiser **apagar apenas os dados de teste** para 
 
 ## Limites e evolução
 
+O [teste de carga sustentada](results/CARGA-SUSTENTADA.md) mede a abertura e a primeira resposta com chegadas em taxa fixa, verifica perdas e duplicações por atendimento e registra quando a fila de respostas passa a crescer.
+
 O dispatcher em [Go](worker/main.go) usa quatro goroutines por padrão. Cada uma reserva um evento com `FOR UPDATE SKIP LOCKED`, entrega o webhook e confirma o resultado na mesma transação. Enquanto há trabalho, busca o próximo evento imediatamente. A versão anterior aguardava 70 ms após cada entrega. Interromper o processo libera reservas não confirmadas. O identificador original permite deduplicar uma eventual reentrega.
 
 Para comparar concorrências na instalação de teste, execute `WORKERS=4 HELPDESK_PORT=4381 docker compose -p central-helpdesk-test up -d --no-deps worker` e `LOAD_RESULT=results/load-go-4.json npm run test:load`. Repita com 1, 8 e 16. As medições estão em `results/load-go-*.json`. A comparação com `results/load.json` inclui a mudança na espera entre entregas. O backlog é amostrado e o p95 inclui a consulta periódica do cliente.

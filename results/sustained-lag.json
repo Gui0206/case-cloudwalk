@@ -1,0 +1,472 @@
+[
+  {
+    "date": "2026-11-10T14:40:38.871Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:40:44.006Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:40:49.124Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:40:54.269Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:40:59.385Z",
+    "requests": 0,
+    "responses": 1
+  },
+  {
+    "date": "2026-11-10T14:41:04.523Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:09.673Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:14.790Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:19.945Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:25.101Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:30.302Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:35.693Z",
+    "requests": 0,
+    "responses": 2
+  },
+  {
+    "date": "2026-11-10T14:41:40.881Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:46.023Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:51.134Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:41:56.263Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:01.404Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:06.546Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:11.678Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:16.825Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:21.972Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:27.089Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:32.220Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:37.392Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:42.509Z",
+    "requests": 0,
+    "responses": 1
+  },
+  {
+    "date": "2026-11-10T14:42:47.646Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:52.747Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:42:57.874Z",
+    "requests": 0,
+    "responses": 3
+  },
+  {
+    "date": "2026-11-10T14:43:02.974Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:08.099Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:13.222Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:18.350Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:23.474Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:28.576Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:33.695Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:38.810Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:43.946Z",
+    "requests": 0,
+    "responses": 3
+  },
+  {
+    "date": "2026-11-10T14:43:49.080Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:54.202Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:43:59.322Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:44:04.421Z",
+    "requests": 1,
+    "responses": 2
+  },
+  {
+    "date": "2026-11-10T14:44:09.545Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:44:14.667Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:44:19.961Z",
+    "requests": 0,
+    "responses": 12
+  },
+  {
+    "date": "2026-11-10T14:44:25.062Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:44:30.171Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:44:35.284Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:44:40.406Z",
+    "requests": 0,
+    "responses": 10
+  },
+  {
+    "date": "2026-11-10T14:44:45.530Z",
+    "requests": 2,
+    "responses": 8
+  },
+  {
+    "date": "2026-11-10T14:44:50.645Z",
+    "requests": 4,
+    "responses": 14
+  },
+  {
+    "date": "2026-11-10T14:44:55.998Z",
+    "requests": 6,
+    "responses": 44
+  },
+  {
+    "date": "2026-11-10T14:45:01.114Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:45:06.223Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:45:11.341Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:45:16.454Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:45:21.595Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:45:26.725Z",
+    "requests": 1,
+    "responses": 242
+  },
+  {
+    "date": "2026-11-10T14:45:32.018Z",
+    "requests": 4,
+    "responses": 932
+  },
+  {
+    "date": "2026-11-10T14:45:37.209Z",
+    "requests": 3,
+    "responses": 1727
+  },
+  {
+    "date": "2026-11-10T14:45:42.341Z",
+    "requests": 3,
+    "responses": 2164
+  },
+  {
+    "date": "2026-11-10T14:45:47.466Z",
+    "requests": 0,
+    "responses": 2716
+  },
+  {
+    "date": "2026-11-10T14:45:52.578Z",
+    "requests": 0,
+    "responses": 3170
+  },
+  {
+    "date": "2026-11-10T14:45:57.711Z",
+    "requests": 3,
+    "responses": 3486
+  },
+  {
+    "date": "2026-11-10T14:46:02.840Z",
+    "requests": 0,
+    "responses": 3916
+  },
+  {
+    "date": "2026-11-10T14:46:07.951Z",
+    "requests": 0,
+    "responses": 4475
+  },
+  {
+    "date": "2026-11-10T14:46:13.070Z",
+    "requests": 3,
+    "responses": 4900
+  },
+  {
+    "date": "2026-11-10T14:46:18.218Z",
+    "requests": 0,
+    "responses": 5356
+  },
+  {
+    "date": "2026-11-10T14:46:23.341Z",
+    "requests": 0,
+    "responses": 5520
+  },
+  {
+    "date": "2026-11-10T14:46:28.474Z",
+    "requests": 0,
+    "responses": 2846
+  },
+  {
+    "date": "2026-11-10T14:46:33.602Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:46:38.733Z",
+    "requests": 4,
+    "responses": 2
+  },
+  {
+    "date": "2026-11-10T14:46:43.861Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:46:49.060Z",
+    "requests": 3,
+    "responses": 3
+  },
+  {
+    "date": "2026-11-10T14:46:54.171Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:46:59.281Z",
+    "requests": 1,
+    "responses": 1
+  },
+  {
+    "date": "2026-11-10T14:47:04.393Z",
+    "requests": 0,
+    "responses": 1
+  },
+  {
+    "date": "2026-11-10T14:47:09.496Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:47:14.600Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:47:19.724Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:47:24.853Z",
+    "requests": 2,
+    "responses": 2
+  },
+  {
+    "date": "2026-11-10T14:47:29.971Z",
+    "requests": 1,
+    "responses": 3
+  },
+  {
+    "date": "2026-11-10T14:47:35.097Z",
+    "requests": 0,
+    "responses": 5
+  },
+  {
+    "date": "2026-11-10T14:47:40.205Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:47:45.303Z",
+    "requests": 0,
+    "responses": 4
+  },
+  {
+    "date": "2026-11-10T14:47:50.426Z",
+    "requests": 0,
+    "responses": 9
+  },
+  {
+    "date": "2026-11-10T14:47:55.534Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:48:00.657Z",
+    "requests": 0,
+    "responses": 4
+  },
+  {
+    "date": "2026-11-10T14:48:05.766Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:48:10.883Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:48:15.999Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:48:21.117Z",
+    "requests": 0,
+    "responses": 2
+  },
+  {
+    "date": "2026-11-10T14:48:26.229Z",
+    "requests": 0,
+    "responses": 0
+  },
+  {
+    "date": "2026-11-10T14:48:31.347Z",
+    "requests": 0,
+    "responses": 1
+  },
+  {
+    "date": "2026-11-10T14:48:36.465Z",
+    "requests": 0,
+    "responses": 0
+  }
+]
