@@ -1,0 +1,850 @@
+{
+  "date": "2026-11-10T19:54:43.943Z",
+  "revision": "a39408b17114b6c3dfd956cc2662060091bcea09",
+  "clients": 32,
+  "stages": [
+    {
+      "diagnosticsBefore": {
+        "api": {
+          "callbackBegin": {
+            "calls": 0,
+            "microseconds": 0
+          },
+          "callbackCommit": {
+            "calls": 0,
+            "microseconds": 0
+          },
+          "callbackHandle": {
+            "calls": 0,
+            "microseconds": 0
+          },
+          "pool": {
+            "MaxOpenConnections": 32,
+            "OpenConnections": 1,
+            "InUse": 0,
+            "Idle": 1,
+            "WaitCount": 0,
+            "WaitDuration": 0,
+            "MaxIdleClosed": 0,
+            "MaxIdleTimeClosed": 0,
+            "MaxLifetimeClosed": 0
+          }
+        },
+        "bridge": {
+          "callback": {
+            "calls": 0,
+            "microseconds": 0
+          },
+          "offset": {
+            "calls": 0,
+            "microseconds": 0
+          },
+          "readers": 3
+        }
+      },
+      "diagnosticsAfter": {
+        "api": {
+          "callbackBegin": {
+            "calls": 23999,
+            "microseconds": 3154847
+          },
+          "callbackCommit": {
+            "calls": 23999,
+            "microseconds": 11406798
+          },
+          "callbackHandle": {
+            "calls": 23999,
+            "microseconds": 30417066
+          },
+          "pool": {
+            "MaxOpenConnections": 32,
+            "OpenConnections": 16,
+            "InUse": 0,
+            "Idle": 16,
+            "WaitCount": 226,
+            "WaitDuration": 5568831289,
+            "MaxIdleClosed": 82,
+            "MaxIdleTimeClosed": 0,
+            "MaxLifetimeClosed": 0
+          }
+        },
+        "bridge": {
+          "callback": {
+            "calls": 23999,
+            "microseconds": 50329776
+          },
+          "offset": {
+            "calls": 23999,
+            "microseconds": 7184945
+          },
+          "readers": 3
+        }
+      },
+      "kind": "indexed",
+      "rate": 400,
+      "seconds": 60,
+      "issued": 23999,
+      "skipped": 0,
+      "accepted": 23999,
+      "errors": {},
+      "apiMs": [
+        2,
+        6,
+        71
+      ],
+      "integrity": {
+        "total": 23999,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 4800,
+        "replyMs": [
+          49.044,
+          74.69889999999998,
+          216.28218000000032
+        ]
+      },
+      "atStop": {
+        "opened": 23999,
+        "completed": 23999,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 60.18
+      },
+      "final": {
+        "opened": 23999,
+        "completed": 23999,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 62.36
+      },
+      "samples": [
+        {
+          "opened": 30,
+          "completed": 22,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 0.11
+        },
+        {
+          "opened": 873,
+          "completed": 858,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 2.22
+        },
+        {
+          "opened": 1785,
+          "completed": 1650,
+          "outboxPending": 17,
+          "outboxFailed": 0,
+          "second": 4.55
+        },
+        {
+          "opened": 2665,
+          "completed": 2651,
+          "outboxPending": 11,
+          "outboxFailed": 0,
+          "second": 6.7
+        },
+        {
+          "opened": 3509,
+          "completed": 3490,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 8.81
+        },
+        {
+          "opened": 4380,
+          "completed": 4365,
+          "outboxPending": 15,
+          "outboxFailed": 0,
+          "second": 11.25
+        },
+        {
+          "opened": 5336,
+          "completed": 5320,
+          "outboxPending": 16,
+          "outboxFailed": 0,
+          "second": 13.38
+        },
+        {
+          "opened": 6189,
+          "completed": 6164,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 15.52
+        },
+        {
+          "opened": 7045,
+          "completed": 7028,
+          "outboxPending": 17,
+          "outboxFailed": 0,
+          "second": 17.65
+        },
+        {
+          "opened": 7892,
+          "completed": 7870,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 19.77
+        },
+        {
+          "opened": 8740,
+          "completed": 8727,
+          "outboxPending": 13,
+          "outboxFailed": 0,
+          "second": 21.89
+        },
+        {
+          "opened": 9591,
+          "completed": 9571,
+          "outboxPending": 20,
+          "outboxFailed": 0,
+          "second": 24.04
+        },
+        {
+          "opened": 10446,
+          "completed": 10419,
+          "outboxPending": 25,
+          "outboxFailed": 0,
+          "second": 26.15
+        },
+        {
+          "opened": 11289,
+          "completed": 11280,
+          "outboxPending": 9,
+          "outboxFailed": 0,
+          "second": 28.26
+        },
+        {
+          "opened": 12139,
+          "completed": 12111,
+          "outboxPending": 26,
+          "outboxFailed": 0,
+          "second": 30.39
+        },
+        {
+          "opened": 12989,
+          "completed": 12982,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 32.51
+        },
+        {
+          "opened": 13839,
+          "completed": 13812,
+          "outboxPending": 27,
+          "outboxFailed": 0,
+          "second": 34.64
+        },
+        {
+          "opened": 14691,
+          "completed": 14674,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 36.77
+        },
+        {
+          "opened": 15542,
+          "completed": 15531,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 38.89
+        },
+        {
+          "opened": 16394,
+          "completed": 16369,
+          "outboxPending": 25,
+          "outboxFailed": 0,
+          "second": 41.02
+        },
+        {
+          "opened": 17244,
+          "completed": 17236,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 43.15
+        },
+        {
+          "opened": 18093,
+          "completed": 18071,
+          "outboxPending": 22,
+          "outboxFailed": 0,
+          "second": 45.27
+        },
+        {
+          "opened": 18939,
+          "completed": 18924,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 47.39
+        },
+        {
+          "opened": 19788,
+          "completed": 19776,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 49.51
+        },
+        {
+          "opened": 20636,
+          "completed": 20616,
+          "outboxPending": 20,
+          "outboxFailed": 0,
+          "second": 51.64
+        },
+        {
+          "opened": 21490,
+          "completed": 21471,
+          "outboxPending": 19,
+          "outboxFailed": 0,
+          "second": 53.77
+        },
+        {
+          "opened": 22338,
+          "completed": 22331,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 55.91
+        },
+        {
+          "opened": 23199,
+          "completed": 23176,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 58.04
+        },
+        {
+          "opened": 23999,
+          "completed": 23999,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 60.18
+        }
+      ],
+      "pass": true
+    },
+    {
+      "diagnosticsBefore": {
+        "api": {
+          "callbackBegin": {
+            "calls": 23999,
+            "microseconds": 3154847
+          },
+          "callbackCommit": {
+            "calls": 23999,
+            "microseconds": 11406798
+          },
+          "callbackHandle": {
+            "calls": 23999,
+            "microseconds": 30417066
+          },
+          "pool": {
+            "MaxOpenConnections": 32,
+            "OpenConnections": 16,
+            "InUse": 0,
+            "Idle": 16,
+            "WaitCount": 226,
+            "WaitDuration": 5568831289,
+            "MaxIdleClosed": 82,
+            "MaxIdleTimeClosed": 0,
+            "MaxLifetimeClosed": 0
+          }
+        },
+        "bridge": {
+          "callback": {
+            "calls": 23999,
+            "microseconds": 50329776
+          },
+          "offset": {
+            "calls": 23999,
+            "microseconds": 7184945
+          },
+          "readers": 3
+        }
+      },
+      "diagnosticsAfter": {
+        "api": {
+          "callbackBegin": {
+            "calls": 71998,
+            "microseconds": 7865727
+          },
+          "callbackCommit": {
+            "calls": 71998,
+            "microseconds": 33303089
+          },
+          "callbackHandle": {
+            "calls": 71998,
+            "microseconds": 88992881
+          },
+          "pool": {
+            "MaxOpenConnections": 32,
+            "OpenConnections": 16,
+            "InUse": 0,
+            "Idle": 16,
+            "WaitCount": 254,
+            "WaitDuration": 6340058246,
+            "MaxIdleClosed": 131,
+            "MaxIdleTimeClosed": 0,
+            "MaxLifetimeClosed": 0
+          }
+        },
+        "bridge": {
+          "callback": {
+            "calls": 71998,
+            "microseconds": 145646488
+          },
+          "offset": {
+            "calls": 71998,
+            "microseconds": 21075614
+          },
+          "readers": 3
+        }
+      },
+      "kind": "confirmação",
+      "rate": 400,
+      "seconds": 120,
+      "issued": 47999,
+      "skipped": 0,
+      "accepted": 47999,
+      "errors": {},
+      "apiMs": [
+        3,
+        6,
+        12
+      ],
+      "integrity": {
+        "total": 47999,
+        "missing": 0,
+        "duplicates": 0,
+        "human": 9600,
+        "replyMs": [
+          48.258,
+          72.4791,
+          77.47929999999978
+        ]
+      },
+      "atStop": {
+        "opened": 47999,
+        "completed": 47999,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 120.14
+      },
+      "final": {
+        "opened": 47999,
+        "completed": 47999,
+        "outboxPending": 0,
+        "outboxFailed": 0,
+        "second": 121.43
+      },
+      "samples": [
+        {
+          "opened": 27,
+          "completed": 15,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 0.17
+        },
+        {
+          "opened": 899,
+          "completed": 879,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 2.29
+        },
+        {
+          "opened": 1752,
+          "completed": 1729,
+          "outboxPending": 23,
+          "outboxFailed": 0,
+          "second": 4.42
+        },
+        {
+          "opened": 2603,
+          "completed": 2575,
+          "outboxPending": 26,
+          "outboxFailed": 0,
+          "second": 6.55
+        },
+        {
+          "opened": 3456,
+          "completed": 3428,
+          "outboxPending": 28,
+          "outboxFailed": 0,
+          "second": 8.69
+        },
+        {
+          "opened": 4311,
+          "completed": 4291,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 10.82
+        },
+        {
+          "opened": 5166,
+          "completed": 5139,
+          "outboxPending": 27,
+          "outboxFailed": 0,
+          "second": 12.96
+        },
+        {
+          "opened": 6013,
+          "completed": 5987,
+          "outboxPending": 26,
+          "outboxFailed": 0,
+          "second": 15.07
+        },
+        {
+          "opened": 6871,
+          "completed": 6850,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 17.24
+        },
+        {
+          "opened": 7736,
+          "completed": 7723,
+          "outboxPending": 13,
+          "outboxFailed": 0,
+          "second": 19.42
+        },
+        {
+          "opened": 8607,
+          "completed": 8580,
+          "outboxPending": 22,
+          "outboxFailed": 0,
+          "second": 21.57
+        },
+        {
+          "opened": 9478,
+          "completed": 9449,
+          "outboxPending": 28,
+          "outboxFailed": 0,
+          "second": 23.73
+        },
+        {
+          "opened": 10327,
+          "completed": 10300,
+          "outboxPending": 27,
+          "outboxFailed": 0,
+          "second": 25.85
+        },
+        {
+          "opened": 11177,
+          "completed": 11148,
+          "outboxPending": 24,
+          "outboxFailed": 0,
+          "second": 28.01
+        },
+        {
+          "opened": 12035,
+          "completed": 12014,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 30.13
+        },
+        {
+          "opened": 12888,
+          "completed": 12871,
+          "outboxPending": 0,
+          "outboxFailed": 0,
+          "second": 32.25
+        },
+        {
+          "opened": 13734,
+          "completed": 13713,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 34.37
+        },
+        {
+          "opened": 14577,
+          "completed": 14561,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 36.48
+        },
+        {
+          "opened": 15430,
+          "completed": 15415,
+          "outboxPending": 15,
+          "outboxFailed": 0,
+          "second": 38.61
+        },
+        {
+          "opened": 16285,
+          "completed": 16262,
+          "outboxPending": 23,
+          "outboxFailed": 0,
+          "second": 40.75
+        },
+        {
+          "opened": 17131,
+          "completed": 17108,
+          "outboxPending": 23,
+          "outboxFailed": 0,
+          "second": 42.87
+        },
+        {
+          "opened": 17979,
+          "completed": 17967,
+          "outboxPending": 5,
+          "outboxFailed": 0,
+          "second": 44.98
+        },
+        {
+          "opened": 18822,
+          "completed": 18795,
+          "outboxPending": 27,
+          "outboxFailed": 0,
+          "second": 47.1
+        },
+        {
+          "opened": 19669,
+          "completed": 19659,
+          "outboxPending": 10,
+          "outboxFailed": 0,
+          "second": 49.21
+        },
+        {
+          "opened": 20507,
+          "completed": 20485,
+          "outboxPending": 22,
+          "outboxFailed": 0,
+          "second": 51.3
+        },
+        {
+          "opened": 21354,
+          "completed": 21342,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 53.42
+        },
+        {
+          "opened": 22204,
+          "completed": 22177,
+          "outboxPending": 27,
+          "outboxFailed": 0,
+          "second": 55.55
+        },
+        {
+          "opened": 23048,
+          "completed": 23028,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 57.66
+        },
+        {
+          "opened": 23893,
+          "completed": 23871,
+          "outboxPending": 22,
+          "outboxFailed": 0,
+          "second": 59.77
+        },
+        {
+          "opened": 24740,
+          "completed": 24733,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 61.89
+        },
+        {
+          "opened": 25585,
+          "completed": 25563,
+          "outboxPending": 1,
+          "outboxFailed": 0,
+          "second": 64.01
+        },
+        {
+          "opened": 26432,
+          "completed": 26416,
+          "outboxPending": 16,
+          "outboxFailed": 0,
+          "second": 66.12
+        },
+        {
+          "opened": 27277,
+          "completed": 27254,
+          "outboxPending": 2,
+          "outboxFailed": 0,
+          "second": 68.23
+        },
+        {
+          "opened": 28125,
+          "completed": 28108,
+          "outboxPending": 17,
+          "outboxFailed": 0,
+          "second": 70.36
+        },
+        {
+          "opened": 28973,
+          "completed": 28946,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 72.47
+        },
+        {
+          "opened": 29820,
+          "completed": 29809,
+          "outboxPending": 11,
+          "outboxFailed": 0,
+          "second": 74.59
+        },
+        {
+          "opened": 30664,
+          "completed": 30638,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 76.71
+        },
+        {
+          "opened": 31515,
+          "completed": 31494,
+          "outboxPending": 21,
+          "outboxFailed": 0,
+          "second": 78.83
+        },
+        {
+          "opened": 32368,
+          "completed": 32344,
+          "outboxPending": 24,
+          "outboxFailed": 0,
+          "second": 80.96
+        },
+        {
+          "opened": 33216,
+          "completed": 33190,
+          "outboxPending": 26,
+          "outboxFailed": 0,
+          "second": 83.08
+        },
+        {
+          "opened": 34069,
+          "completed": 34049,
+          "outboxPending": 7,
+          "outboxFailed": 0,
+          "second": 85.21
+        },
+        {
+          "opened": 34918,
+          "completed": 34891,
+          "outboxPending": 27,
+          "outboxFailed": 0,
+          "second": 87.34
+        },
+        {
+          "opened": 35773,
+          "completed": 35761,
+          "outboxPending": 12,
+          "outboxFailed": 0,
+          "second": 89.48
+        },
+        {
+          "opened": 36621,
+          "completed": 36602,
+          "outboxPending": 19,
+          "outboxFailed": 0,
+          "second": 91.6
+        },
+        {
+          "opened": 37472,
+          "completed": 37463,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 93.72
+        },
+        {
+          "opened": 38320,
+          "completed": 38301,
+          "outboxPending": 4,
+          "outboxFailed": 0,
+          "second": 95.85
+        },
+        {
+          "opened": 39170,
+          "completed": 39152,
+          "outboxPending": 18,
+          "outboxFailed": 0,
+          "second": 97.97
+        },
+        {
+          "opened": 40016,
+          "completed": 39993,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 100.09
+        },
+        {
+          "opened": 40866,
+          "completed": 40845,
+          "outboxPending": 21,
+          "outboxFailed": 0,
+          "second": 102.21
+        },
+        {
+          "opened": 41718,
+          "completed": 41710,
+          "outboxPending": 6,
+          "outboxFailed": 0,
+          "second": 104.34
+        },
+        {
+          "opened": 42569,
+          "completed": 42545,
+          "outboxPending": 24,
+          "outboxFailed": 0,
+          "second": 106.47
+        },
+        {
+          "opened": 43423,
+          "completed": 43408,
+          "outboxPending": 15,
+          "outboxFailed": 0,
+          "second": 108.61
+        },
+        {
+          "opened": 44274,
+          "completed": 44259,
+          "outboxPending": 3,
+          "outboxFailed": 0,
+          "second": 110.73
+        },
+        {
+          "opened": 45124,
+          "completed": 45103,
+          "outboxPending": 21,
+          "outboxFailed": 0,
+          "second": 112.86
+        },
+        {
+          "opened": 45975,
+          "completed": 45953,
+          "outboxPending": 8,
+          "outboxFailed": 0,
+          "second": 114.99
+        },
+        {
+          "opened": 46828,
+          "completed": 46807,
+          "outboxPending": 21,
+          "outboxFailed": 0,
+          "second": 117.12
+        },
+        {
+          "opened": 47681,
+          "completed": 47671,
+          "outboxPending": 9,
+          "outboxFailed": 0,
+          "second": 119.25
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "backendImage": "56f25e3ef4a8f4389b66690c47d85e91b6f89befda60606c76686150e710b0c1",
+  "initialDatabase": {
+    "tickets": 118973,
+    "pendingIndex": true
+  }
+}

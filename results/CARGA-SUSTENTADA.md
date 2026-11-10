@@ -10,7 +10,7 @@ O teste investiga quantos **novos atendimentos por segundo** uma instalação lo
 - Critério experimental: pelo menos 99% da taxa oferecida, zero erros de criação, uma resposta por atendimento aceito, número esperado de transferências, zero falhas definitivas na outbox, p95 até a resposta de no máximo dois segundos e pendência total ao fim da carga de no máximo dois segundos de chegadas. O TAPI não especifica esse prazo.
 - A latência de abertura usa o relógio do cliente HTTP. A latência de resposta usa a diferença entre timestamps de início das transações PostgreSQL da mensagem inicial e da primeira resposta. Ela exclui a espera pela próxima atualização do navegador. O script conserva p50, p95 e p99. As consultas de acompanhamento rodam a cada dois segundos. A integridade é conferida por atendimento depois de até 90 segundos adicionais de drenagem.
 
-## Resultados
+## Medição original
 
 | Chegadas/s | Duração | Casos aceitos / oferecidos | p95 abertura | p95 resposta | Aguardando resposta ao parar |
 |---:|---:|---:|---:|---:|---:|
@@ -26,11 +26,28 @@ Todos os 70.973 casos aceitos tiveram exatamente uma primeira resposta na confer
 
 Os dados de cada etapa, incluindo erros HTTP, latências e evolução da pendência, estão em [sustained.json](sustained.json). As amostras dos consumidores Kafka estão em [sustained-lag.json](sustained-lag.json).
 
-## Diagnóstico da sobrecarga
+## Diagnóstico da versão original
 
-Na etapa de 400/s, os logs da API registraram 127 ocorrências de `pq: sorry, too many clients already`. O PostgreSQL estava configurado com `max_connections=100`. O dispatcher limita seu próprio pool a quatro conexões. A API usa o pool de `database/sql` sem definir `SetMaxOpenConns`. O primeiro ajuste a testar é reservar conexões para o dispatcher e administração e impor um orçamento ao pool da API, medindo a espera e os erros após a mudança.
+Na etapa de 400/s, os logs da API registraram 127 ocorrências de `pq: sorry, too many clients already`. O PostgreSQL estava configurado com `max_connections=100`. O dispatcher limitava seu próprio pool a quatro conexões. A API usava o pool de `database/sql` sem definir `SetMaxOpenConns`.
 
 Ao encerrar a entrada a 400/s, a outbox estava vazia e 5.695 casos aceitos ainda aguardavam resposta. A maior amostra de atraso do grupo que lê `desk.responses` nessa etapa foi de 5.520 eventos. Na mesma amostra, o grupo que lê `desk.requests` estava em dia. A ponte confirma cada offset após aguardar o callback HTTP. Essa observação localiza a pendência no retorno Kafka → ponte → API/PostgreSQL. Para separar o custo de cada componente, medir a duração do callback e do commit de offset e repetir o teste variando uma configuração por vez.
+
+## Reteste a 400 aberturas por segundo
+
+O reteste começou com os 70.973 casos da medição original e manteve o histórico entre rodadas. O pool da API passou a aceitar até 32 conexões com o PostgreSQL, com até 16 ociosas. O dispatcher manteve quatro conexões. A ponte passou a consumir o corpo da resposta HTTP para reutilizar a conexão do callback. No teste com três leitores, cada leitor processou uma das três partições do tópico de respostas, com confirmação do offset após o processamento.
+
+| Configuração | Duração | Aceitos | p95 abertura | p95 primeira resposta | Sem resposta ao parar | Destes, na outbox |
+|---|---:|---:|---:|---:|---:|---:|
+| Pool limitado e um leitor | 60 s | 24.000 | 32 ms | 4.959 ms | 1.721 | 1.666 |
+| Pool limitado e três leitores | 60 s | 24.000 | 5 ms | 3.038 ms | 1.185 | 1.184 |
+| Três leitores e índice da outbox | 60 s | 23.999 | 6 ms | 75 ms | 0 | 0 |
+| Mesma configuração, confirmação | 120 s | 47.999 | 6 ms | 72 ms | 0 | 0 |
+
+Na confirmação, a taxa efetiva foi de 399,99 aberturas/s. O gerador encerrou a janela uma chegada antes do alvo de 48.000. A API aceitou todas as tentativas, cada atendimento teve uma primeira resposta, 9.600 passaram à fila humana e o p99 da resposta foi de 77 ms. O primeiro retrato após o fim da entrada, aos 120,14 s, já mostrou zero respostas pendentes. Durante a rodada, o callback levou em média 1,99 ms e a confirmação do offset, 0,29 ms. O cenário mede abertura até a primeira resposta de um agente simulado em uma máquina, por dois minutos.
+
+Na rodada com um leitor, o callback HTTP levou em média 1,75 ms, dos quais 0,13 ms para começar a transação, 1,03 ms no processamento do retorno e 0,40 ms no commit do PostgreSQL. A confirmação do offset no Kafka, medida separadamente, levou 0,29 ms. Essas médias medem o trabalho de uma entrega já em processamento. O p95 de primeira resposta também inclui a espera nas filas. Veja os contadores e as amostras [com um leitor](retest-400-single.json) e [com três leitores](retest-400-parallel.json).
+
+O plano de execução da reserva de eventos pelo dispatcher mostrava uma varredura sequencial da outbox seguida de ordenação por `due,id`. Com o índice parcial `outbox_pending_due`, o PostgreSQL passou a buscar o próximo evento diretamente no índice dos pendentes. As rodadas foram sequenciais, com diferentes volumes de histórico. As diferenças de latência refletem essas condições e a variabilidade local.
 
 ## Alcance para o TAPI
 
@@ -45,5 +62,7 @@ HELPDESK_PORT=4382 docker compose -p central-sustained up -d --build
 npm run test:sustained
 docker compose -p central-sustained stop
 ```
+
+Para repetir somente o patamar de 400/s com a configuração atual, substitua o comando `npm run test:sustained` por `RETEST_400=indexed npm run test:sustained`. O gerador roda 60 segundos e, se os critérios forem cumpridos, confirma por mais 120 segundos. Os resultados ficam em [retest-400-indexed.json](retest-400-indexed.json). O limite de conexões vale por instância da API. Ao adicionar réplicas, dimensione a soma dos pools dentro do orçamento do PostgreSQL.
 
 Em outro terminal, `node scripts/sustained-lag.js` coleta a diferença entre eventos publicados e posições confirmadas pelos grupos do agente e da ponte a cada cinco segundos. Interrompa com Ctrl+C após o experimento. A primeira execução começou com volumes vazios. Reutilizar volumes altera a quantidade de histórico no PostgreSQL. Os scripts sobrescrevem os respectivos arquivos JSON de resultados.
