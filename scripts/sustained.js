@@ -45,6 +45,12 @@ const report = {
 };
 const target = process.env.RETEST_400;
 if (target) assert.ok(["single", "parallel", "indexed"].includes(target));
+if (target) {
+  report.backendImage = await dc("images", "-q", "web");
+  report.initialDatabase = await sql(`SELECT json_build_object(
+    'tickets', (SELECT count(*) FROM tickets),
+    'pendingIndex', to_regclass('outbox_pending_due') IS NOT NULL)`);
+}
 async function diagnostics() {
   return JSON.parse(
     await dc(

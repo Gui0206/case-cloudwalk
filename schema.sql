@@ -6,4 +6,5 @@ CREATE TABLE IF NOT EXISTS messages(n bigserial PRIMARY KEY,ticket uuid REFERENC
 CREATE INDEX IF NOT EXISTS msg_lookup ON messages(ticket,n);
 CREATE TABLE IF NOT EXISTS audit(n bigserial PRIMARY KEY,ticket uuid REFERENCES tickets(id),kind text NOT NULL,detail jsonb NOT NULL,created timestamptz DEFAULT now());
 CREATE TABLE IF NOT EXISTS outbox(id uuid PRIMARY KEY,ticket uuid REFERENCES tickets(id),payload jsonb NOT NULL,tries int DEFAULT 0,state text DEFAULT 'pending',due timestamptz DEFAULT now());
+CREATE INDEX IF NOT EXISTS outbox_pending_due ON outbox(due,id) WHERE state='pending';
 CREATE TABLE IF NOT EXISTS inbox(id uuid PRIMARY KEY,created timestamptz DEFAULT now());
