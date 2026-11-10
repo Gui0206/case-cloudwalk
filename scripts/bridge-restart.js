@@ -83,6 +83,11 @@ try {
   const before = await until(replies, (v) => v > 0);
   assert.ok(before < n, "A interrupção deve ocorrer com respostas pendentes");
   dc("kill", "-s", "SIGKILL", "bridge");
+  const persistedAtRestart = replies();
+  assert.ok(
+    persistedAtRestart < n,
+    "A ponte deve reiniciar com trabalho pendente",
+  );
   dc("start", "bridge");
   await until(replies, (v) => v >= n);
   await until(
@@ -116,6 +121,7 @@ try {
     JSON.stringify({
       tickets: n,
       observedBeforeKill: before,
+      persistedAtRestart,
       orderedSingleReplies: n,
       auditedDecisions: audit,
     }),
