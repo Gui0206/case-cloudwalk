@@ -1,26 +1,54 @@
 <!doctype html>
 <html lang="pt-BR">
-  <meta charset="utf-8" /><meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
-  /><title>Central · Atendimento</title
-  ><link rel="stylesheet" href="/style.css" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#101011" />
+    <title>Support Desk · CloudWalk × Inteli</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
   <body>
-    <header>
-      <div class="brand"><i>c.</i> Central<span> / atendimento</span></div>
-      <small>AMBIENTE DE DEMONSTRAÇÃO</small>
-    </header>
-    <nav aria-label="Áreas">
-      <button data-tab="client">01　Cliente</button
-      ><button data-tab="analyst">02　Analista</button
-      ><button data-tab="ops">03　Operação</button>
-    </nav>
-    <main><div id="screen"></div></main>
+    <a class="skip" href="#screen">Ir para o conteúdo</a>
+    <aside class="rail">
+      <div class="brand">
+        <img src="/assets/cloudwalk.svg" alt="CloudWalk" /><span
+          >Support Desk</span
+        >
+      </div>
+      <div class="nav-label">ESPAÇOS DE TRABALHO</div>
+      <nav aria-label="Áreas">
+        <button data-tab="client">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v12H9l-5 4z" /></svg
+          >Cliente</button
+        ><button data-tab="analyst">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M4 13v-2a8 8 0 0 1 16 0v5a4 4 0 0 1-4 4h-3M4 11h4v6H4zm12 0h4v6h-4z"
+            /></svg
+          >Analista</button
+        ><button data-tab="ops">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 7h8m5 0h5M3 17h3m5 0h10" />
+            <circle cx="13" cy="7" r="2.5" />
+            <circle cx="8.5" cy="17" r="2.5" /></svg
+          >Operação
+        </button>
+      </nav>
+      <div class="rail-end">
+        CloudWalk × Inteli<br /><small>Projeto demonstrativo</small>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header>
+        <span>Support Desk <i>/</i> <b id="crumb">Cliente</b></span
+        ><span class="demo"><i></i> Ambiente simulado</span>
+      </header>
+      <main id="screen" tabindex="-1"></main>
+      <footer>
+        CloudWalk × Inteli <span>/</span> Demonstração com dados fictícios
+      </footer>
+    </div>
     <div id="notice" role="status"></div>
-    <footer>
-      Central de atendimento　/　Inteli × CloudWalk · Projeto demonstrativo com
-      dados fictícios
-    </footer>
     <script type="module" src="/ui.js"></script>
   </body>
 </html>

@@ -22,14 +22,14 @@ let tab = "client",
   epoch = 0;
 const label = {
   client: [
-    "01 / CANAIS SIMULADOS",
-    "Conversa do lojista",
-    "Abra uma solicitação fictícia ou continue uma conversa pelo canal de origem.",
+    "01　/　EXPERIÊNCIA DO CLIENTE",
+    "Central do lojista",
+    "Inicie um atendimento ou acompanhe suas conversas.",
   ],
   analyst: [
     "02 / SUPORTE",
     "Mesa de atendimento",
-    "Assuma casos da sua equipe com o contexto de quem já atendeu.",
+    "Veja quem aguarda sua equipe e continue o atendimento com o histórico completo.",
   ],
   ops: [
     "03 / OPERAÇÃO",
@@ -38,13 +38,7 @@ const label = {
   ],
 };
 const head = () =>
-  '<div class="kicker">' +
-  label[tab][0] +
-  "</div><h1>" +
-  label[tab][1] +
-  "</h1><p>" +
-  label[tab][2] +
-  "</p>";
+  `<section class="hero"><div class="kicker">${label[tab][0]}</div><h1>${label[tab][1]}</h1><p>${label[tab][2]}</p></section>`;
 const opts = (arr, v, any = false) =>
   (any ? '<option value="">Qualquer</option>' : "") +
   arr
@@ -93,12 +87,20 @@ window.addEventListener("unhandledrejection", (e) => {
 async function switchTab(t) {
   epoch++;
   tab = t;
+  document.body.dataset.area = t;
+  $("#crumb").textContent = {
+    client: "Cliente",
+    analyst: "Analista",
+    ops: "Operação",
+  }[t];
   selected = null;
   filter = "";
   preview = null;
-  document
-    .querySelectorAll("nav button")
-    .forEach((b) => b.classList.toggle("sel", b.dataset.tab === tab));
+  document.querySelectorAll("nav button").forEach((b) => {
+    b.classList.toggle("sel", b.dataset.tab === tab);
+    if (b.dataset.tab === tab) b.setAttribute("aria-current", "page");
+    else b.removeAttribute("aria-current");
+  });
   meta = await api("meta");
   if (tab === "client" && meta.staff) {
     await api("profile", { role: "client" });
@@ -134,26 +136,49 @@ function desks() {
   const cli = tab === "client";
   out.innerHTML =
     head() +
-    '<div class="grid"><section>' +
+    '<div class="grid"><section class="desk-side">' +
     (cli
-      ? '<form id="new" class="card stack"><h2>Novo atendimento</h2><div class="row">' +
+      ? '<form id="new" class="card stack"><div class="eyebrow">ABERTURA DE CASO</div><h2>Novo atendimento</h2><div class="row">' +
         sel("brand", "Marca", meta.brands) +
         sel("channel", "Canal", meta.channels) +
         "</div>" +
         sel("priority", "Prioridade simulada", meta.priorities) +
-        '<label>Mensagem inicial<textarea name="text" required maxlength="1500" placeholder="Meu repasse não caiu."></textarea></label><button class="primary">Iniciar conversa</button></form>'
+        '<label>Mensagem inicial<textarea name="text" required maxlength="1500" placeholder="Meu repasse não caiu."></textarea></label><div class="suggest"><span>Experimentar</span><button type="button" data-prompt="Meu repasse não caiu.">Repasse</button><button type="button" data-prompt="Minha maquininha não conecta.">Maquininha</button></div><button class="primary">Iniciar conversa</button></form>'
       : '<div class="card"><span class="badge">' +
         esc(meta.staff.brand) +
         " · " +
         esc(meta.staff.team) +
         '</span> <button id="change">Trocar perfil</button><label>Filtrar por fila<select id="queueFilter"><option value="">Todas</option></select></label></div>') +
-    '<div class="card"><h2>' +
+    '<div class="card inbox"><div class="eyebrow">CAIXA DE ENTRADA</div><h2>' +
     (cli ? "Minhas conversas" : "Casos da equipe") +
-    '</h2><div id="list"></div></div></section><section class="card" id="conversation"><div id="conversationBody"><h2>Conversa</h2><p>Selecione um atendimento para visualizar as mensagens.</p></div>' +
+    '</h2><div id="list"></div></div></section><section class="card" id="conversation"><div id="conversationBody"><div class="empty"><div class="empty-icon" aria-hidden="true">↗</div><h2>Selecione um caso</h2><p>As mensagens e o histórico do caso aparecerão aqui.</p></div></div>' +
     (cli
       ? ""
       : '<details id="decisionHistory" hidden><summary>Histórico de decisões</summary><div id="decisionEvents"></div></details>') +
     "</section></div>";
+  document.querySelectorAll("[data-prompt]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        const field = $("#new textarea");
+        field.value = b.dataset.prompt;
+        field.focus();
+      }),
+  );
+  if (cli) {
+    const button = document.createElement("button");
+    button.id = "newCase";
+    button.textContent = "+ Novo atendimento";
+    button.hidden = true;
+    $(".inbox").prepend(button);
+    button.onclick = () => {
+      selected = null;
+      $(".grid").classList.remove("reading");
+      button.hidden = true;
+      $("#conversation").removeAttribute("data-id");
+      $("#new textarea").focus();
+      refresh();
+    };
+  }
   if (cli)
     $("#new").onsubmit = async (e) => {
       e.preventDefault();
@@ -198,7 +223,7 @@ async function refresh(force = false) {
         )
         .join("");
   }
-  $("#list").innerHTML =
+  const listMarkup =
     rows
       .filter((t) => !filter || t.queue === filter)
       .map(
@@ -219,7 +244,8 @@ async function refresh(force = false) {
           esc(t.priority) +
           "</small></button>",
       )
-      .join("") || "<p>Nenhum atendimento nesta lista.</p>";
+      .join("") || "<p>Nenhum atendimento por aqui ainda.</p>";
+  if ($("#list").innerHTML !== listMarkup) $("#list").innerHTML = listMarkup;
   document.querySelectorAll("[data-id]").forEach(
     (b) =>
       (b.onclick = () => {
@@ -245,6 +271,10 @@ async function refresh(force = false) {
     focus = document.activeElement === old,
     cli = tab === "client",
     last = $("#conversation").dataset.id;
+  if (cli) {
+    $(".grid").classList.add("reading");
+    $("#newCase").hidden = false;
+  }
   $("#conversation").dataset.sig = sig;
   $("#conversation").dataset.id = id;
   $("#conversationBody").innerHTML =
@@ -356,18 +386,18 @@ function opsView() {
   const c = data.draft;
   out.innerHTML =
     head() +
-    '<p class="badge">Atendimentos: ' +
+    '<div class="metrics"><div><small>Atendimentos</small><strong>' +
     data.metrics.tickets +
-    "　·　Escalas: " +
+    "</strong></div><div><small>Escalas humanas</small><strong>" +
     data.metrics.handoffs +
-    "　·　Webhooks pendentes: " +
+    "</strong></div><div><small>Webhooks pendentes</small><strong>" +
     data.metrics.pending +
-    "　·　Falhas definitivas: " +
+    "</strong></div><div><small>Falhas de entrega</small><strong>" +
     data.metrics.failed +
-    "</p>" +
+    "</strong></div></div>" +
     '<div class="card"><span class="badge">Em vigor · versão ' +
     data.version +
-    "</span><h2>Rascunho da operação</h2><p>A primeira regra compatível vence. Alterações só afetam decisões futuras após a publicação.</p><div class='actions'><button id='example' class='primary'>Exemplo: repasses</button></div><details><summary>Filas e equipes (" +
+    "</span><h2>Editor de regras</h2><p>A primeira regra compatível vence. Alterações só afetam decisões futuras após a publicação.</p><div class='row actions'><button id='example'>Exemplo: repasses</button><button id='sim' class='primary'>Simular impacto →</button></div><details><summary>Filas e equipes (" +
     c.queues.length +
     ')</summary><div id="queues">' +
     c.queues
@@ -385,9 +415,7 @@ function opsView() {
     c.rules
       .map(
         (r, i) =>
-          '<div class="rule" data-rule="' +
-          i +
-          '"><div class="row">' +
+          `<details class="rule policy" data-rule="${i}" ${i === 0 ? "open" : ""}><summary><span class="rule-index">${String(i + 1).padStart(2, "0")}</span> <span class="rule-title">${esc(r.name)}</span> <small class="rule-dest">→ ${esc(c.queues.find((q) => q.id === r.queue)?.name)}</small></summary><div class="row">` +
           input("name", "Regra " + (i + 1), r.name) +
           '<button data-up="' +
           i +
@@ -418,10 +446,10 @@ function opsView() {
                 .join("") +
               "</select>",
           ) +
-          "</div></div>",
+          "</div></details>",
       )
       .join("") +
-    '<div class="row actions"><button id="addR">Adicionar regra no topo</button></div><div class="row"><button id="save">Salvar rascunho</button><button id="sim" class="primary">Simular impacto</button></div></div><div id="preview"></div>';
+    '<div class="row actions"><button id="addR">Adicionar regra no topo</button></div><div class="row"><button id="save">Salvar rascunho</button></div></div><div id="preview"></div>';
   const mutate = (el) => {
     const p = el.closest("[data-queue],[data-rule]");
     if (!p) return;
@@ -429,6 +457,19 @@ function opsView() {
       ? c.queues[p.dataset.queue]
       : c.rules[p.dataset.rule];
     obj[el.dataset.field] = el.value;
+    if (p.hasAttribute("data-rule")) {
+      p.querySelector(".rule-title").textContent = obj.name;
+      p.querySelector(".rule-dest").textContent =
+        "→ " + (c.queues.find((q) => q.id === obj.queue)?.name ?? "");
+    } else if (el.dataset.field === "name") {
+      out.querySelectorAll("select[data-field=queue] option").forEach((o) => {
+        if (o.value === obj.id) o.textContent = obj.name;
+      });
+      out.querySelectorAll("[data-rule]").forEach((row) => {
+        if (c.rules[row.dataset.rule].queue === obj.id)
+          row.querySelector(".rule-dest").textContent = "→ " + obj.name;
+      });
+    }
     preview = null;
     $("#preview").innerHTML = "";
   };
@@ -440,15 +481,17 @@ function opsView() {
     preview = null;
     opsView();
   };
-  on("#addQ", () =>
+  on("#addQ", () => {
     reset(() =>
       c.queues.push({
         id: crypto.randomUUID(),
         name: "Nova fila",
         team: "Atendimento",
       }),
-    ),
-  );
+    );
+    $("#queues").closest("details").open = true;
+    $("#queues .rule:last-child input").focus();
+  });
   const newRule = (example) => ({
     id: crypto.randomUUID(),
     name: example ? "Escalas de repasse da InfinitePay" : "Nova regra",
@@ -481,7 +524,14 @@ function opsView() {
   on("#sim", async () => {
     await save();
     preview = await api("simulate", {});
-    renderPreview();
+    renderPreview(
+      preview.rows.some(
+        (x) =>
+          x.before.queue !== x.after.queue ||
+          x.before.team !== x.after.team ||
+          x.before.name !== x.after.name,
+      ),
+    );
     $("#preview").scrollIntoView({ behavior: "smooth" });
   });
 }

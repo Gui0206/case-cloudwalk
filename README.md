@@ -98,3 +98,7 @@ Se já executou o experimento e quiser **apagar apenas os dados de teste** para 
 Este experimento avalia roteamento e recuperação em uma máquina. Não mede o volume de produção da CloudWalk. A execução usa um nó de banco e um nó de mensageria, sem alta disponibilidade; o worker embutido na API processa um evento por vez. O mock classifica o assunto inicial com palavras-chave e recebe o histórico integral; isso não é adequado para conversas ilimitadas. O painel usa atualização periódica, com até 250 casos por consulta. Há um único rascunho compartilhado: múltiplos editores podem sobrescrever alterações antes da simulação. As identidades de equipe usam um código local compartilhado, não SSO corporativo.
 
 Para evoluir: aumentar carga progressivamente, medir atraso por partição e latência de ponta a ponta sob indisponibilidade prolongada, testar workers independentes, paginar históricos e acrescentar autenticação individual e controle concorrente de edição. O frontend é HTML/CSS/JS sem build; `public/ui.js` contém as três telas. A API/worker está em `server.js`, a ponte e o consumidor em `integration.js`, o modelo relacional em `schema.sql`, e as versões das dependências em `package-lock.json`.
+
+## Identidade da demonstração
+
+A interface usa o [site institucional da CloudWalk](https://www.cloudwalk.io/) como referência: logotipo institucional, base em preto e branco e acentos em laranja. O grafismo orbital é original do projeto. Os arquivos visuais são servidos localmente; esta aplicação é uma demonstração acadêmica, sem vínculo com sistemas de produção.
