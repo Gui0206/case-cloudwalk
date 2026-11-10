@@ -18,6 +18,7 @@ let tab = "client",
   data,
   preview,
   filter = "",
+  pageOffset = 0,
   timer,
   epoch = 0;
 const label = {
@@ -148,7 +149,7 @@ function desks() {
         esc(meta.staff.brand) +
         " · " +
         esc(meta.staff.team) +
-        '</span> <button id="change">Trocar perfil</button><label>Filtrar por fila<select id="queueFilter"><option value="">Todas</option></select></label></div>') +
+        '</span> <button id="change">Trocar perfil</button><label>Filtrar por fila<select id="queueFilter"><option value="">Todas</option></select></label><label>Exibir<select id="caseState"><option value="active">Em aberto</option><option value="closed">Encerrados</option></select></label></div>') +
     '<div class="card inbox"><div class="eyebrow">CAIXA DE ENTRADA</div><h2>' +
     (cli ? "Minhas conversas" : "Casos da equipe") +
     '</h2><div id="list"></div></div></section><section class="card" id="conversation"><div id="conversationBody"><div class="empty"><div class="empty-icon" aria-hidden="true">↗</div><h2>Selecione um caso</h2><p>As mensagens e o histórico do caso aparecerão aqui.</p></div></div>' +
@@ -193,6 +194,24 @@ function desks() {
       }
     };
   else {
+    pageOffset = 0;
+    const pages = document.createElement("div");
+    pages.className = "row";
+    pages.innerHTML =
+      '<button id="previousPage">Anterior</button><span id="pageNumber"></span><button id="nextPage">Próxima</button>';
+    $("#list").after(pages);
+    on("#previousPage", () => {
+      pageOffset = Math.max(0, pageOffset - 250);
+      refresh();
+    });
+    on("#nextPage", () => {
+      pageOffset += 250;
+      refresh();
+    });
+    $("#caseState").onchange = () => {
+      pageOffset = 0;
+      refresh();
+    };
     on("#change", login);
     $("#queueFilter").onchange = (e) => {
       filter = e.target.value;
@@ -204,8 +223,20 @@ function desks() {
 async function refresh(force = false) {
   if (!$("#list")) return;
   const n = epoch,
-    rows = await api("tickets" + (tab === "client" ? "?mine=1" : ""));
+    rows = await api(
+      "tickets" +
+        (tab === "client"
+          ? "?mine=1"
+          : "?offset=" +
+            pageOffset +
+            ($("#caseState")?.value === "closed" ? "&closed=1" : "")),
+    );
   if (n !== epoch || !$("#list")) return;
+  if ($("#pageNumber")) {
+    $("#pageNumber").textContent = "Página " + (pageOffset / 250 + 1);
+    $("#previousPage").disabled = pageOffset === 0;
+    $("#nextPage").disabled = rows.length < 250;
+  }
   if ($("#queueFilter")) {
     const ids = [...new Set(rows.map((t) => t.queue))];
     $("#queueFilter").innerHTML =

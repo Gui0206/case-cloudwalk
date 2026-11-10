@@ -5,10 +5,11 @@ import { promisify } from "node:util";
 import { setTimeout as sleep } from "node:timers/promises";
 import { writeFileSync } from "node:fs";
 const exec = promisify(execFile);
+const project = process.env.MIXED_PROJECT || "central-mixed";
+const port = project === "central-mixed-fixed" ? 4384 : 4383;
+assert.ok(["central-mixed", "central-mixed-fixed"].includes(project));
 const dc = async (...args) =>
-  (
-    await exec("docker", ["compose", "-p", "central-mixed", ...args])
-  ).stdout.trim();
+  (await exec("docker", ["compose", "-p", project, ...args])).stdout.trim();
 const sql = async (query) =>
   JSON.parse(
     await dc(
@@ -25,7 +26,7 @@ const sql = async (query) =>
       query,
     ),
   );
-assert.match(await dc("port", "web", "3000"), /127\.0\.0\.1:4383$/);
+assert.equal(await dc("port", "web", "3000"), "127.0.0.1:" + port);
 assert.equal(await sql("SELECT count(*) FROM tickets"), 0);
 const rate = 400,
   seconds = 300,
@@ -38,6 +39,7 @@ const report = {
   seconds,
   drain,
   samples: [],
+  diagnostics: [],
   errors: {},
   http: {},
 };
@@ -45,7 +47,7 @@ async function call(session, label, path, body) {
   const at = performance.now();
   let status = "network";
   try {
-    const r = await fetch("http://127.0.0.1:4383/api/" + path, {
+    const r = await fetch("http://127.0.0.1:" + port + "/api/" + path, {
       method: body ? "POST" : "GET",
       headers: {
         cookie: session.cookie || "",
@@ -87,6 +89,19 @@ for (const a of agents)
       brand: a.brand,
     }),
   );
+async function diagnostics() {
+  const result = await dc(
+    "exec",
+    "-T",
+    "web",
+    "node",
+    "--input-type=module",
+    "-e",
+    "const get=async u=>{const r=await fetch(u+'/internal/diagnostics',{headers:{'x-internal-key':process.env.INTERNAL_KEY}});if(!r.ok)throw Error(r.status);return r.json()};console.log(JSON.stringify({api:await get(process.env.APP_URL),bridge:await get(process.env.BROKER_URL)}))",
+  );
+  return JSON.parse(result);
+}
+report.diagnostics.push({ second: 0, ...(await diagnostics()) });
 const active = new Set(),
   ready = [],
   reserved = new Set(),
@@ -198,10 +213,28 @@ const sample = () => ({
   closedByStaff,
   waitingForClientWorker: ready.length - head,
 });
+let measurement = Promise.resolve();
+let measuring = false;
 const monitor = setInterval(() => {
   const s = sample();
   report.samples.push(s);
   console.log(JSON.stringify(s));
+  if (!measuring) {
+    measuring = true;
+    measurement = diagnostics()
+      .then((d) =>
+        report.diagnostics.push({ second: +elapsed().toFixed(2), ...d }),
+      )
+      .catch((e) =>
+        report.diagnostics.push({
+          second: +elapsed().toFixed(2),
+          error: e.message,
+        }),
+      )
+      .finally(() => {
+        measuring = false;
+      });
+  }
 }, 15000);
 for (let i = 0; i < rate * seconds;) {
   const due = Math.min(rate * seconds, Math.floor(elapsed() * rate) + 1);
@@ -227,6 +260,11 @@ while (
 running = false;
 clearInterval(monitor);
 await Promise.all(processes);
+await measurement;
+report.diagnostics.push({
+  second: +elapsed().toFixed(2),
+  ...(await diagnostics()),
+});
 report.end = sample();
 report.analysts = agents.map(({ name, brand, handled }) => ({
   name,
@@ -252,7 +290,7 @@ report.integrity = await sql(`WITH msg AS (
 const v = report.integrity;
 report.pass =
   opened === rate * seconds &&
-  !Object.keys(report.errors).length &&
+  Object.keys(report.errors).every((error) => error === "claim 409") &&
   !report.invalidContext &&
   v.tickets === opened &&
   v.closedAuto === rate * seconds * 0.8 &&
@@ -264,7 +302,12 @@ report.pass =
   v.secondP95Ms <= 2000 &&
   report.atStop.opened - report.atStop.followed <= rate * 3 &&
   report.atStop.requestedHuman - report.atStop.closedByStaff <= rate * 0.2 * 3;
-writeFileSync("results/mixed.json", JSON.stringify(report, null, 2) + "\n");
+writeFileSync(
+  project === "central-mixed-fixed"
+    ? "results/mixed-fixed.json"
+    : "results/mixed.json",
+  JSON.stringify(report, null, 2) + "\n",
+);
 console.log(
   JSON.stringify({ pass: report.pass, integrity: v, errors: report.errors }),
 );

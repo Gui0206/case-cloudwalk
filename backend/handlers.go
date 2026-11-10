@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -40,7 +41,21 @@ func (q *request) handle() any {
 		if q.staff["role"] == "ops" {
 			return q.rows(listed + order)
 		}
-		return q.rows(listed+" WHERE phase='Humano' AND brand=$1 AND team=$2"+order, q.staff["brand"], q.staff["team"])
+		offset := 0
+		if raw := q.r.URL.Query().Get("offset"); raw != "" {
+			n, err := strconv.Atoi(raw)
+			if err != nil || n < 0 || n > 10000000 {
+				fail(400, "Página inválida.")
+			}
+			offset = n
+		}
+		state := "status IN ('Aguardando analista','Em atendimento')"
+		if q.r.URL.Query().Get("closed") == "1" {
+			state = "status='Encerrado'"
+		}
+		return q.rows(listed+" WHERE phase='Humano' AND brand=$1 AND team=$2 AND "+state+
+			" ORDER BY CASE priority WHEN 'Urgente' THEN 1 WHEN 'Alta' THEN 2 ELSE 3 END,updated,id LIMIT 250 OFFSET $3",
+			q.staff["brand"], q.staff["team"], offset)
 	case "POST /internal/reply":
 		return q.callback()
 	}
