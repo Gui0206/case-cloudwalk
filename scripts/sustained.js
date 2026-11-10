@@ -43,13 +43,31 @@ const report = {
   clients: clients.length,
   stages: [],
 };
+const target = process.env.RETEST_400;
+if (target) assert.ok(["single", "parallel", "indexed"].includes(target));
+async function diagnostics() {
+  return JSON.parse(
+    await dc(
+      "exec",
+      "-T",
+      "web",
+      "node",
+      "--input-type=module",
+      "-e",
+      `const get=async url=>{const r=await fetch(url+'/internal/diagnostics',{headers:{'x-internal-key':process.env.INTERNAL_KEY}});if(!r.ok)throw Error(r.status);return r.json()};console.log(JSON.stringify({api:await get(process.env.APP_URL),bridge:await get(process.env.BROKER_URL)}))`,
+    ),
+  );
+}
 const save = () =>
   writeFileSync(
-    "results/sustained.json",
+    target
+      ? "results/retest-400-" + target + ".json"
+      : "results/sustained.json",
     JSON.stringify(report, null, 2) + "\n",
   );
 async function stage(rate, seconds, kind) {
   const startN = await sql("SELECT coalesce(max(n),0) FROM messages");
+  const diagnosticsBefore = target ? await diagnostics() : undefined;
   const start = performance.now(),
     active = new Set(),
     latency = [],
@@ -147,6 +165,8 @@ async function stage(rate, seconds, kind) {
     atStop.opened - atStop.completed <= rate * 2 &&
     final.outboxFailed === 0;
   const result = {
+    diagnosticsBefore,
+    diagnosticsAfter: target ? await diagnostics() : undefined,
     kind,
     rate,
     seconds,
@@ -178,10 +198,15 @@ async function stage(rate, seconds, kind) {
   return result;
 }
 let best = 0;
-for (const rate of [10, 25, 50, 100, 200, 400]) {
-  const result = await stage(rate, 60, "rampa");
-  if (!result.pass) break;
-  best = rate;
+if (target) {
+  const first = await stage(400, 60, target);
+  if (first.pass) await stage(400, 120, "confirmação");
+} else {
+  for (const rate of [10, 25, 50, 100, 200, 400]) {
+    const result = await stage(rate, 60, "rampa");
+    if (!result.pass) break;
+    best = rate;
+  }
+  if (best && report.stages.at(-1).integrity.missing === 0)
+    await stage(best, 120, "confirmação");
 }
-if (best && report.stages.at(-1).integrity.missing === 0)
-  await stage(best, 120, "confirmação");

@@ -7,10 +7,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/segmentio/kafka-go"
+	"io"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 )
@@ -57,6 +59,8 @@ func integration(role string) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	broker := os.Getenv("KAFKA_BROKERS")
+	var callback, offset durationTotal
+	workers := 1
 	topic := requests
 	writer := kafka.Writer{Addr: kafka.TCP(broker), Balancer: &kafka.Murmur2Balancer{}, RequiredAcks: kafka.RequireAll, BatchSize: 1}
 	defer writer.Close()
@@ -72,6 +76,10 @@ func integration(role string) {
 		}
 		conn.Close()
 		mux := http.NewServeMux()
+		workers = setting("BRIDGE_READERS", 1, 3)
+		diagnostics(mux, func() object {
+			return object{"readers": workers, "callback": callback.snapshot(), "offset": offset.snapshot()}
+		})
 		mux.HandleFunc("POST /webhook", func(w http.ResponseWriter, r *http.Request) {
 			if r.Header.Get("x-internal-key") != os.Getenv("INTERNAL_KEY") {
 				http.Error(w, "forbidden", 403)
@@ -97,8 +105,6 @@ func integration(role string) {
 		}()
 		defer srv.Close()
 	}
-	reader := kafka.NewReader(kafka.ReaderConfig{Brokers: []string{broker}, Topic: topic, GroupID: "central-" + role + "-v1", StartOffset: kafka.FirstOffset, MaxWait: 150 * time.Millisecond})
-	defer reader.Close()
 	client := http.Client{Timeout: 3500 * time.Millisecond}
 	process := func(m kafka.Message) error {
 		var e object
@@ -118,38 +124,57 @@ func integration(role string) {
 		}
 		req.Header.Set("Content-Type", "application/json")
 		req.Header.Set("x-internal-key", os.Getenv("INTERNAL_KEY"))
+		start := time.Now()
+		defer callback.observe(start)
 		res, err := client.Do(req)
 		if err != nil {
 			return err
 		}
 		defer res.Body.Close()
+		if _, err := io.Copy(io.Discard, res.Body); err != nil {
+			return err
+		}
 		if res.StatusCode/100 != 2 {
 			return fmt.Errorf("HTTP %d", res.StatusCode)
 		}
 		return nil
 	}
-	for ctx.Err() == nil {
-		m, err := reader.FetchMessage(ctx)
-		if ctx.Err() != nil {
-			return
-		}
-		check(err)
-		for attempt := 0; attempt < 4; attempt++ {
-			err = process(m)
-			if err == nil {
-				break
+	var group sync.WaitGroup
+	for range workers {
+		group.Go(func() {
+			reader := kafka.NewReader(kafka.ReaderConfig{Brokers: []string{broker}, Topic: topic, GroupID: "central-" + role + "-v1", StartOffset: kafka.FirstOffset, MaxWait: 150 * time.Millisecond})
+			defer reader.Close()
+			for ctx.Err() == nil {
+				m, err := reader.FetchMessage(ctx)
+				if ctx.Err() != nil {
+					return
+				}
+				check(err)
+				for attempt := 0; attempt < 4; attempt++ {
+					err = process(m)
+					if err == nil {
+						break
+					}
+					select {
+					case <-ctx.Done():
+						return
+					case <-time.After(250 * time.Millisecond << attempt):
+					}
+				}
+				if err != nil {
+					check(publish(ctx, failed, m.Key, []byte(encode(object{"topic": topic, "partition": m.Partition, "offset": fmt.Sprint(m.Offset), "error": err.Error(), "raw": string(m.Value)}))))
+				}
+				start := time.Now()
+				err = reader.CommitMessages(ctx, m)
+				offset.observe(start)
+				if ctx.Err() != nil {
+					return
+				}
+				check(err)
 			}
-			select {
-			case <-ctx.Done():
-				return
-			case <-time.After(250 * time.Millisecond << attempt):
-			}
-		}
-		if err != nil {
-			check(publish(ctx, failed, m.Key, []byte(encode(object{"topic": topic, "partition": m.Partition, "offset": fmt.Sprint(m.Offset), "error": err.Error(), "raw": string(m.Value)}))))
-		}
-		check(reader.CommitMessages(ctx, m))
+		})
 	}
+	group.Wait()
 }
 func main() {
 	if len(os.Args) == 1 {

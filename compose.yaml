@@ -10,6 +10,8 @@ x-app: &app
     INTERNAL_KEY: ${INTERNAL_KEY:?execute iniciar.command}
     SESSION_SECRET: ${SESSION_SECRET:?execute iniciar.command}
     STAFF_CODE: ${STAFF_CODE:-demo-local}
+    API_DB_MAX_OPEN: ${API_DB_MAX_OPEN:-32}
+    BRIDGE_READERS: ${BRIDGE_READERS:-1}
 services:
   db:
     image: postgres:16-alpine

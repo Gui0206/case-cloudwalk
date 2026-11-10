@@ -130,6 +130,12 @@ func (q *request) session(w http.ResponseWriter) {
 func serve() {
 	db, e := sql.Open("postgres", os.Getenv("DATABASE_URL")+"?sslmode=disable")
 	check(e)
+	defer db.Close()
+	maxOpen := setting("API_DB_MAX_OPEN", 32, 256)
+	db.SetMaxOpenConns(maxOpen)
+	db.SetMaxIdleConns(min(maxOpen, 16))
+	db.SetConnMaxIdleTime(5 * time.Minute)
+	var acquire, handle, commit durationTotal
 	schema, e := os.ReadFile("schema.sql")
 	check(e)
 	_, e = db.Exec(string(schema))
@@ -163,20 +169,36 @@ func serve() {
 			}
 		}
 		var e error
+		callback := r.URL.Path == "/internal/reply"
+		start := time.Now()
 		q.tx, e = db.BeginTx(r.Context(), nil)
+		if callback {
+			acquire.observe(start)
+		}
 		check(e)
 		defer q.tx.Rollback()
 		if strings.HasPrefix(r.URL.Path, "/api/") {
 			q.session(w)
 		}
+		start = time.Now()
 		result := q.handle()
+		if callback {
+			handle.observe(start)
+		}
+		start = time.Now()
 		check(q.tx.Commit())
+		if callback {
+			commit.observe(start)
+		}
 		if r.Method == "POST" && r.URL.Path == "/api/tickets" {
 			w.WriteHeader(201)
 		}
 		json.NewEncoder(w).Encode(result)
 	}
 	mux := http.NewServeMux()
+	diagnostics(mux, func() object {
+		return object{"pool": db.Stats(), "callbackBegin": acquire.snapshot(), "callbackHandle": handle.snapshot(), "callbackCommit": commit.snapshot()}
+	})
 	mux.HandleFunc("/api/", handler)
 	mux.HandleFunc("/internal/", handler)
 	mux.Handle("/", http.FileServer(http.Dir("public")))
