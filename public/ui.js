@@ -149,7 +149,11 @@ function desks() {
         '</span> <button id="change">Trocar perfil</button><label>Filtrar por fila<select id="queueFilter"><option value="">Todas</option></select></label></div>') +
     '<div class="card"><h2>' +
     (cli ? "Minhas conversas" : "Casos da equipe") +
-    '</h2><div id="list"></div></div></section><section class="card" id="conversation"><h2>Conversa</h2><p>Selecione um atendimento para visualizar as mensagens.</p></section></div>';
+    '</h2><div id="list"></div></div></section><section class="card" id="conversation"><div id="conversationBody"><h2>Conversa</h2><p>Selecione um atendimento para visualizar as mensagens.</p></div>' +
+    (cli
+      ? ""
+      : '<details id="decisionHistory" hidden><summary>Histórico de decisões</summary><div id="decisionEvents"></div></details>') +
+    "</section></div>";
   if (cli)
     $("#new").onsubmit = async (e) => {
       e.preventDefault();
@@ -243,7 +247,7 @@ async function refresh(force = false) {
     last = $("#conversation").dataset.id;
   $("#conversation").dataset.sig = sig;
   $("#conversation").dataset.id = id;
-  $("#conversation").innerHTML =
+  $("#conversationBody").innerHTML =
     '<span class="badge">' +
     esc(t.status) +
     "</span><h2>" +
@@ -285,27 +289,28 @@ async function refresh(force = false) {
           "</div></form>"
         : !t.owner
           ? '<button id="claim" class="primary">Assumir caso</button>'
-          : "<p>Outro analista assumiu este caso.</p>") +
-    (!cli
-      ? "<details><summary>Histórico de decisões</summary>" +
-        t.audit
-          .map(
-            (a) =>
-              "<p><b>" +
-              esc(a.kind) +
-              "</b> · " +
-              esc(new Date(a.created).toLocaleTimeString()) +
-              "<br>" +
-              esc(
-                Object.entries(a.detail)
-                  .map(([k, v]) => k + ": " + v)
-                  .join(" · "),
-              ) +
-              "</p>",
-          )
-          .join("") +
-        "</details>"
-      : "");
+          : "<p>Outro analista assumiu este caso.</p>");
+  if (!cli) {
+    const history = $("#decisionHistory");
+    if (last !== id) history.open = false;
+    history.hidden = false;
+    $("#decisionEvents").innerHTML = t.audit
+      .map(
+        (a) =>
+          "<p><b>" +
+          esc(a.kind) +
+          "</b> · " +
+          esc(new Date(a.created).toLocaleTimeString()) +
+          "<br>" +
+          esc(
+            Object.entries(a.detail)
+              .map(([k, v]) => k + ": " + v)
+              .join(" · "),
+          ) +
+          "</p>",
+      )
+      .join("");
+  }
   const act = async (action, text) => {
     await api("tickets/" + id + "/action", { action, text });
     await refresh(true);
