@@ -1,0 +1,132 @@
+[
+  {
+    "utc": "20:04:22",
+    "waitingForAnalyst": 1264,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 7109,
+    "tickets": 9321,
+    "outboxPending": 60,
+    "agentLag": 0,
+    "bridgeLag": 251
+  },
+  {
+    "utc": "20:04:53",
+    "waitingForAnalyst": 3712,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 16907,
+    "tickets": 21504,
+    "outboxPending": 5,
+    "agentLag": 1,
+    "bridgeLag": 129
+  },
+  {
+    "utc": "20:05:23",
+    "waitingForAnalyst": 6128,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 26570,
+    "tickets": 33710,
+    "outboxPending": 6,
+    "agentLag": 17,
+    "bridgeLag": 279
+  },
+  {
+    "utc": "20:05:54",
+    "waitingForAnalyst": 8601,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 36461,
+    "tickets": 45924,
+    "outboxPending": 36,
+    "agentLag": 0,
+    "bridgeLag": 70
+  },
+  {
+    "utc": "20:06:24",
+    "waitingForAnalyst": 10630,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 44583,
+    "tickets": 58099,
+    "outboxPending": 46,
+    "agentLag": 0,
+    "bridgeLag": 2360
+  },
+  {
+    "utc": "20:06:55",
+    "waitingForAnalyst": 11226,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 46973,
+    "tickets": 70337,
+    "outboxPending": 21,
+    "agentLag": 2,
+    "bridgeLag": 11666
+  },
+  {
+    "utc": "20:07:26",
+    "waitingForAnalyst": 11531,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 48186,
+    "tickets": 82567,
+    "outboxPending": 20,
+    "agentLag": 16,
+    "bridgeLag": 22306
+  },
+  {
+    "utc": "20:07:56",
+    "waitingForAnalyst": 11670,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 48724,
+    "tickets": 94834,
+    "outboxPending": 5,
+    "agentLag": 6,
+    "bridgeLag": 33851
+  },
+  {
+    "utc": "20:08:27",
+    "waitingForAnalyst": 11797,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 49235,
+    "tickets": 107112,
+    "outboxPending": 24,
+    "agentLag": 5,
+    "bridgeLag": 45283
+  },
+  {
+    "utc": "20:08:59",
+    "waitingForAnalyst": 11973,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 49961,
+    "tickets": 119659,
+    "outboxPending": 3,
+    "agentLag": 0,
+    "bridgeLag": 56764
+  },
+  {
+    "utc": "20:09:30",
+    "waitingForAnalyst": 12206,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 50901,
+    "tickets": 119659,
+    "outboxPending": 4,
+    "agentLag": 0,
+    "bridgeLag": 55698
+  },
+  {
+    "utc": "20:10:00",
+    "waitingForAnalyst": 12461,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 51908,
+    "tickets": 119659,
+    "outboxPending": 17,
+    "agentLag": 0,
+    "bridgeLag": 54509
+  },
+  {
+    "utc": "20:10:31",
+    "waitingForAnalyst": 12695,
+    "closedByAnalyst": 515,
+    "closedAutomatically": 52818,
+    "tickets": 119659,
+    "outboxPending": 12,
+    "agentLag": 0,
+    "bridgeLag": 53364
+  }
+]

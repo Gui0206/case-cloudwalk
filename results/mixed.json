@@ -1,0 +1,447 @@
+{
+  "date": "2026-11-10T20:03:59.497Z",
+  "revision": "91377eec6a865d513ae8b256882830925451f586",
+  "rate": 400,
+  "seconds": 300,
+  "drain": 120,
+  "samples": [
+    {
+      "second": 15,
+      "attempted": 6000,
+      "skipped": 0,
+      "opened": 5997,
+      "followed": 5675,
+      "requestedHuman": 1135,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 226
+    },
+    {
+      "second": 30,
+      "attempted": 12001,
+      "skipped": 0,
+      "opened": 11999,
+      "followed": 11674,
+      "requestedHuman": 2335,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 229
+    },
+    {
+      "second": 45,
+      "attempted": 18001,
+      "skipped": 0,
+      "opened": 17999,
+      "followed": 17677,
+      "requestedHuman": 3536,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 226
+    },
+    {
+      "second": 60,
+      "attempted": 24000,
+      "skipped": 0,
+      "opened": 23998,
+      "followed": 23675,
+      "requestedHuman": 4735,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 227
+    },
+    {
+      "second": 75,
+      "attempted": 30000,
+      "skipped": 0,
+      "opened": 29999,
+      "followed": 29675,
+      "requestedHuman": 5935,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 228
+    },
+    {
+      "second": 90,
+      "attempted": 36000,
+      "skipped": 0,
+      "opened": 35998,
+      "followed": 35676,
+      "requestedHuman": 7136,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 226
+    },
+    {
+      "second": 105.01,
+      "attempted": 42003,
+      "skipped": 0,
+      "opened": 41996,
+      "followed": 41673,
+      "requestedHuman": 8335,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 227
+    },
+    {
+      "second": 120.01,
+      "attempted": 48002,
+      "skipped": 0,
+      "opened": 48000,
+      "followed": 47678,
+      "requestedHuman": 9536,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 226
+    },
+    {
+      "second": 135.01,
+      "attempted": 54002,
+      "skipped": 0,
+      "opened": 53970,
+      "followed": 53280,
+      "requestedHuman": 10655,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 594
+    },
+    {
+      "second": 150.01,
+      "attempted": 60003,
+      "skipped": 0,
+      "opened": 59989,
+      "followed": 57970,
+      "requestedHuman": 11596,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 1923
+    },
+    {
+      "second": 165.01,
+      "attempted": 66001,
+      "skipped": 0,
+      "opened": 65994,
+      "followed": 60645,
+      "requestedHuman": 12127,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 5253
+    },
+    {
+      "second": 180.01,
+      "attempted": 72002,
+      "skipped": 0,
+      "opened": 71993,
+      "followed": 61591,
+      "requestedHuman": 12317,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 10306
+    },
+    {
+      "second": 195.01,
+      "attempted": 78002,
+      "skipped": 0,
+      "opened": 77990,
+      "followed": 63142,
+      "requestedHuman": 12628,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 14752
+    },
+    {
+      "second": 210.01,
+      "attempted": 84002,
+      "skipped": 0,
+      "opened": 83988,
+      "followed": 64675,
+      "requestedHuman": 12938,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 19217
+    },
+    {
+      "second": 225.01,
+      "attempted": 90003,
+      "skipped": 0,
+      "opened": 89991,
+      "followed": 66062,
+      "requestedHuman": 13218,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 23833
+    },
+    {
+      "second": 240.01,
+      "attempted": 96001,
+      "skipped": 0,
+      "opened": 95993,
+      "followed": 68069,
+      "requestedHuman": 13613,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 27828
+    },
+    {
+      "second": 255.01,
+      "attempted": 102001,
+      "skipped": 0,
+      "opened": 101991,
+      "followed": 69899,
+      "requestedHuman": 13976,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 31996
+    },
+    {
+      "second": 270.01,
+      "attempted": 107661,
+      "skipped": 341,
+      "opened": 107641,
+      "followed": 71072,
+      "requestedHuman": 14207,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 36473
+    },
+    {
+      "second": 285.01,
+      "attempted": 113662,
+      "skipped": 341,
+      "opened": 113653,
+      "followed": 73136,
+      "requestedHuman": 14629,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 40421
+    },
+    {
+      "second": 300.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119651,
+      "followed": 74792,
+      "requestedHuman": 14960,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 44763
+    },
+    {
+      "second": 315.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119659,
+      "followed": 76938,
+      "requestedHuman": 15387,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 42625
+    },
+    {
+      "second": 330.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119659,
+      "followed": 79616,
+      "requestedHuman": 15923,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 39947
+    },
+    {
+      "second": 345.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119659,
+      "followed": 81687,
+      "requestedHuman": 16338,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 37876
+    },
+    {
+      "second": 360.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119659,
+      "followed": 84269,
+      "requestedHuman": 16855,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 35294
+    },
+    {
+      "second": 375.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119659,
+      "followed": 86789,
+      "requestedHuman": 17357,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 32774
+    },
+    {
+      "second": 390.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119659,
+      "followed": 89017,
+      "requestedHuman": 17799,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 30546
+    },
+    {
+      "second": 405.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119659,
+      "followed": 91235,
+      "requestedHuman": 18246,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 28328
+    },
+    {
+      "second": 420.01,
+      "attempted": 119659,
+      "skipped": 341,
+      "opened": 119659,
+      "followed": 93605,
+      "requestedHuman": 18724,
+      "closedByStaff": 515,
+      "waitingForClientWorker": 25958
+    }
+  ],
+  "errors": {
+    "claim 409": 539
+  },
+  "http": {
+    "login": {
+      "calls": 144,
+      "totalMs": 181
+    },
+    "queue": {
+      "calls": 15226,
+      "totalMs": 613383
+    },
+    "open": {
+      "calls": 119659,
+      "totalMs": 2432530
+    },
+    "clientRead": {
+      "calls": 1633422,
+      "totalMs": 25218021
+    },
+    "follow": {
+      "calls": 93605,
+      "totalMs": 1174660
+    },
+    "staffRead": {
+      "calls": 1054,
+      "totalMs": 7112
+    },
+    "claim": {
+      "calls": 1054,
+      "totalMs": 5602
+    },
+    "reply": {
+      "calls": 515,
+      "totalMs": 3621
+    },
+    "close": {
+      "calls": 515,
+      "totalMs": 3559
+    }
+  },
+  "atStop": {
+    "second": 300,
+    "attempted": 119659,
+    "skipped": 341,
+    "opened": 119647,
+    "followed": 74792,
+    "requestedHuman": 14960,
+    "closedByStaff": 515,
+    "waitingForClientWorker": 44759
+  },
+  "end": {
+    "second": 420.48,
+    "attempted": 119659,
+    "skipped": 341,
+    "opened": 119659,
+    "followed": 93605,
+    "requestedHuman": 18724,
+    "closedByStaff": 515,
+    "waitingForClientWorker": 26054
+  },
+  "analysts": [
+    {
+      "name": "Analista 0",
+      "brand": "InfinitePay",
+      "handled": 25
+    },
+    {
+      "name": "Analista 1",
+      "brand": "JIM",
+      "handled": 39
+    },
+    {
+      "name": "Analista 2",
+      "brand": "InfinitePay",
+      "handled": 46
+    },
+    {
+      "name": "Analista 3",
+      "brand": "JIM",
+      "handled": 31
+    },
+    {
+      "name": "Analista 4",
+      "brand": "InfinitePay",
+      "handled": 34
+    },
+    {
+      "name": "Analista 5",
+      "brand": "JIM",
+      "handled": 38
+    },
+    {
+      "name": "Analista 6",
+      "brand": "InfinitePay",
+      "handled": 28
+    },
+    {
+      "name": "Analista 7",
+      "brand": "JIM",
+      "handled": 29
+    },
+    {
+      "name": "Analista 8",
+      "brand": "InfinitePay",
+      "handled": 38
+    },
+    {
+      "name": "Analista 9",
+      "brand": "JIM",
+      "handled": 26
+    },
+    {
+      "name": "Analista 10",
+      "brand": "InfinitePay",
+      "handled": 30
+    },
+    {
+      "name": "Analista 11",
+      "brand": "JIM",
+      "handled": 20
+    },
+    {
+      "name": "Analista 12",
+      "brand": "InfinitePay",
+      "handled": 28
+    },
+    {
+      "name": "Analista 13",
+      "brand": "JIM",
+      "handled": 34
+    },
+    {
+      "name": "Analista 14",
+      "brand": "InfinitePay",
+      "handled": 31
+    },
+    {
+      "name": "Analista 15",
+      "brand": "JIM",
+      "handled": 38
+    }
+  ],
+  "openP95Ms": 54.30125000001863,
+  "integrity": {
+    "tickets": 119659,
+    "firstReplies": 94814,
+    "secondReplies": 67639,
+    "closedAuto": 54109,
+    "closedHuman": 515,
+    "awaitingStaff": 13015,
+    "unexpectedOrder": 0,
+    "firstP95Ms": 168284.1563,
+    "secondP95Ms": 139510.23239999998,
+    "pendingOutbox": 0,
+    "failedOutbox": 0
+  },
+  "pass": false
+}
