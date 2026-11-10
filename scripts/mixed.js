@@ -11,9 +11,10 @@ const port = {
   "central-mixed-fixed": 4384,
   "central-mixed-reserved": 4385,
   "central-mixed-optimized": 4386,
+  "central-mixed-conversation": 4387,
 }[project];
 assert.ok(port);
-const optimized = project === "central-mixed-optimized";
+const optimized = port >= 4386;
 const dc = async (...args) =>
   (await exec("docker", ["compose", "-p", project, ...args])).stdout.trim();
 const sql = async (query) =>
@@ -45,6 +46,7 @@ const report = {
   seconds,
   drain,
   optimizedPolling: optimized,
+  readHistoryOnChange: optimized,
   samples: [],
   diagnostics: [],
   errors: {},
@@ -164,11 +166,15 @@ async function follow() {
       "clientRead",
       path + (optimized ? "/status" : ""),
     );
-    const answered =
+    let answered =
       t &&
       (optimized
         ? t.last_author === "IA"
         : t.messages.some((m) => m.author === "IA"));
+    if (optimized && answered) {
+      const history = await call(job.session, "clientHistory", path);
+      answered = history?.messages.some((m) => m.author === "IA" && m.body);
+    }
     if (!answered) {
       job.delay = optimized ? Math.min(8000, (job.delay || 400) * 2) : 800;
       job.after = performance.now() + job.delay;
