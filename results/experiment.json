@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-10T14:29:06.009Z",
+  "date": "2026-11-10T14:37:25.821Z",
   "scenarios": 48,
   "tickets": 24,
   "concurrency": 6,
@@ -7,8 +7,8 @@
   "expectedMatches": 48,
   "wrongDraftChanges": 6,
   "correctedDraftChanges": 3,
-  "seconds": 2.03,
-  "p95OpenToHandoffMs": 1324,
+  "seconds": 1.98,
+  "p95OpenToHandoffMs": 1290,
   "handoffReplyAndClose": "ok",
   "crossBrandAccess": "blocked",
   "obsoletePreview": "blocked"

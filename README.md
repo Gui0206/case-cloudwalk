@@ -57,7 +57,7 @@ flowchart LR
   V --> D
 ~~~
 
-O motor em `domain.js` é uma função pura: dados do caso + configuração → fila, equipe, prioridade e motivo. A primeira regra compatível vence. Sem correspondência, a fase IA usa a fila automática; escalações usam o padrão da marca. Publicar gera uma versão imutável. Casos existentes mantêm seu destino até uma nova decisão. Remover uma regra ou editar uma fila não reescreve o histórico.
+O motor em [`backend/rules.go`](backend/rules.go) é uma função pura: dados do caso + configuração → fila, equipe, prioridade e motivo. A primeira regra compatível vence. Sem correspondência, a fase IA usa a fila automática; escalações usam o padrão da marca. Publicar gera uma versão imutável. Casos existentes mantêm seu destino até uma nova decisão. Remover uma regra ou editar uma fila não reescreve o histórico.
 
 O simulador avalia 48 combinações fixas: 2 marcas × 4 assuntos × 2 etapas × 3 prioridades. O conjunto é construído em memória, separado de atendimentos e de clientes. A simulação não publica eventos, não altera o responsável e não muda filas reais. A publicação exige a versão base e a assinatura do rascunho avaliado; uma prévia anterior a uma alteração é recusada.
 
@@ -99,7 +99,7 @@ O dispatcher em [Go](worker/main.go) usa quatro goroutines por padrão. Cada uma
 
 Para comparar concorrências na instalação de teste, execute `WORKERS=4 HELPDESK_PORT=4381 docker compose -p central-helpdesk-test up -d --no-deps worker` e `LOAD_RESULT=results/load-go-4.json npm run test:load`. Repita com 1, 8 e 16. As medições estão em `results/load-go-*.json`. A comparação com `results/load.json` inclui a mudança na espera entre entregas. O backlog é amostrado e o p95 inclui a consulta periódica do cliente.
 
-A API e as regras usam Node.js, a ponte e o agente usam KafkaJS. O teste cobre um pico local em uma máquina com banco e mensageria de nó único. O mock recebe o histórico integral, o painel lista até 250 casos por consulta e a operação compartilha um rascunho. Carga sustentada e recuperação de perda de um nó exigem experimentos próprios.
+A API HTTP, o motor de regras, o simulador, a ponte Kafka e o atendente determinístico estão em Go no diretório [backend](backend/). O dispatcher da outbox está em [worker](worker/). O navegador usa JavaScript e os scripts de experimento e recuperação usam Node.js. A API lê o cookie assinado e a tabela de sessões do backend anterior, e utiliza as mesmas tabelas de atendimentos e versões de regras. O experimento de pico cobre uma máquina com banco e mensageria de nó único.
 
 ## Identidade da demonstração
 

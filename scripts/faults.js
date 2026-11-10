@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 const dc = (...args) =>
     execFileSync(
       "docker",
-      ["compose", "-p", "central-helpdesk-test", ...args],
+      ["compose", "-p", process.env.TEST_PROJECT || "central-helpdesk-test", ...args],
       { encoding: "utf8" },
     ),
   sql = (q) =>

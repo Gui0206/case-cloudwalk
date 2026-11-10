@@ -1,0 +1,53 @@
+{
+  "queues": [
+    {
+      "id": "auto",
+      "name": "Primeiro atendimento",
+      "team": "Atendimento"
+    },
+    {
+      "id": "br",
+      "name": "Geral BR",
+      "team": "Atendimento"
+    },
+    {
+      "id": "us",
+      "name": "Suporte EUA",
+      "team": "Atendimento"
+    },
+    {
+      "id": "rep",
+      "name": "Repasses BR",
+      "team": "Repasses"
+    }
+  ],
+  "rules": [
+    {
+      "id": "r-br",
+      "name": "Escalas InfinitePay",
+      "brand": "InfinitePay",
+      "category": "",
+      "phase": "Humano",
+      "priority": "",
+      "queue": "br"
+    },
+    {
+      "id": "r-us",
+      "name": "Escalas JIM",
+      "brand": "JIM",
+      "category": "",
+      "phase": "Humano",
+      "priority": "",
+      "queue": "us"
+    },
+    {
+      "id": "r-ai",
+      "name": "Primeiro atendimento",
+      "brand": "",
+      "category": "",
+      "phase": "IA",
+      "priority": "",
+      "queue": "auto"
+    }
+  ]
+}
