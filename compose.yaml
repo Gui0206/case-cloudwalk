@@ -1,0 +1,47 @@
+name: central-helpdesk
+x-app: &app
+  build: .
+  restart: unless-stopped
+  environment: &env
+    DATABASE_URL: postgres://helpdesk:${DB_PASSWORD:?execute iniciar.command}@db/helpdesk
+    KAFKA_BROKERS: kafka:9092
+    BROKER_URL: http://bridge:3001
+    APP_URL: http://web:3000
+    INTERNAL_KEY: ${INTERNAL_KEY:?execute iniciar.command}
+    SESSION_SECRET: ${SESSION_SECRET:?execute iniciar.command}
+    STAFF_CODE: ${STAFF_CODE:-demo-local}
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: helpdesk
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: helpdesk
+    volumes: [dbdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U helpdesk"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  kafka:
+    image: redpandadata/redpanda:v25.2.8
+    restart: unless-stopped
+    command: ["redpanda","start","--mode","dev-container","--smp","1","--memory","512M","--kafka-addr","0.0.0.0:9092","--advertise-kafka-addr","kafka:9092"]
+    volumes: [events:/var/lib/redpanda/data]
+  web:
+    <<: *app
+    ports: ["127.0.0.1:${HELPDESK_PORT:-4380}:3000"]
+    depends_on:
+      db: {condition: service_healthy}
+  bridge:
+    <<: *app
+    command: ["node","integration.js","bridge"]
+    depends_on: [kafka,web]
+  agent:
+    <<: *app
+    command: ["node","integration.js","agent"]
+    depends_on: [bridge]
+volumes:
+  dbdata:
+  events:
