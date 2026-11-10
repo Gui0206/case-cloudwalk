@@ -133,8 +133,15 @@ func serve() {
 	defer db.Close()
 	maxOpen := setting("API_DB_MAX_OPEN", 32, 256)
 	db.SetMaxOpenConns(maxOpen)
-	db.SetMaxIdleConns(min(maxOpen, 16))
+	db.SetMaxIdleConns(maxOpen)
 	db.SetConnMaxIdleTime(5 * time.Minute)
+	// Reserve database capacity for replies when client reads saturate the public pool.
+	replyDB, e := sql.Open("postgres", os.Getenv("DATABASE_URL")+"?sslmode=disable")
+	check(e)
+	defer replyDB.Close()
+	replyDB.SetMaxOpenConns(8)
+	replyDB.SetMaxIdleConns(8)
+	replyDB.SetConnMaxIdleTime(5 * time.Minute)
 	var acquire, handle, commit durationTotal
 	schema, e := os.ReadFile("schema.sql")
 	check(e)
@@ -171,7 +178,11 @@ func serve() {
 		var e error
 		callback := r.URL.Path == "/internal/reply"
 		start := time.Now()
-		q.tx, e = db.BeginTx(r.Context(), nil)
+		pool := db
+		if callback {
+			pool = replyDB
+		}
+		q.tx, e = pool.BeginTx(r.Context(), nil)
 		if callback {
 			acquire.observe(start)
 		}
@@ -197,7 +208,7 @@ func serve() {
 	}
 	mux := http.NewServeMux()
 	diagnostics(mux, func() object {
-		return object{"pool": db.Stats(), "callbackBegin": acquire.snapshot(), "callbackHandle": handle.snapshot(), "callbackCommit": commit.snapshot()}
+		return object{"pool": db.Stats(), "replyPool": replyDB.Stats(), "callbackBegin": acquire.snapshot(), "callbackHandle": handle.snapshot(), "callbackCommit": commit.snapshot()}
 	})
 	mux.HandleFunc("/api/", handler)
 	mux.HandleFunc("/internal/", handler)

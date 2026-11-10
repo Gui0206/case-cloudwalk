@@ -6,8 +6,12 @@ import { setTimeout as sleep } from "node:timers/promises";
 import { writeFileSync } from "node:fs";
 const exec = promisify(execFile);
 const project = process.env.MIXED_PROJECT || "central-mixed";
-const port = project === "central-mixed-fixed" ? 4384 : 4383;
-assert.ok(["central-mixed", "central-mixed-fixed"].includes(project));
+const port = {
+  "central-mixed": 4383,
+  "central-mixed-fixed": 4384,
+  "central-mixed-reserved": 4385,
+}[project];
+assert.ok(port);
 const dc = async (...args) =>
   (await exec("docker", ["compose", "-p", project, ...args])).stdout.trim();
 const sql = async (query) =>
@@ -303,7 +307,7 @@ report.pass =
   report.atStop.opened - report.atStop.followed <= rate * 3 &&
   report.atStop.requestedHuman - report.atStop.closedByStaff <= rate * 0.2 * 3;
 writeFileSync(
-  project === "central-mixed-fixed"
+  project !== "central-mixed"
     ? "results/mixed-fixed.json"
     : "results/mixed.json",
   JSON.stringify(report, null, 2) + "\n",
