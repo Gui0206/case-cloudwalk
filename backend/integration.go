@@ -76,7 +76,7 @@ func integration(role string) {
 		}
 		conn.Close()
 		mux := http.NewServeMux()
-		workers = setting("BRIDGE_READERS", 1, 3)
+		workers = setting("BRIDGE_READERS", 3, 3)
 		diagnostics(mux, func() object {
 			return object{"readers": workers, "callback": callback.snapshot(), "offset": offset.snapshot()}
 		})

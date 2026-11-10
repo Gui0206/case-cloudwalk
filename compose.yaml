@@ -11,7 +11,7 @@ x-app: &app
     SESSION_SECRET: ${SESSION_SECRET:?execute iniciar.command}
     STAFF_CODE: ${STAFF_CODE:-demo-local}
     API_DB_MAX_OPEN: ${API_DB_MAX_OPEN:-32}
-    BRIDGE_READERS: ${BRIDGE_READERS:-1}
+    BRIDGE_READERS: ${BRIDGE_READERS:-3}
 services:
   db:
     image: postgres:16-alpine
