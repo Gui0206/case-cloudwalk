@@ -101,6 +101,8 @@ No [reteste a 400 aberturas/s](results/retest-400-indexed.json), a instalação 
 
 No [teste misto de cinco minutos](results/CARGA-MISTA.md), a API aceitou 119.659 aberturas. Com segundas mensagens e 16 analistas simultâneos, a ponte acumulou respostas e os casos encerrados ocuparam todas as posições visíveis da fila humana. O fluxo completo reprovou a 400 novas conversas/s.
 
+A [correção e o reteste da carga mista](results/CARGA-MISTA-RETESTE.md) mantiveram a fila acessível e elevaram os encerramentos humanos para 17.175. O fluxo completo ainda reprovou a 400 novas conversas/s. A gravação dos callbacks acumulou respostas mesmo com conexões reservadas.
+
 O dispatcher em [Go](worker/main.go) usa quatro goroutines por padrão. Cada uma reserva um evento com `FOR UPDATE SKIP LOCKED`, entrega o webhook e confirma o resultado na mesma transação. Enquanto há trabalho, busca o próximo evento imediatamente. A versão anterior aguardava 70 ms após cada entrega. Interromper o processo libera reservas não confirmadas. O identificador original permite deduplicar uma eventual reentrega.
 
 Para comparar concorrências na instalação de teste, execute `WORKERS=4 HELPDESK_PORT=4381 docker compose -p central-helpdesk-test up -d --no-deps worker` e `LOAD_RESULT=results/load-go-4.json npm run test:load`. Repita com 1, 8 e 16. As medições estão em `results/load-go-*.json`. A comparação com `results/load.json` inclui a mudança na espera entre entregas. O backlog é amostrado e o p95 inclui a consulta periódica do cliente.

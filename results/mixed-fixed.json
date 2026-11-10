@@ -1,0 +1,1949 @@
+{
+  "date": "2026-11-10T20:33:14.920Z",
+  "revision": "e8483d3874f31f6b103ee85395ecfabe3be93908",
+  "rate": 400,
+  "seconds": 300,
+  "drain": 120,
+  "samples": [
+    {
+      "second": 15,
+      "attempted": 6000,
+      "skipped": 0,
+      "opened": 5998,
+      "followed": 5674,
+      "requestedHuman": 1135,
+      "closedByStaff": 1119,
+      "waitingForClientWorker": 228
+    },
+    {
+      "second": 30,
+      "attempted": 11999,
+      "skipped": 0,
+      "opened": 11988,
+      "followed": 11662,
+      "requestedHuman": 2333,
+      "closedByStaff": 2317,
+      "waitingForClientWorker": 230
+    },
+    {
+      "second": 45,
+      "attempted": 17999,
+      "skipped": 0,
+      "opened": 17997,
+      "followed": 17672,
+      "requestedHuman": 3535,
+      "closedByStaff": 3467,
+      "waitingForClientWorker": 229
+    },
+    {
+      "second": 60,
+      "attempted": 24001,
+      "skipped": 0,
+      "opened": 23999,
+      "followed": 23674,
+      "requestedHuman": 4735,
+      "closedByStaff": 4708,
+      "waitingForClientWorker": 229
+    },
+    {
+      "second": 75,
+      "attempted": 30001,
+      "skipped": 0,
+      "opened": 29998,
+      "followed": 29673,
+      "requestedHuman": 5935,
+      "closedByStaff": 5910,
+      "waitingForClientWorker": 229
+    },
+    {
+      "second": 90,
+      "attempted": 36001,
+      "skipped": 0,
+      "opened": 35997,
+      "followed": 35672,
+      "requestedHuman": 7135,
+      "closedByStaff": 7097,
+      "waitingForClientWorker": 229
+    },
+    {
+      "second": 105,
+      "attempted": 42001,
+      "skipped": 0,
+      "opened": 41999,
+      "followed": 41406,
+      "requestedHuman": 8280,
+      "closedByStaff": 8168,
+      "waitingForClientWorker": 497
+    },
+    {
+      "second": 120,
+      "attempted": 48001,
+      "skipped": 0,
+      "opened": 47998,
+      "followed": 47134,
+      "requestedHuman": 9430,
+      "closedByStaff": 9297,
+      "waitingForClientWorker": 768
+    },
+    {
+      "second": 135,
+      "attempted": 54000,
+      "skipped": 0,
+      "opened": 53999,
+      "followed": 52475,
+      "requestedHuman": 10496,
+      "closedByStaff": 10246,
+      "waitingForClientWorker": 1428
+    },
+    {
+      "second": 150,
+      "attempted": 60001,
+      "skipped": 0,
+      "opened": 59989,
+      "followed": 57560,
+      "requestedHuman": 11511,
+      "closedByStaff": 11102,
+      "waitingForClientWorker": 2333
+    },
+    {
+      "second": 165,
+      "attempted": 66001,
+      "skipped": 0,
+      "opened": 65995,
+      "followed": 61893,
+      "requestedHuman": 12379,
+      "closedByStaff": 11805,
+      "waitingForClientWorker": 4006
+    },
+    {
+      "second": 180,
+      "attempted": 72001,
+      "skipped": 0,
+      "opened": 71992,
+      "followed": 64928,
+      "requestedHuman": 12987,
+      "closedByStaff": 12269,
+      "waitingForClientWorker": 6968
+    },
+    {
+      "second": 195,
+      "attempted": 78001,
+      "skipped": 0,
+      "opened": 77995,
+      "followed": 68046,
+      "requestedHuman": 13611,
+      "closedByStaff": 12620,
+      "waitingForClientWorker": 9853
+    },
+    {
+      "second": 210,
+      "attempted": 84001,
+      "skipped": 0,
+      "opened": 83994,
+      "followed": 71514,
+      "requestedHuman": 14301,
+      "closedByStaff": 12952,
+      "waitingForClientWorker": 12384
+    },
+    {
+      "second": 225,
+      "attempted": 90000,
+      "skipped": 0,
+      "opened": 89992,
+      "followed": 74750,
+      "requestedHuman": 14947,
+      "closedByStaff": 13285,
+      "waitingForClientWorker": 15146
+    },
+    {
+      "second": 240,
+      "attempted": 96001,
+      "skipped": 0,
+      "opened": 95992,
+      "followed": 77531,
+      "requestedHuman": 15507,
+      "closedByStaff": 13591,
+      "waitingForClientWorker": 18365
+    },
+    {
+      "second": 255.01,
+      "attempted": 102001,
+      "skipped": 0,
+      "opened": 101991,
+      "followed": 80610,
+      "requestedHuman": 16124,
+      "closedByStaff": 13931,
+      "waitingForClientWorker": 21285
+    },
+    {
+      "second": 270.01,
+      "attempted": 107980,
+      "skipped": 22,
+      "opened": 107961,
+      "followed": 83177,
+      "requestedHuman": 16637,
+      "closedByStaff": 14250,
+      "waitingForClientWorker": 24688
+    },
+    {
+      "second": 285,
+      "attempted": 113979,
+      "skipped": 22,
+      "opened": 113957,
+      "followed": 85407,
+      "requestedHuman": 17083,
+      "closedByStaff": 14491,
+      "waitingForClientWorker": 28454
+    },
+    {
+      "second": 300,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119960,
+      "followed": 87173,
+      "requestedHuman": 17434,
+      "closedByStaff": 14729,
+      "waitingForClientWorker": 32691
+    },
+    {
+      "second": 315,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119978,
+      "followed": 91096,
+      "requestedHuman": 18220,
+      "closedByStaff": 15086,
+      "waitingForClientWorker": 28786
+    },
+    {
+      "second": 330,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119978,
+      "followed": 94439,
+      "requestedHuman": 18887,
+      "closedByStaff": 15414,
+      "waitingForClientWorker": 25443
+    },
+    {
+      "second": 345,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119978,
+      "followed": 98096,
+      "requestedHuman": 19611,
+      "closedByStaff": 15755,
+      "waitingForClientWorker": 21786
+    },
+    {
+      "second": 360,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119978,
+      "followed": 101788,
+      "requestedHuman": 20344,
+      "closedByStaff": 16104,
+      "waitingForClientWorker": 18094
+    },
+    {
+      "second": 375,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119978,
+      "followed": 104320,
+      "requestedHuman": 20856,
+      "closedByStaff": 16381,
+      "waitingForClientWorker": 15562
+    },
+    {
+      "second": 390,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119978,
+      "followed": 107998,
+      "requestedHuman": 21597,
+      "closedByStaff": 16654,
+      "waitingForClientWorker": 11884
+    },
+    {
+      "second": 405,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119978,
+      "followed": 111636,
+      "requestedHuman": 22334,
+      "closedByStaff": 16936,
+      "waitingForClientWorker": 8246
+    },
+    {
+      "second": 420.01,
+      "attempted": 119978,
+      "skipped": 22,
+      "opened": 119978,
+      "followed": 115409,
+      "requestedHuman": 23079,
+      "closedByStaff": 17170,
+      "waitingForClientWorker": 4473
+    }
+  ],
+  "diagnostics": [
+    {
+      "second": 0,
+      "api": {
+        "callbackBegin": {
+          "calls": 0,
+          "microseconds": 0
+        },
+        "callbackCommit": {
+          "calls": 0,
+          "microseconds": 0
+        },
+        "callbackHandle": {
+          "calls": 0,
+          "microseconds": 0
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 1,
+          "InUse": 0,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 0,
+          "InUse": 0,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 0,
+          "microseconds": 0
+        },
+        "offset": {
+          "calls": 0,
+          "microseconds": 0
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 15.31,
+      "api": {
+        "callbackBegin": {
+          "calls": 11795,
+          "microseconds": 1836113
+        },
+        "callbackCommit": {
+          "calls": 11793,
+          "microseconds": 8677544
+        },
+        "callbackHandle": {
+          "calls": 11793,
+          "microseconds": 21977482
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 3,
+          "Idle": 29,
+          "WaitCount": 563,
+          "WaitDuration": 10120236011,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 11798,
+          "microseconds": 37225825
+        },
+        "offset": {
+          "calls": 11797,
+          "microseconds": 4664083
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 30.26,
+      "api": {
+        "callbackBegin": {
+          "calls": 23734,
+          "microseconds": 3579308
+        },
+        "callbackCommit": {
+          "calls": 23733,
+          "microseconds": 17345564
+        },
+        "callbackHandle": {
+          "calls": 23733,
+          "microseconds": 43376916
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 17,
+          "Idle": 15,
+          "WaitCount": 1355,
+          "WaitDuration": 33113495182,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 1,
+          "Idle": 2,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 23736,
+          "microseconds": 73150777
+        },
+        "offset": {
+          "calls": 23736,
+          "microseconds": 9530988
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 45.34,
+      "api": {
+        "callbackBegin": {
+          "calls": 35485,
+          "microseconds": 5371284
+        },
+        "callbackCommit": {
+          "calls": 35483,
+          "microseconds": 26387061
+        },
+        "callbackHandle": {
+          "calls": 35484,
+          "microseconds": 65807392
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 2,
+          "Idle": 30,
+          "WaitCount": 2024,
+          "WaitDuration": 40517912505,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 35492,
+          "microseconds": 111103956
+        },
+        "offset": {
+          "calls": 35492,
+          "microseconds": 14401277
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 60.29,
+      "api": {
+        "callbackBegin": {
+          "calls": 47684,
+          "microseconds": 7060865
+        },
+        "callbackCommit": {
+          "calls": 47682,
+          "microseconds": 34348266
+        },
+        "callbackHandle": {
+          "calls": 47683,
+          "microseconds": 87538295
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 4,
+          "Idle": 28,
+          "WaitCount": 2072,
+          "WaitDuration": 40627191550,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 47693,
+          "microseconds": 147069656
+        },
+        "offset": {
+          "calls": 47692,
+          "microseconds": 18698947
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 75.35,
+      "api": {
+        "callbackBegin": {
+          "calls": 59817,
+          "microseconds": 8879408
+        },
+        "callbackCommit": {
+          "calls": 59816,
+          "microseconds": 43206717
+        },
+        "callbackHandle": {
+          "calls": 59817,
+          "microseconds": 110863618
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 8,
+          "Idle": 24,
+          "WaitCount": 2115,
+          "WaitDuration": 40691562133,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 59820,
+          "microseconds": 185945772
+        },
+        "offset": {
+          "calls": 59820,
+          "microseconds": 23481299
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 90.34,
+      "api": {
+        "callbackBegin": {
+          "calls": 71624,
+          "microseconds": 10701960
+        },
+        "callbackCommit": {
+          "calls": 71623,
+          "microseconds": 53073387
+        },
+        "callbackHandle": {
+          "calls": 71623,
+          "microseconds": 133519341
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 4,
+          "Idle": 28,
+          "WaitCount": 4199,
+          "WaitDuration": 107984265842,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 71629,
+          "microseconds": 224357405
+        },
+        "offset": {
+          "calls": 71629,
+          "microseconds": 28720944
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 105.41,
+      "api": {
+        "callbackBegin": {
+          "calls": 82711,
+          "microseconds": 12517859
+        },
+        "callbackCommit": {
+          "calls": 82710,
+          "microseconds": 62330042
+        },
+        "callbackHandle": {
+          "calls": 82711,
+          "microseconds": 156279237
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 10,
+          "Idle": 22,
+          "WaitCount": 5926,
+          "WaitDuration": 171574751914,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 82714,
+          "microseconds": 262611950
+        },
+        "offset": {
+          "calls": 82714,
+          "microseconds": 33787086
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 120.2,
+      "api": {
+        "callbackBegin": {
+          "calls": 93951,
+          "microseconds": 14455442
+        },
+        "callbackCommit": {
+          "calls": 93949,
+          "microseconds": 71515118
+        },
+        "callbackHandle": {
+          "calls": 93951,
+          "microseconds": 179759897
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 6881,
+          "WaitDuration": 194017360847,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 93952,
+          "microseconds": 301798016
+        },
+        "offset": {
+          "calls": 93952,
+          "microseconds": 38834942
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 135.35,
+      "api": {
+        "callbackBegin": {
+          "calls": 104035,
+          "microseconds": 16347486
+        },
+        "callbackCommit": {
+          "calls": 104032,
+          "microseconds": 80746094
+        },
+        "callbackHandle": {
+          "calls": 104032,
+          "microseconds": 203661949
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 16,
+          "Idle": 16,
+          "WaitCount": 9554,
+          "WaitDuration": 245983414626,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 104041,
+          "microseconds": 342289924
+        },
+        "offset": {
+          "calls": 104041,
+          "microseconds": 43643119
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 150.35,
+      "api": {
+        "callbackBegin": {
+          "calls": 113243,
+          "microseconds": 18226005
+        },
+        "callbackCommit": {
+          "calls": 113241,
+          "microseconds": 90711165
+        },
+        "callbackHandle": {
+          "calls": 113241,
+          "microseconds": 227185906
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 19608,
+          "WaitDuration": 353639529309,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 113243,
+          "microseconds": 382071024
+        },
+        "offset": {
+          "calls": 113243,
+          "microseconds": 48722394
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 165.25,
+      "api": {
+        "callbackBegin": {
+          "calls": 121098,
+          "microseconds": 20237389
+        },
+        "callbackCommit": {
+          "calls": 121095,
+          "microseconds": 100625348
+        },
+        "callbackHandle": {
+          "calls": 121096,
+          "microseconds": 250900187
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 51336,
+          "WaitDuration": 558504081508,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 121097,
+          "microseconds": 421867889
+        },
+        "offset": {
+          "calls": 121097,
+          "microseconds": 53499901
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 180.58,
+      "api": {
+        "callbackBegin": {
+          "calls": 126520,
+          "microseconds": 22501866
+        },
+        "callbackCommit": {
+          "calls": 126517,
+          "microseconds": 110485896
+        },
+        "callbackHandle": {
+          "calls": 126518,
+          "microseconds": 275482637
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 143206,
+          "WaitDuration": 1420748907883,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 126520,
+          "microseconds": 463124200
+        },
+        "offset": {
+          "calls": 126518,
+          "microseconds": 58064068
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 195.31,
+      "api": {
+        "callbackBegin": {
+          "calls": 131438,
+          "microseconds": 24640521
+        },
+        "callbackCommit": {
+          "calls": 131437,
+          "microseconds": 120340230
+        },
+        "callbackHandle": {
+          "calls": 131437,
+          "microseconds": 298989287
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 238212,
+          "WaitDuration": 2348492715820,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 131439,
+          "microseconds": 502841759
+        },
+        "offset": {
+          "calls": 131439,
+          "microseconds": 62488167
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 210.27,
+      "api": {
+        "callbackBegin": {
+          "calls": 136489,
+          "microseconds": 26868284
+        },
+        "callbackCommit": {
+          "calls": 136487,
+          "microseconds": 130280282
+        },
+        "callbackHandle": {
+          "calls": 136488,
+          "microseconds": 323205975
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 335548,
+          "WaitDuration": 3286876787704,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 136488,
+          "microseconds": 543445614
+        },
+        "offset": {
+          "calls": 136488,
+          "microseconds": 66667513
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 225.57,
+      "api": {
+        "callbackBegin": {
+          "calls": 141654,
+          "microseconds": 29091209
+        },
+        "callbackCommit": {
+          "calls": 141651,
+          "microseconds": 140296292
+        },
+        "callbackHandle": {
+          "calls": 141651,
+          "microseconds": 348095593
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 435809,
+          "WaitDuration": 4248064774298,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 141656,
+          "microseconds": 584867912
+        },
+        "offset": {
+          "calls": 141656,
+          "microseconds": 71062134
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 240.33,
+      "api": {
+        "callbackBegin": {
+          "calls": 145828,
+          "microseconds": 31290780
+        },
+        "callbackCommit": {
+          "calls": 145828,
+          "microseconds": 150644630
+        },
+        "callbackHandle": {
+          "calls": 145828,
+          "microseconds": 371186631
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 517232,
+          "WaitDuration": 5229485506527,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 0,
+          "Idle": 3,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 145828,
+          "microseconds": 624391906
+        },
+        "offset": {
+          "calls": 145828,
+          "microseconds": 75700597
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 255.36,
+      "api": {
+        "callbackBegin": {
+          "calls": 150608,
+          "microseconds": 33524035
+        },
+        "callbackCommit": {
+          "calls": 150607,
+          "microseconds": 160696940
+        },
+        "callbackHandle": {
+          "calls": 150608,
+          "microseconds": 395256445
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 609899,
+          "WaitDuration": 6187755253984,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 1,
+          "Idle": 2,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 150611,
+          "microseconds": 664886725
+        },
+        "offset": {
+          "calls": 150611,
+          "microseconds": 80208422
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 270.46,
+      "api": {
+        "callbackBegin": {
+          "calls": 154859,
+          "microseconds": 35812854
+        },
+        "callbackCommit": {
+          "calls": 154856,
+          "microseconds": 171030781
+        },
+        "callbackHandle": {
+          "calls": 154857,
+          "microseconds": 418926513
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 691589,
+          "WaitDuration": 7244120934192,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 154859,
+          "microseconds": 705114098
+        },
+        "offset": {
+          "calls": 154859,
+          "microseconds": 85139553
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 285.51,
+      "api": {
+        "callbackBegin": {
+          "calls": 158405,
+          "microseconds": 38047278
+        },
+        "callbackCommit": {
+          "calls": 158403,
+          "microseconds": 181216585
+        },
+        "callbackHandle": {
+          "calls": 158404,
+          "microseconds": 442567584
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 762603,
+          "WaitDuration": 8271751356574,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 158409,
+          "microseconds": 745173219
+        },
+        "offset": {
+          "calls": 158409,
+          "microseconds": 90175334
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 300.44,
+      "api": {
+        "callbackBegin": {
+          "calls": 161805,
+          "microseconds": 40265788
+        },
+        "callbackCommit": {
+          "calls": 161804,
+          "microseconds": 192386994
+        },
+        "callbackHandle": {
+          "calls": 161804,
+          "microseconds": 465277224
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 831617,
+          "WaitDuration": 9279804524189,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 161807,
+          "microseconds": 784850633
+        },
+        "offset": {
+          "calls": 161807,
+          "microseconds": 95173519
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 315.28,
+      "api": {
+        "callbackBegin": {
+          "calls": 167190,
+          "microseconds": 42490516
+        },
+        "callbackCommit": {
+          "calls": 167187,
+          "microseconds": 201710309
+        },
+        "callbackHandle": {
+          "calls": 167188,
+          "microseconds": 489870700
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 939872,
+          "WaitDuration": 10045005578856,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 167191,
+          "microseconds": 825131807
+        },
+        "offset": {
+          "calls": 167191,
+          "microseconds": 99302241
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 330.34,
+      "api": {
+        "callbackBegin": {
+          "calls": 172343,
+          "microseconds": 44741731
+        },
+        "callbackCommit": {
+          "calls": 172342,
+          "microseconds": 211371725
+        },
+        "callbackHandle": {
+          "calls": 172343,
+          "microseconds": 514245433
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 1048570,
+          "WaitDuration": 10788354485945,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 1,
+          "Idle": 2,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 172345,
+          "microseconds": 865688960
+        },
+        "offset": {
+          "calls": 172345,
+          "microseconds": 103817732
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 345.42,
+      "api": {
+        "callbackBegin": {
+          "calls": 177370,
+          "microseconds": 46973416
+        },
+        "callbackCommit": {
+          "calls": 177367,
+          "microseconds": 222006063
+        },
+        "callbackHandle": {
+          "calls": 177367,
+          "microseconds": 537642235
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 1156574,
+          "WaitDuration": 11545408238162,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 177386,
+          "microseconds": 906310450
+        },
+        "offset": {
+          "calls": 177386,
+          "microseconds": 108310097
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 360.32,
+      "api": {
+        "callbackBegin": {
+          "calls": 182523,
+          "microseconds": 49197451
+        },
+        "callbackCommit": {
+          "calls": 182520,
+          "microseconds": 232195851
+        },
+        "callbackHandle": {
+          "calls": 182521,
+          "microseconds": 561387659
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 1265312,
+          "WaitDuration": 12296030362488,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 182523,
+          "microseconds": 946420496
+        },
+        "offset": {
+          "calls": 182523,
+          "microseconds": 112833047
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 375.44,
+      "api": {
+        "callbackBegin": {
+          "calls": 186676,
+          "microseconds": 51443042
+        },
+        "callbackCommit": {
+          "calls": 186674,
+          "microseconds": 242142789
+        },
+        "callbackHandle": {
+          "calls": 186675,
+          "microseconds": 584971407
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 1357963,
+          "WaitDuration": 13032037049451,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 186676,
+          "microseconds": 986569136
+        },
+        "offset": {
+          "calls": 186676,
+          "microseconds": 117893403
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 390.33,
+      "api": {
+        "callbackBegin": {
+          "calls": 191510,
+          "microseconds": 53798042
+        },
+        "callbackCommit": {
+          "calls": 191507,
+          "microseconds": 251953547
+        },
+        "callbackHandle": {
+          "calls": 191508,
+          "microseconds": 608604647
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 32,
+          "Idle": 0,
+          "WaitCount": 1462496,
+          "WaitDuration": 13769665170973,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 191510,
+          "microseconds": 1026462694
+        },
+        "offset": {
+          "calls": 191510,
+          "microseconds": 122579169
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 405.63,
+      "api": {
+        "callbackBegin": {
+          "calls": 196594,
+          "microseconds": 56223659
+        },
+        "callbackCommit": {
+          "calls": 196592,
+          "microseconds": 262079678
+        },
+        "callbackHandle": {
+          "calls": 196592,
+          "microseconds": 632793155
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 11,
+          "Idle": 21,
+          "WaitCount": 1570776,
+          "WaitDuration": 14523298641386,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 2,
+          "Idle": 1,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 196605,
+          "microseconds": 1067599736
+        },
+        "offset": {
+          "calls": 196604,
+          "microseconds": 127262938
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 420.34,
+      "api": {
+        "callbackBegin": {
+          "calls": 201639,
+          "microseconds": 58387630
+        },
+        "callbackCommit": {
+          "calls": 201636,
+          "microseconds": 272103047
+        },
+        "callbackHandle": {
+          "calls": 201636,
+          "microseconds": 656087153
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 0,
+          "Idle": 32,
+          "WaitCount": 1664802,
+          "WaitDuration": 15184348743056,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 201649,
+          "microseconds": 1107124598
+        },
+        "offset": {
+          "calls": 201649,
+          "microseconds": 131830710
+        },
+        "readers": 3
+      }
+    },
+    {
+      "second": 420.65,
+      "api": {
+        "callbackBegin": {
+          "calls": 202689,
+          "microseconds": 58447632
+        },
+        "callbackCommit": {
+          "calls": 202686,
+          "microseconds": 272353329
+        },
+        "callbackHandle": {
+          "calls": 202686,
+          "microseconds": 656903827
+        },
+        "pool": {
+          "MaxOpenConnections": 32,
+          "OpenConnections": 32,
+          "InUse": 0,
+          "Idle": 32,
+          "WaitCount": 1664802,
+          "WaitDuration": 15184348743056,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        },
+        "replyPool": {
+          "MaxOpenConnections": 8,
+          "OpenConnections": 3,
+          "InUse": 3,
+          "Idle": 0,
+          "WaitCount": 0,
+          "WaitDuration": 0,
+          "MaxIdleClosed": 0,
+          "MaxIdleTimeClosed": 0,
+          "MaxLifetimeClosed": 0
+        }
+      },
+      "bridge": {
+        "callback": {
+          "calls": 202701,
+          "microseconds": 1108356920
+        },
+        "offset": {
+          "calls": 202700,
+          "microseconds": 132000785
+        },
+        "readers": 3
+      }
+    }
+  ],
+  "errors": {
+    "claim 409": 13984
+  },
+  "http": {
+    "login": {
+      "calls": 144,
+      "totalMs": 180
+    },
+    "queue": {
+      "calls": 14121,
+      "totalMs": 200898
+    },
+    "open": {
+      "calls": 119978,
+      "totalMs": 2211082
+    },
+    "clientRead": {
+      "calls": 1659152,
+      "totalMs": 24345407
+    },
+    "follow": {
+      "calls": 115514,
+      "totalMs": 1704965
+    },
+    "staffRead": {
+      "calls": 31159,
+      "totalMs": 269660
+    },
+    "claim": {
+      "calls": 31159,
+      "totalMs": 251309
+    },
+    "reply": {
+      "calls": 17175,
+      "totalMs": 180094
+    },
+    "close": {
+      "calls": 17175,
+      "totalMs": 177321
+    }
+  },
+  "atStop": {
+    "second": 300,
+    "attempted": 119978,
+    "skipped": 22,
+    "opened": 119959,
+    "followed": 87173,
+    "requestedHuman": 17434,
+    "closedByStaff": 14729,
+    "waitingForClientWorker": 32690
+  },
+  "end": {
+    "second": 420.81,
+    "attempted": 119978,
+    "skipped": 22,
+    "opened": 119978,
+    "followed": 115514,
+    "requestedHuman": 23100,
+    "closedByStaff": 17175,
+    "waitingForClientWorker": 4415
+  },
+  "analysts": [
+    {
+      "name": "Analista 0",
+      "brand": "InfinitePay",
+      "handled": 1084
+    },
+    {
+      "name": "Analista 1",
+      "brand": "JIM",
+      "handled": 1061
+    },
+    {
+      "name": "Analista 2",
+      "brand": "InfinitePay",
+      "handled": 1052
+    },
+    {
+      "name": "Analista 3",
+      "brand": "JIM",
+      "handled": 1127
+    },
+    {
+      "name": "Analista 4",
+      "brand": "InfinitePay",
+      "handled": 1062
+    },
+    {
+      "name": "Analista 5",
+      "brand": "JIM",
+      "handled": 1053
+    },
+    {
+      "name": "Analista 6",
+      "brand": "InfinitePay",
+      "handled": 1065
+    },
+    {
+      "name": "Analista 7",
+      "brand": "JIM",
+      "handled": 1008
+    },
+    {
+      "name": "Analista 8",
+      "brand": "InfinitePay",
+      "handled": 1073
+    },
+    {
+      "name": "Analista 9",
+      "brand": "JIM",
+      "handled": 1078
+    },
+    {
+      "name": "Analista 10",
+      "brand": "InfinitePay",
+      "handled": 1079
+    },
+    {
+      "name": "Analista 11",
+      "brand": "JIM",
+      "handled": 1075
+    },
+    {
+      "name": "Analista 12",
+      "brand": "InfinitePay",
+      "handled": 1098
+    },
+    {
+      "name": "Analista 13",
+      "brand": "JIM",
+      "handled": 1128
+    },
+    {
+      "name": "Analista 14",
+      "brand": "InfinitePay",
+      "handled": 1074
+    },
+    {
+      "name": "Analista 15",
+      "brand": "JIM",
+      "handled": 1058
+    }
+  ],
+  "openP95Ms": 52.150250000006054,
+  "integrity": {
+    "tickets": 119978,
+    "firstReplies": 116823,
+    "secondReplies": 86184,
+    "closedAuto": 68945,
+    "closedHuman": 17175,
+    "awaitingStaff": 64,
+    "unexpectedOrder": 0,
+    "firstP95Ms": 123915.7615,
+    "secondP95Ms": 113003.43084999999,
+    "pendingOutbox": 0,
+    "failedOutbox": 0
+  },
+  "pass": false
+}
