@@ -38,6 +38,15 @@ services:
     <<: *app
     command: ["node","integration.js","bridge"]
     depends_on: [kafka,web]
+  worker:
+    build: ./worker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://helpdesk:${DB_PASSWORD}@db/helpdesk
+      BROKER_URL: http://bridge:3001
+      INTERNAL_KEY: ${INTERNAL_KEY}
+      WORKERS: ${WORKERS:-4}
+    depends_on: [web,bridge]
   agent:
     <<: *app
     command: ["node","integration.js","agent"]

@@ -93,7 +93,7 @@ try {
     ticketsWithOneReply: seen.length,
   };
   mkdirSync("results", { recursive: true });
-  writeFileSync("results/load.json", JSON.stringify(result, null, 2) + "\n");
+  writeFileSync(process.env.LOAD_RESULT || "results/load-go.json", JSON.stringify(result, null, 2) + "\n");
   console.log(result);
 } finally {
   stopped = true;

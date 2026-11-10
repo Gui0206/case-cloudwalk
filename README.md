@@ -95,9 +95,11 @@ Se já executou o experimento e quiser **apagar apenas os dados de teste** para 
 
 ## Limites e evolução
 
-Este experimento avalia roteamento e recuperação em uma máquina. Não mede o volume de produção da CloudWalk. A execução usa um nó de banco e um nó de mensageria, sem alta disponibilidade; o worker embutido na API processa um evento por vez. O mock classifica o assunto inicial com palavras-chave e recebe o histórico integral; isso não é adequado para conversas ilimitadas. O painel usa atualização periódica, com até 250 casos por consulta. Há um único rascunho compartilhado: múltiplos editores podem sobrescrever alterações antes da simulação. As identidades de equipe usam um código local compartilhado, não SSO corporativo.
+O dispatcher em [Go](worker/main.go) usa quatro goroutines por padrão. Cada uma reserva um evento com `FOR UPDATE SKIP LOCKED`, entrega o webhook e confirma o resultado na mesma transação. Enquanto há trabalho, busca o próximo evento imediatamente. A versão anterior aguardava 70 ms após cada entrega. Interromper o processo libera reservas não confirmadas. O identificador original permite deduplicar uma eventual reentrega.
 
-Para evoluir: aumentar carga progressivamente, medir atraso por partição e latência de ponta a ponta sob indisponibilidade prolongada, testar workers independentes, paginar históricos e acrescentar autenticação individual e controle concorrente de edição. O frontend é HTML/CSS/JS sem build; `public/ui.js` contém as três telas. A API/worker está em `server.js`, a ponte e o consumidor em `integration.js`, o modelo relacional em `schema.sql`, e as versões das dependências em `package-lock.json`.
+Para comparar concorrências na instalação de teste, execute `WORKERS=4 HELPDESK_PORT=4381 docker compose -p central-helpdesk-test up -d --no-deps worker` e `LOAD_RESULT=results/load-go-4.json npm run test:load`. Repita com 1, 8 e 16. As medições estão em `results/load-go-*.json`. A comparação com `results/load.json` inclui a mudança na espera entre entregas. O backlog é amostrado e o p95 inclui a consulta periódica do cliente.
+
+A API e as regras usam Node.js, a ponte e o agente usam KafkaJS. O teste cobre um pico local em uma máquina com banco e mensageria de nó único. O mock recebe o histórico integral, o painel lista até 250 casos por consulta e a operação compartilha um rascunho. Carga sustentada e recuperação de perda de um nó exigem experimentos próprios.
 
 ## Identidade da demonstração
 

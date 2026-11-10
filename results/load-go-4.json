@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-10T14:29:37.241Z",
+  "tickets": 120,
+  "concurrentSubmissions": 12,
+  "creationSeconds": 0.14,
+  "totalSeconds": 0.46,
+  "maxObservedOutboxPending": 24,
+  "p95CreationMs": 16,
+  "p95ObservedFirstReplyMs": 398,
+  "ticketsWithOneReply": 120
+}
