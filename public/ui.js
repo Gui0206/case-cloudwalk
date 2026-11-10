@@ -286,8 +286,27 @@ async function refresh(force = false) {
   );
   if (!selected) return;
   const id = selected,
-    t = await api("tickets/" + id);
+    panel = $("#conversation");
+  if (
+    !force &&
+    panel.dataset.id === id &&
+    Date.now() < Number(panel.dataset.nextCheck || 0)
+  )
+    return;
+  const status = await api("tickets/" + id + "/status");
   if (n !== epoch || id !== selected || !$("#conversation")) return;
+  const version = JSON.stringify(status);
+  if (!force && panel.dataset.version === version) {
+    const delay = Math.min(8000, Number(panel.dataset.delay || 1600) * 2);
+    panel.dataset.delay = delay;
+    panel.dataset.nextCheck = Date.now() + delay;
+    return;
+  }
+  const t = await api("tickets/" + id);
+  if (n !== epoch || id !== selected || !$("#conversation")) return;
+  panel.dataset.version = version;
+  panel.dataset.delay = 1600;
+  panel.dataset.nextCheck = Date.now() + 1600;
   const sig = JSON.stringify([
     id,
     t.messages.length,

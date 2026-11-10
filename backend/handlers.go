@@ -64,6 +64,9 @@ func (q *request) handle() any {
 		if len(parts) == 1 && q.r.Method == "GET" {
 			return q.detail(parts[0])
 		}
+		if len(parts) == 2 && parts[1] == "status" && q.r.Method == "GET" {
+			return q.status(parts[0])
+		}
 		if len(parts) == 2 && parts[1] == "action" && q.r.Method == "POST" {
 			return q.action(parts[0])
 		}
@@ -193,6 +196,21 @@ func (q *request) detail(id string) object {
 	}
 	return t
 }
+func (q *request) status(id string) object {
+	audit := "'0'::text"
+	if q.staff != nil {
+		audit = "coalesce((SELECT n::text FROM audit WHERE ticket=t.id ORDER BY n DESC LIMIT 1),'0')"
+	}
+	t := q.one("SELECT t.id,t.client,t.brand,t.team,t.phase,t.status,t.owner,t.revision,t.updated,"+
+		"coalesce(m.n::text,'0') AS message_id,coalesce(m.author,'') AS last_author,"+audit+" AS audit_id "+
+		"FROM tickets t LEFT JOIN LATERAL (SELECT n,author FROM messages WHERE ticket=t.id ORDER BY n DESC LIMIT 1) m ON true WHERE t.id=$1", id)
+	if t == nil {
+		fail(404, "Atendimento não encontrado.")
+	}
+	require(t["client"] == q.client || q.staff["role"] == "ops" || q.team(t))
+	delete(t, "client")
+	return t
+}
 func (q *request) action(id string) any {
 	t := q.ticket(id, true)
 	action := str(q.body, "action")
@@ -247,23 +265,33 @@ func (q *request) callback() any {
 		q.audit(id, "Retorno obsoleto ignorado", object{"event": e["id"]})
 		return object{"stale": true}
 	}
-	q.msg(id, "IA", str(e, "text"))
 	if e["type"] == "handoff" {
 		a := q.active()
 		d := configuration(a).route(fields{"phase": "Humano", "brand": str(t, "brand"), "category": str(t, "category"), "priority": str(t, "priority")})
-		q.exec("UPDATE tickets SET phase='Humano',status='Aguardando analista',queue=$2,team=$3,summary=$4,motive=$5,version=$6,updated=now() WHERE id=$1", id, d["queue"], d["team"], e["summary"], e["motive"], a["v"])
 		detail := object{"version": a["v"], "event": e["id"], "motivo": e["motive"]}
 		for k, v := range d {
 			detail[k] = v
 		}
-		q.audit(id, "Transferência humana", detail)
+		q.exec(`WITH message AS (
+			INSERT INTO messages(ticket,author,body) VALUES($1,'IA',$7)
+		), trace AS (
+			INSERT INTO audit(ticket,kind,detail) VALUES($1,'Transferência humana',$8)
+		)
+		UPDATE tickets SET phase='Humano',status='Aguardando analista',queue=$2,team=$3,
+			summary=$4,motive=$5,version=$6,updated=now() WHERE id=$1`,
+			id, d["queue"], d["team"], e["summary"], e["motive"], a["v"], str(e, "text"), encode(detail))
 	} else {
 		status := "Aberto"
 		if e["type"] == "close" {
 			status = "Encerrado"
 		}
-		q.exec("UPDATE tickets SET status=$2,updated=now() WHERE id=$1", id, status)
-		q.audit(id, "Decisão da IA", object{"event": e["id"], "acao": e["type"]})
+		q.exec(`WITH message AS (
+			INSERT INTO messages(ticket,author,body) VALUES($1,'IA',$3)
+		), trace AS (
+			INSERT INTO audit(ticket,kind,detail) VALUES($1,'Decisão da IA',$4)
+		)
+		UPDATE tickets SET status=$2,updated=now() WHERE id=$1`,
+			id, status, str(e, "text"), encode(object{"event": e["id"], "acao": e["type"]}))
 	}
 	return ok
 }

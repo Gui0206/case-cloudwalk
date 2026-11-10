@@ -10,8 +10,10 @@ const port = {
   "central-mixed": 4383,
   "central-mixed-fixed": 4384,
   "central-mixed-reserved": 4385,
+  "central-mixed-optimized": 4386,
 }[project];
 assert.ok(port);
+const optimized = project === "central-mixed-optimized";
 const dc = async (...args) =>
   (await exec("docker", ["compose", "-p", project, ...args])).stdout.trim();
 const sql = async (query) =>
@@ -42,6 +44,7 @@ const report = {
   rate,
   seconds,
   drain,
+  optimizedPolling: optimized,
   samples: [],
   diagnostics: [],
   errors: {},
@@ -156,9 +159,19 @@ async function follow() {
       await sleep(job.after - performance.now());
     if (!running) break;
     const path = "tickets/" + job.id;
-    const t = await call(job.session, "clientRead", path);
-    if (!t || !t.messages.some((m) => m.author === "IA")) {
-      job.after = performance.now() + 800;
+    const t = await call(
+      job.session,
+      "clientRead",
+      path + (optimized ? "/status" : ""),
+    );
+    const answered =
+      t &&
+      (optimized
+        ? t.last_author === "IA"
+        : t.messages.some((m) => m.author === "IA"));
+    if (!answered) {
+      job.delay = optimized ? Math.min(8000, (job.delay || 400) * 2) : 800;
+      job.after = performance.now() + job.delay;
       ready.push(job);
       continue;
     }
@@ -307,9 +320,11 @@ report.pass =
   report.atStop.opened - report.atStop.followed <= rate * 3 &&
   report.atStop.requestedHuman - report.atStop.closedByStaff <= rate * 0.2 * 3;
 writeFileSync(
-  project !== "central-mixed"
-    ? "results/mixed-fixed.json"
-    : "results/mixed.json",
+  optimized
+    ? "results/mixed-optimized.json"
+    : project !== "central-mixed"
+      ? "results/mixed-fixed.json"
+      : "results/mixed.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(

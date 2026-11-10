@@ -61,6 +61,7 @@ func integration(role string) {
 	broker := os.Getenv("KAFKA_BROKERS")
 	var callback, offset durationTotal
 	workers := 1
+	var commitInterval time.Duration
 	topic := requests
 	writer := kafka.Writer{Addr: kafka.TCP(broker), Balancer: &kafka.Murmur2Balancer{}, RequiredAcks: kafka.RequireAll, BatchSize: 1}
 	defer writer.Close()
@@ -69,6 +70,7 @@ func integration(role string) {
 	}
 	if role == "bridge" {
 		topic = responses
+		commitInterval = 100 * time.Millisecond
 		conn, err := kafka.Dial("tcp", broker)
 		check(err)
 		for _, t := range []string{requests, responses, failed} {
@@ -78,7 +80,7 @@ func integration(role string) {
 		mux := http.NewServeMux()
 		workers = setting("BRIDGE_READERS", 3, 3)
 		diagnostics(mux, func() object {
-			return object{"readers": workers, "callback": callback.snapshot(), "offset": offset.snapshot()}
+			return object{"readers": workers, "commitIntervalMs": commitInterval.Milliseconds(), "callback": callback.snapshot(), "offset": offset.snapshot()}
 		})
 		mux.HandleFunc("POST /webhook", func(w http.ResponseWriter, r *http.Request) {
 			if r.Header.Get("x-internal-key") != os.Getenv("INTERNAL_KEY") {
@@ -142,7 +144,7 @@ func integration(role string) {
 	var group sync.WaitGroup
 	for range workers {
 		group.Go(func() {
-			reader := kafka.NewReader(kafka.ReaderConfig{Brokers: []string{broker}, Topic: topic, GroupID: "central-" + role + "-v1", StartOffset: kafka.FirstOffset, MaxWait: 150 * time.Millisecond})
+			reader := kafka.NewReader(kafka.ReaderConfig{Brokers: []string{broker}, Topic: topic, GroupID: "central-" + role + "-v1", StartOffset: kafka.FirstOffset, MaxWait: 150 * time.Millisecond, CommitInterval: commitInterval, ErrorLogger: log.Default()})
 			defer reader.Close()
 			for ctx.Err() == nil {
 				m, err := reader.FetchMessage(ctx)
@@ -165,6 +167,8 @@ func integration(role string) {
 					check(publish(ctx, failed, m.Key, []byte(encode(object{"topic": topic, "partition": m.Partition, "offset": fmt.Sprint(m.Offset), "error": err.Error(), "raw": string(m.Value)}))))
 				}
 				start := time.Now()
+				// Mark only completed callbacks. The bridge flushes these offsets in batches.
+				// A crash before flushing can redeliver them; the API's inbox deduplicates.
 				err = reader.CommitMessages(ctx, m)
 				offset.observe(start)
 				if ctx.Err() != nil {
