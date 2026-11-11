@@ -71,3 +71,25 @@ O pool reservado registrou zero esperas por vaga. A outbox terminou sem eventos 
 A verificação dos históricos encontrou 95.884 sequências completas de encerramento automático e 23.973 sequências completas com resposta humana. Uma consulta independente à auditoria conferiu os 119.857 casos: cada automático tinha uma triagem e duas decisões da IA; cada humano tinha uma triagem, uma decisão inicial, uma transferência, uma atribuição e um encerramento. Nenhum atendimento ficou aguardando analista.
 
 A comparação combina consulta leve, leitura adaptativa, gravação agrupada e confirmação assíncrona de offsets. Ela demonstra o comportamento desta instalação e deste perfil sintético. Não mede o limite absoluto do servidor nem comprova 400 aberturas enviadas por segundo sem descarte pelo gerador.
+
+## Confirmação de 120.000 conversas em cinco minutos
+
+O reteste com teto de 1.024 aberturas simultâneas passou nos critérios da carga mista. O gerador programou e enviou 120.000 aberturas em 300 segundos, com zero chegadas puladas. O perfil inclui a leitura do conteúdo da primeira resposta, a segunda mensagem e os 16 analistas. A mudança de configuração se limitou ao teto do gerador. O pico medido de 97 aberturas simultâneas ficou abaixo do teto anterior de 160. A diferença entre rodadas impede atribuir a aprovação ao aumento do teto.
+
+| Medida | Rodada anterior | Confirmação |
+|---|---:|---:|
+| Aberturas enviadas | 119.857 | 120.000 |
+| Chegadas puladas | 143 | 0 |
+| p95 de abertura | 19 ms | 11 ms |
+| p95 da primeira resposta persistida | 707 ms | 119 ms |
+| p95 da segunda resposta persistida | 679 ms | 119 ms |
+
+No corte de 300 s, duas aberturas aguardavam a confirmação HTTP e os analistas haviam encerrado 23.911 casos. Aos 301,74 s, todas as conversas já tinham duas respostas da IA e o encerramento esperado. Foram 96.000 encerramentos automáticos e 24.000 humanos. A conferência independente da auditoria encontrou os eventos esperados nos 120.000 casos. A outbox terminou vazia e sem falhas definitivas. O gerador registrou 24.367 conflitos HTTP 409 ao tentar assumir casos a partir de listagens desatualizadas, todos na operação de atribuição. As contagens, amostras e latências estão em [mixed-capacity.json](mixed-capacity.json).
+
+Para reproduzir a confirmação em volumes vazios, execute os comandos abaixo. Para reproduzir o teto das rodadas anteriores, use `MIXED_MAX_OPENS=160` com o respectivo projeto de teste.
+
+```sh
+HELPDESK_PORT=4388 docker compose -p central-mixed-capacity up -d --build
+MIXED_PROJECT=central-mixed-capacity MIXED_MAX_OPENS=1024 node --env-file=.env scripts/mixed.js
+docker compose -p central-mixed-capacity stop
+```

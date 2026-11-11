@@ -103,7 +103,7 @@ No [teste misto de cinco minutos](results/CARGA-MISTA.md), a API aceitou 119.659
 
 A [correção e o reteste da carga mista](results/CARGA-MISTA-RETESTE.md) mantiveram a fila acessível e elevaram os encerramentos humanos para 17.175. O fluxo completo ainda reprovou a 400 novas conversas/s. A gravação dos callbacks acumulou respostas mesmo com conexões reservadas.
 
-Com [consulta leve e gravação agrupada](results/CARGA-MISTA-OTIMIZADA.md), o reteste de cinco minutos completou todas as 119.857 conversas enviadas, com p95 de 707 ms e 679 ms para a primeira e a segunda resposta. O gerador atingiu seu limite de concorrência em 143 chegadas e a taxa efetiva foi 399,52/s. O critério de completar as 120.000 programadas segue pendente.
+Com [consulta leve e gravação agrupada](results/CARGA-MISTA-OTIMIZADA.md), o reteste de cinco minutos completou todas as 119.857 conversas enviadas, com p95 de 707 ms e 679 ms para a primeira e a segunda resposta. O gerador atingiu seu limite de concorrência em 143 chegadas e a taxa efetiva foi 399,52/s. Na [rodada de confirmação](results/mixed-capacity.json), o gerador enviou as 120.000 chegadas programadas em cinco minutos sem descarte. A aplicação encerrou os 120.000 casos após 1,74 s adicionais e o p95 de ambas as respostas ficou em 119 ms.
 
 O dispatcher em [Go](worker/main.go) usa quatro goroutines por padrão. Cada uma reserva um evento com `FOR UPDATE SKIP LOCKED`, entrega o webhook e confirma o resultado na mesma transação. Enquanto há trabalho, busca o próximo evento imediatamente. A versão anterior aguardava 70 ms após cada entrega. Interromper o processo libera reservas não confirmadas. O identificador original permite deduplicar uma eventual reentrega.
 
