@@ -7,6 +7,8 @@ import { writeFileSync } from "node:fs";
 const exec = promisify(execFile);
 const project = process.env.MIXED_PROJECT || "central-mixed";
 const port = {
+  "central-history-empty": 4393,
+  "central-history-aged": 4394,
   "central-mixed": 4383,
   "central-mixed-fixed": 4384,
   "central-mixed-reserved": 4385,
@@ -37,7 +39,31 @@ const sql = async (query) =>
     ),
   );
 assert.equal(await dc("port", "web", "3000"), "127.0.0.1:" + port);
-assert.equal(await sql("SELECT count(*) FROM tickets"), 0);
+const comparison = project.startsWith("central-history-");
+const historical = project === "central-history-aged" ? 360000 : 0;
+assert.equal(await sql("SELECT count(*) FROM tickets"), historical);
+if (historical)
+  assert.equal(
+    await sql(
+      "SELECT count(*) FROM tickets WHERE client LIKE 'archive-%' AND status='Encerrado'",
+    ),
+    historical,
+  );
+const samplesByGroup = {};
+function observe(key, ms) {
+  (samplesByGroup[key] ??= []).push(ms);
+}
+function summarize(values) {
+  values.sort((a, b) => a - b);
+  const at = (p) =>
+    Math.round(values[Math.ceil(p * values.length) - 1] * 100) / 100;
+  return {
+    count: values.length,
+    p50Ms: at(0.5),
+    p95Ms: at(0.95),
+    p99Ms: at(0.99),
+  };
+}
 const rate = 400,
   seconds = 300,
   drain = 120,
@@ -57,7 +83,7 @@ const report = {
   errors: {},
   http: {},
 };
-async function call(session, label, path, body) {
+async function call(session, label, path, body, priority) {
   const at = performance.now();
   let status = "network";
   try {
@@ -75,6 +101,14 @@ async function call(session, label, path, body) {
       r.headers.getSetCookie()[0]?.split(";")[0] || session.cookie;
     const data = await r.json();
     if (!r.ok) throw Error(status);
+    if (comparison && label === "queue") {
+      const duration = performance.now() - at;
+      observe("queue", duration);
+      for (const value of new Set(data.map((ticket) => ticket.priority)))
+        observe("queueWith" + value, duration);
+    }
+    if (comparison && label === "claim")
+      observe("claim" + priority, performance.now() - at);
     return data;
   } catch (e) {
     const key = label + " " + (status === "network" ? e.name : status);
@@ -136,7 +170,11 @@ async function open(i) {
   const t = await call(session, "open", "tickets", {
     brand: brands[i % 2],
     channel: ["Chat", "WhatsApp", "E-mail"][i % 3],
-    priority: i % 10 ? "Normal" : "Alta",
+    priority: comparison
+      ? ["Normal", "Alta", "Urgente"][Math.floor(i / 2) % 3]
+      : i % 10
+        ? "Normal"
+        : "Alta",
     text: "Dúvida sobre Pix",
   });
   if (t?.id) {
@@ -214,7 +252,7 @@ async function staff(a) {
           continue;
         }
         const act = (action, text) =>
-          call(a, action, path + "/action", { action, text });
+          call(a, action, path + "/action", { action, text }, t.priority);
         if (
           (await act("claim")) &&
           (await act("reply", "Conferi o Pix fictício.")) &&
@@ -308,7 +346,7 @@ report.openP95Ms = openingMs[Math.ceil(openingMs.length * 0.95) - 1];
 report.integrity = await sql(`WITH msg AS (
  SELECT ticket,array_agg(CASE author WHEN 'Cliente' THEN 'C' WHEN 'IA' THEN 'I' ELSE 'A' END ORDER BY n) authors,
  (array_agg(created ORDER BY n)) ts,bool_or(body LIKE 'Quero falar%') handoff
- FROM messages GROUP BY ticket)
+ FROM messages ${historical ? "JOIN tickets ON id=ticket WHERE client NOT LIKE 'archive-%'" : ""} GROUP BY ticket)
  SELECT json_build_object('tickets',count(*),'firstReplies',count(*) FILTER(WHERE authors[2]='I'),
  'secondReplies',count(*) FILTER(WHERE authors[4]='I'),
  'closedAuto',count(*) FILTER(WHERE NOT handoff AND status='Encerrado' AND phase='IA' AND authors=ARRAY['C','I','C','I']),
@@ -334,14 +372,56 @@ report.pass =
   v.secondP95Ms <= 2000 &&
   report.atStop.opened - report.atStop.followed <= rate * 3 &&
   report.atStop.requestedHuman - report.atStop.closedByStaff <= rate * 0.2 * 3;
+if (comparison) {
+  report.historicalTickets = historical;
+  report.panel = Object.fromEntries(
+    Object.entries(samplesByGroup).map(([k, v]) => [k, summarize(v)]),
+  );
+  report.handoff = await sql(`WITH waits AS (
+    SELECT t.id,t.priority,extract(epoch FROM max(a.created) FILTER(WHERE kind='Caso assumido') -
+      min(a.created) FILTER(WHERE kind='Transferência humana'))*1000 ms
+    FROM tickets t JOIN audit a ON a.ticket=t.id
+    WHERE t.client NOT LIKE 'archive-%' AND phase='Humano' GROUP BY t.id)
+    SELECT json_agg(s) FROM (SELECT priority,count(ms) AS claims,
+      round(percentile_cont(.50) WITHIN GROUP(ORDER BY ms)::numeric,2) AS "p50Ms",
+      round(percentile_cont(.95) WITHIN GROUP(ORDER BY ms)::numeric,2) AS "p95Ms"
+      FROM waits GROUP BY priority ORDER BY priority) s`);
+  report.events =
+    await sql(`SELECT json_build_object('sent',count(*) FILTER(WHERE state='sent'),
+    'missingCallback',count(*) FILTER(WHERE i.id IS NULL)) FROM outbox o JOIN tickets t ON t.id=o.ticket
+    LEFT JOIN inbox i ON i.id=o.id WHERE t.client NOT LIKE 'archive-%'`);
+  for (const role of ["agent", "bridge"]) {
+    const description = await dc(
+      "exec",
+      "-T",
+      "kafka",
+      "rpk",
+      "group",
+      "describe",
+      "central-" + role + "-v1",
+    );
+    report.events[role + "Lag"] = Number(
+      description.match(/^TOTAL-LAG\s+(\d+)/m)?.[1] ?? NaN,
+    );
+  }
+  report.pass &&=
+    report.events.sent === 240000 &&
+    report.events.missingCallback === 0 &&
+    report.events.agentLag === 0 &&
+    report.events.bridgeLag === 0 &&
+    report.handoff?.length === 3 &&
+    report.handoff.every((row) => row.claims === 8000);
+}
 writeFileSync(
-  project === "central-mixed-capacity"
-    ? "results/mixed-capacity.json"
-    : optimized
-      ? "results/mixed-optimized.json"
-      : project !== "central-mixed"
-        ? "results/mixed-fixed.json"
-        : "results/mixed.json",
+  comparison
+    ? "results/" + project + ".json"
+    : project === "central-mixed-capacity"
+      ? "results/mixed-capacity.json"
+      : optimized
+        ? "results/mixed-optimized.json"
+        : project !== "central-mixed"
+          ? "results/mixed-fixed.json"
+          : "results/mixed.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(
