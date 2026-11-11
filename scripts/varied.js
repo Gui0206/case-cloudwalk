@@ -1,10 +1,14 @@
 // A fixed synthetic day. Each slot has its own arrival count, independent of previous replies.
 import assert from "node:assert/strict";
-import { execFileSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { execFile, execFileSync } from "node:child_process";
+import { promisify } from "node:util";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
 import { checkBrandRoute } from "../public/routing-proof.js";
 
+const resultDir = process.env.VARIED_RESULTS || "results";
+mkdirSync(resultDir, { recursive: true });
 const project = process.env.VARIED_PROJECT || "central-varied";
 assert.match(project, /^central-varied(?:-[a-z0-9-]+)?$/);
 const dc = (...args) =>
@@ -98,16 +102,19 @@ const opening = [
   "Preciso de ajuda com o cadastro.",
 ];
 const staff = new Map();
-for (const [brand, team] of [
-  ["JIM", "Atendimento"],
-  ["InfinitePay", "Atendimento"],
-  ["InfinitePay", "Repasses"],
-]) {
-  const agent = session(),
-    name = brand + " " + team;
-  await agent("profile", { role: "analyst", name, team, brand, code });
-  staff.set(name, agent);
+async function signInAnalysts() {
+  for (const [brand, team] of [
+    ["JIM", "Atendimento"],
+    ["InfinitePay", "Atendimento"],
+    ["InfinitePay", "Repasses"],
+  ]) {
+    const agent = session(),
+      name = brand + " " + team;
+    await agent("profile", { role: "analyst", name, team, brand, code });
+    staff.set(name, agent);
+  }
 }
+await signInAnalysts();
 let seed = 20261111;
 function random(n) {
   seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
@@ -147,7 +154,7 @@ function plan(i) {
     priority,
     lines,
     human,
-    think: 100 + random(850),
+    think: (100 + random(850)) * Math.min(90, slotSeconds / 15),
   };
 }
 const target = byHour.reduce((a, b) => a + b, 0),
@@ -256,7 +263,18 @@ async function conversation(p) {
   report.finished++;
 }
 const start = performance.now();
+let recovery;
+let lastStaffLogin = start;
 for (const [hour, count] of byHour.entries()) {
+  if (performance.now() - lastStaffLogin >= 4 * 3600000) {
+    await signInAnalysts();
+    lastStaffLogin = performance.now();
+  }
+  if (hour === 16 && process.argv.includes("--with-outage")) {
+    recovery = promisify(execFile)(process.execPath, [
+      "scripts/varied-recovery.js",
+    ]).catch((e) => errors.push(e.message));
+  }
   for (let i = 0; i < count; i++) {
     const due = start + (hour + i / count) * slotSeconds * 1000;
     await sleep(Math.max(0, due - performance.now()));
@@ -280,6 +298,7 @@ for (const [hour, count] of byHour.entries()) {
   console.log(JSON.stringify(report.windows.at(-1)));
 }
 await Promise.all(pending);
+await recovery;
 report.elapsedSeconds = (performance.now() - start) / 1000;
 function percentiles(values) {
   values.sort((a, b) => a - b);
@@ -308,8 +327,12 @@ report.pass =
   v.brands === 2 &&
   v.channels === 3 &&
   v.priorities === 3;
-writeFileSync("results/varied.json", JSON.stringify(report, null, 2) + "\n");
+writeFileSync(
+  join(resultDir, "varied.json"),
+  JSON.stringify(report, null, 2) + "\n",
+);
 assert.ok(report.pass, JSON.stringify(report.errors));
+await op("profile", { role: "ops", code });
 const proofs = [];
 for (const f of scoped.rows.filter(
   (r) =>
@@ -321,7 +344,7 @@ for (const f of scoped.rows.filter(
   proofs.push(proof);
 }
 writeFileSync(
-  "results/routing-proof.json",
+  join(resultDir, "routing-proof.json"),
   JSON.stringify(
     {
       version: 2,

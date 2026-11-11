@@ -1,0 +1,223 @@
+{
+  "date": "2026-11-11T19:56:06.971Z",
+  "revision": "9d69d566bef3d85a2be10e9e7959607619250a3a",
+  "seed": 20261111,
+  "slotSeconds": 15,
+  "byHour": [
+    60,
+    40,
+    35,
+    30,
+    35,
+    70,
+    120,
+    200,
+    320,
+    500,
+    400,
+    350,
+    280,
+    300,
+    360,
+    450,
+    750,
+    600,
+    400,
+    300,
+    220,
+    150,
+    110,
+    80
+  ],
+  "target": 6160,
+  "issued": 6160,
+  "finished": 6160,
+  "handoffs": 3053,
+  "peakActive": 338,
+  "maxLaunchDelayMs": 6,
+  "windows": [
+    {
+      "hour": 0,
+      "issued": 60,
+      "completed": 54,
+      "inFlight": 6
+    },
+    {
+      "hour": 1,
+      "issued": 100,
+      "completed": 96,
+      "inFlight": 4
+    },
+    {
+      "hour": 2,
+      "issued": 135,
+      "completed": 130,
+      "inFlight": 5
+    },
+    {
+      "hour": 3,
+      "issued": 165,
+      "completed": 163,
+      "inFlight": 2
+    },
+    {
+      "hour": 4,
+      "issued": 200,
+      "completed": 197,
+      "inFlight": 3
+    },
+    {
+      "hour": 5,
+      "issued": 270,
+      "completed": 263,
+      "inFlight": 7
+    },
+    {
+      "hour": 6,
+      "issued": 390,
+      "completed": 382,
+      "inFlight": 8
+    },
+    {
+      "hour": 7,
+      "issued": 590,
+      "completed": 577,
+      "inFlight": 13
+    },
+    {
+      "hour": 8,
+      "issued": 910,
+      "completed": 883,
+      "inFlight": 27
+    },
+    {
+      "hour": 9,
+      "issued": 1410,
+      "completed": 1372,
+      "inFlight": 38
+    },
+    {
+      "hour": 10,
+      "issued": 1810,
+      "completed": 1784,
+      "inFlight": 26
+    },
+    {
+      "hour": 11,
+      "issued": 2160,
+      "completed": 2135,
+      "inFlight": 25
+    },
+    {
+      "hour": 12,
+      "issued": 2440,
+      "completed": 2421,
+      "inFlight": 19
+    },
+    {
+      "hour": 13,
+      "issued": 2740,
+      "completed": 2717,
+      "inFlight": 23
+    },
+    {
+      "hour": 14,
+      "issued": 3100,
+      "completed": 3073,
+      "inFlight": 27
+    },
+    {
+      "hour": 15,
+      "issued": 3550,
+      "completed": 3514,
+      "inFlight": 36
+    },
+    {
+      "hour": 16,
+      "issued": 4300,
+      "completed": 4240,
+      "inFlight": 60
+    },
+    {
+      "hour": 17,
+      "issued": 4900,
+      "completed": 4857,
+      "inFlight": 43
+    },
+    {
+      "hour": 18,
+      "issued": 5300,
+      "completed": 5269,
+      "inFlight": 31
+    },
+    {
+      "hour": 19,
+      "issued": 5600,
+      "completed": 5583,
+      "inFlight": 17
+    },
+    {
+      "hour": 20,
+      "issued": 5820,
+      "completed": 5806,
+      "inFlight": 14
+    },
+    {
+      "hour": 21,
+      "issued": 5970,
+      "completed": 5961,
+      "inFlight": 9
+    },
+    {
+      "hour": 22,
+      "issued": 6080,
+      "completed": 6073,
+      "inFlight": 7
+    },
+    {
+      "hour": 23,
+      "issued": 6160,
+      "completed": 6156,
+      "inFlight": 4
+    }
+  ],
+  "byCategory": {
+    "Repasse": 1532,
+    "Maquininha": 1582,
+    "Outros": 1548,
+    "Pix": 1498
+  },
+  "byTurns": {
+    "1": 2374,
+    "2": 2380,
+    "3": 468,
+    "4": 460,
+    "5": 478
+  },
+  "elapsedSeconds": 360.713119917,
+  "replyMs": [
+    38,
+    71,
+    4268
+  ],
+  "conversationMs": [
+    913,
+    3934,
+    6614
+  ],
+  "persisted": {
+    "tickets": 6160,
+    "distinctClients": 6160,
+    "closed": 6160,
+    "brands": 2,
+    "channels": 3,
+    "priorities": 3,
+    "categories": 4,
+    "outboxUnsent": 0,
+    "outboxEvents": 12768,
+    "inboxEvents": 12768
+  },
+  "errorCount": 0,
+  "errors": [],
+  "pass": true
+}

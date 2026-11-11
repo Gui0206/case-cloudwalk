@@ -2,6 +2,14 @@
 
 Protótipo individual do case Inteli × CloudWalk. Uma lojista conversa em um canal simulado; um atendente determinístico responde primeiro; quando há escalação, o analista assume com o histórico. O diferencial é testar alterações de roteamento contra casos fictícios antes de publicá-las. Não há acesso à CloudWalk, dados reais, API de LLM nem mensagens enviadas para fora.
 
+O problema operacional é mudar a distribuição de chamados sem depender de desenvolvimento. No exemplo do case, a operação quer encaminhar repasses da InfinitePay para a equipe especializada e preservar o suporte da JIM. O laboratório permite examinar o efeito por marca, publicar uma versão e conferir sua decisão em duas conversas.
+
+| Pergunta da avaliação | Evidência |
+|---|---|
+| A operação consegue prever e conferir uma alteração de regra? | [Comparação da prévia com os dois encaminhamentos auditados](results/PERFIL-VARIADO.md) |
+| O sistema aceita novas conversas durante um pico com atendimento humano ativo? | [120.000 conversas em cinco minutos, com 24.000 encerramentos humanos](results/CARGA-MISTA-OTIMIZADA.md) |
+| O fluxo preserva contexto e recupera trabalho durante uma falha? | [6.160 clientes distintos, quatro assuntos e interrupção do agente durante o pico](results/PERFIL-VARIADO.md#resultado) |
+
 ## Início rápido no Mac
 
 Instale Docker Desktop com Docker Compose v2. No Finder, abra **iniciar.command**, ou no Terminal:
@@ -20,9 +28,12 @@ Para parar e manter conversas, regras e histórico: `docker compose stop`. Para 
 1. Em **Operação**, entre com o código de equipe. Abra **Filas e equipes** para ver os destinos e quem os atende. Clique em **Exemplo: repasses**; a regra nova entra no topo. Para demonstrar um erro, troque a marca da regra para **Qualquer**.
 2. Clique em **Simular impacto → Só alterações**. No estado inicial, seis cenários mudam: duas marcas × três prioridades. A fila *Repasses BR* receberia também casos JIM. Nada foi publicado ou enviado ao agente.
 3. Corrija a marca para **InfinitePay**, simule novamente: agora só três cenários mudam. Confira a regra vencedora em cada linha. Publique. Fila de destino e equipe podem ser editadas pela própria operação.
-4. Em **Cliente**, escolha InfinitePay, WhatsApp e envie “Meu repasse não caiu”. O mock pede o identificador da venda. Responda “VENDA-42”. O agente encaminha para análise humana. Para experimentar fechamento automático, pergunte sobre Pix e responda “funcionou”; para forçar uma transferência, peça um humano.
-5. Em **Analista**, selecione **InfinitePay / Repasses**, entre, abra o caso e clique em **Assumir caso**. Leia o resumo, responda e encerre. Em *Histórico de decisões*, confira a versão da configuração e a regra de transferência. Volte para **Cliente** para ler a resposta no mesmo atendimento.
-6. Repita com JIM: a escalação segue para **Suporte EUA / Atendimento**. Marcas e equipes limitam o acesso do analista; a tela de operação administra ambas.
+4. Após publicar, clique em **Abrir os dois casos de teste**. O painel abre duas conversas de repasse pelo chat, com prioridade normal e o mesmo relato. O agente pede a referência da venda e recebe `VENDA-42`. Compare a previsão com o destino registrado em cada transferência. A InfinitePay deve chegar a **Repasses BR / Repasses** e a JIM a **Suporte EUA / Atendimento**. Abra **Conversa e decisão** para conferir mensagens, resumo, regra e versão.
+5. Em **Analista**, entre como **InfinitePay / Repasses**, assuma o caso, responda e encerre. Troque o perfil para **JIM / Atendimento** para conferir a segunda escalação. O roteiro usa dados sintéticos e deixa os casos nas respectivas filas até que um analista os encerre.
+
+![Dois atendimentos de repasse com a previsão e o destino confirmado](results/demonstracao-repasses.png)
+
+O exemplo parte das regras iniciais da instalação. Em uma instalação já personalizada, a prévia reflete os destinos vigentes. O atalho após publicar cria dois atendimentos persistidos somente quando acionado. [Conversas e decisões da verificação automatizada](results/routing-proof.json)
 
 ## O que é requisito e o que é diferencial
 

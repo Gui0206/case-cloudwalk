@@ -597,7 +597,17 @@ function renderPreview(changedOnly = false) {
     rows.filter(changed).length +
     " de " +
     rows.length +
-    ' cenários mudam de destino</h2><div class="row"><button id="toggle">' +
+    " cenários mudam de destino</h2><p>" +
+    meta.brands
+      .map(
+        (brand) =>
+          esc(brand) +
+          " · " +
+          rows.filter((row) => row.brand === brand && changed(row)).length +
+          " alterações",
+      )
+      .join(" &nbsp;|&nbsp; ") +
+    '</p><div class="row"><button id="toggle">' +
     (changedOnly ? "Ver todos" : "Só alterações") +
     '</button><button class="primary" id="publish">Publicar como v' +
     (data.version + 1) +
@@ -645,8 +655,9 @@ function showRoutingCheck(cases, version) {
   proof.innerHTML =
     "<h2>Conferir repasses na versão " +
     esc(version) +
-    '</h2><p>Abra um caso de teste em cada marca. Ambos entram pelo chat com a mesma prioridade e ficam disponíveis para os analistas após a escalação.</p><button class="primary">Abrir os dois casos de teste</button><div aria-live="polite"></div>';
-  $("#preview").after(proof);
+    '</h2><p>Abra um caso de teste em cada marca. Ambos entram pelo chat com a mesma prioridade e ficam disponíveis para os analistas após a escalação.</p><button class="primary">Abrir os dois casos de teste</button><div class="routing-comparison" aria-live="polite"></div>';
+  out.querySelector(".metrics").after(proof);
+  proof.scrollIntoView({ block: "start" });
   const button = proof.querySelector("button");
   button.onclick = async () => {
     button.disabled = true;

@@ -9,7 +9,8 @@
     "test:faults": "node scripts/faults.js",
     "format": "prettier --write public scripts",
     "test:load": "node scripts/load.js",
-    "test:sustained": "node scripts/sustained.js"
+    "test:sustained": "node scripts/sustained.js",
+    "test:varied": "node --env-file=.env scripts/varied.js --with-outage"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-11T20:00:07.139Z",
+  "ticketsAtTrigger": 3558,
+  "offlineMs": 5096,
+  "acceptedWhileOffline": 255,
+  "repliesBeforeRestart": 0,
+  "recovered": 255,
+  "recoveryObservedMs": 573,
+  "pass": true
+}

@@ -1,0 +1,101 @@
+{
+  "version": 2,
+  "wideChanges": 6,
+  "scopedChanges": 3,
+  "cases": [
+    {
+      "id": "abe7dfb0-c998-4888-889a-a1cd007c2c83",
+      "brand": "InfinitePay",
+      "expected": {
+        "name": "Repasses BR",
+        "priority": "Normal",
+        "queue": "rep",
+        "reason": "Repasses InfinitePay · InfinitePay / Repasse / Humano",
+        "rule": "repasse-demo",
+        "team": "Repasses"
+      },
+      "actual": {
+        "event": "0d198c1a-a8ec-443a-a0f7-bcd38f37090a",
+        "motivo": "Análise do caso pela equipe",
+        "name": "Repasses BR",
+        "priority": "Normal",
+        "queue": "rep",
+        "reason": "Repasses InfinitePay · InfinitePay / Repasse / Humano",
+        "rule": "repasse-demo",
+        "team": "Repasses",
+        "version": 2
+      },
+      "summary": "Assunto: Repasse. Relato inicial: Meu repasse não caiu.. Última informação: VENDA-42",
+      "messages": [
+        {
+          "author": "Cliente",
+          "body": "Meu repasse não caiu.",
+          "created": "2026-11-11T20:02:07.947219+00:00"
+        },
+        {
+          "author": "IA",
+          "body": "Para conferir a divergência simulada, qual é o identificador fictício da venda?",
+          "created": "2026-11-11T20:02:07.954384+00:00"
+        },
+        {
+          "author": "Cliente",
+          "body": "VENDA-42",
+          "created": "2026-11-11T20:02:08.160493+00:00"
+        },
+        {
+          "author": "IA",
+          "body": "Vou encaminhar seu caso à equipe com o histórico da conversa.",
+          "created": "2026-11-11T20:02:08.17129+00:00"
+        }
+      ],
+      "matches": true
+    },
+    {
+      "id": "63fc0d2b-1056-48c2-9af8-10b5e1dc4210",
+      "brand": "JIM",
+      "expected": {
+        "name": "Suporte EUA",
+        "priority": "Normal",
+        "queue": "us",
+        "reason": "Escalas JIM · JIM / Humano",
+        "rule": "r-us",
+        "team": "Atendimento"
+      },
+      "actual": {
+        "event": "ca7ed677-0bbf-461f-92ec-068133e728a2",
+        "motivo": "Análise do caso pela equipe",
+        "name": "Suporte EUA",
+        "priority": "Normal",
+        "queue": "us",
+        "reason": "Escalas JIM · JIM / Humano",
+        "rule": "r-us",
+        "team": "Atendimento",
+        "version": 2
+      },
+      "summary": "Assunto: Repasse. Relato inicial: Meu repasse não caiu.. Última informação: VENDA-42",
+      "messages": [
+        {
+          "author": "Cliente",
+          "body": "Meu repasse não caiu.",
+          "created": "2026-11-11T20:02:08.384677+00:00"
+        },
+        {
+          "author": "IA",
+          "body": "Para conferir a divergência simulada, qual é o identificador fictício da venda?",
+          "created": "2026-11-11T20:02:08.455004+00:00"
+        },
+        {
+          "author": "Cliente",
+          "body": "VENDA-42",
+          "created": "2026-11-11T20:02:08.601409+00:00"
+        },
+        {
+          "author": "IA",
+          "body": "Vou encaminhar seu caso à equipe com o histórico da conversa.",
+          "created": "2026-11-11T20:02:08.613122+00:00"
+        }
+      ],
+      "matches": true
+    }
+  ]
+}
