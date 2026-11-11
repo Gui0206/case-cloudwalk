@@ -12,9 +12,12 @@ const port = {
   "central-mixed-reserved": 4385,
   "central-mixed-optimized": 4386,
   "central-mixed-conversation": 4387,
+  "central-mixed-capacity": 4388,
 }[project];
 assert.ok(port);
 const optimized = port >= 4386;
+const maxConcurrentOpens = Number(process.env.MIXED_MAX_OPENS ?? 1024);
+assert.ok(Number.isSafeInteger(maxConcurrentOpens) && maxConcurrentOpens > 0);
 const dc = async (...args) =>
   (await exec("docker", ["compose", "-p", project, ...args])).stdout.trim();
 const sql = async (query) =>
@@ -45,6 +48,8 @@ const report = {
   rate,
   seconds,
   drain,
+  maxConcurrentOpens,
+  peakConcurrentOpens: 0,
   optimizedPolling: optimized,
   readHistoryOnChange: optimized,
   samples: [],
@@ -262,7 +267,7 @@ const monitor = setInterval(() => {
 for (let i = 0; i < rate * seconds;) {
   const due = Math.min(rate * seconds, Math.floor(elapsed() * rate) + 1);
   while (i < due) {
-    if (active.size >= 160) {
+    if (active.size >= maxConcurrentOpens) {
       skipped++;
       i++;
       continue;
@@ -270,6 +275,10 @@ for (let i = 0; i < rate * seconds;) {
     attempted++;
     const p = open(i++).finally(() => active.delete(p));
     active.add(p);
+    report.peakConcurrentOpens = Math.max(
+      report.peakConcurrentOpens,
+      active.size,
+    );
   }
   if (i < rate * seconds) await sleep(4);
 }
@@ -326,11 +335,13 @@ report.pass =
   report.atStop.opened - report.atStop.followed <= rate * 3 &&
   report.atStop.requestedHuman - report.atStop.closedByStaff <= rate * 0.2 * 3;
 writeFileSync(
-  optimized
-    ? "results/mixed-optimized.json"
-    : project !== "central-mixed"
-      ? "results/mixed-fixed.json"
-      : "results/mixed.json",
+  project === "central-mixed-capacity"
+    ? "results/mixed-capacity.json"
+    : optimized
+      ? "results/mixed-optimized.json"
+      : project !== "central-mixed"
+        ? "results/mixed-fixed.json"
+        : "results/mixed.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(
