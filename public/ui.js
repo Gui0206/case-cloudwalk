@@ -1,3 +1,4 @@
+import { checkBrandRoute } from "./routing-proof.js";
 const $ = (s) => document.querySelector(s),
   out = $("#screen"),
   esc = (v) =>
@@ -623,10 +624,77 @@ function renderPreview(changedOnly = false) {
     "</table></div></div>";
   on("#toggle", () => renderPreview(!changedOnly));
   on("#publish", async () => {
-    await api("publish", { base: preview.base, hash: preview.hash });
+    const cases = preview.rows.filter(
+      (row) =>
+        row.phase === "Humano" &&
+        row.category === "Repasse" &&
+        row.priority === "Normal",
+    );
+    const { version } = await api("publish", {
+      base: preview.base,
+      hash: preview.hash,
+    });
     await switchTab("ops");
     note("Versão publicada. Aplicável às próximas decisões.");
+    if (tab === "ops" && $("#preview")) showRoutingCheck(cases, version);
   });
+}
+function showRoutingCheck(cases, version) {
+  const proof = document.createElement("section");
+  proof.className = "card";
+  proof.innerHTML =
+    "<h2>Conferir repasses na versão " +
+    esc(version) +
+    '</h2><p>Abra um caso de teste em cada marca. Ambos entram pelo chat com a mesma prioridade e ficam disponíveis para os analistas após a escalação.</p><button class="primary">Abrir os dois casos de teste</button><div aria-live="polite"></div>';
+  $("#preview").after(proof);
+  const button = proof.querySelector("button");
+  button.onclick = async () => {
+    button.disabled = true;
+    await Promise.all(
+      cases.map(async (forecast) => {
+        const result = document.createElement("section");
+        proof.lastElementChild.append(result);
+        result.textContent = forecast.brand + " · Abrindo caso…";
+        try {
+          const r = await checkBrandRoute(api, forecast, version, (id) => {
+            result.textContent =
+              forecast.brand + " · Aguardando escalação · " + id;
+          });
+          result.innerHTML =
+            "<h3>" +
+            esc(r.brand) +
+            "</h3><p><strong>" +
+            (r.matches ? "Destino confirmado" : "Diferença encontrada") +
+            "</strong></p><p>Prévia · " +
+            esc(r.expected.name + " / " + r.expected.team) +
+            "<br>Atendimento · " +
+            esc(r.actual.name + " / " + r.actual.team) +
+            "</p><details><summary>Conversa e decisão</summary><p>" +
+            esc(r.id) +
+            "</p>" +
+            r.messages
+              .map(
+                (m) =>
+                  "<p><strong>" +
+                  esc(m.author) +
+                  "</strong> · " +
+                  esc(m.body) +
+                  "</p>",
+              )
+              .join("") +
+            "<p>" +
+            esc(r.summary) +
+            "</p><p>" +
+            esc(r.actual.reason) +
+            " · versão " +
+            esc(r.actual.version) +
+            "</p></details>";
+        } catch (error) {
+          result.append(document.createTextNode(" · " + error.message));
+        }
+      }),
+    );
+  };
 }
 await switchTab("client");
 let polling = false;
