@@ -1,0 +1,99 @@
+{
+  "database": {
+    "archiveTickets": 0,
+    "oldest": null,
+    "newest": null,
+    "databaseBytesAfterRun": 389258263
+  },
+  "failedTopicOffsets": [
+    {
+      "partition": 0,
+      "log_start_offset": 0,
+      "high_watermark": 0
+    },
+    {
+      "partition": 1,
+      "log_start_offset": 0,
+      "high_watermark": 0
+    },
+    {
+      "partition": 2,
+      "log_start_offset": 0,
+      "high_watermark": 0
+    }
+  ],
+  "queuePlanAfterDrain": [
+    {
+      "Plan": {
+        "Node Type": "Limit",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Startup Cost": 0.26,
+        "Total Cost": 11.74,
+        "Plan Rows": 2,
+        "Plan Width": 34,
+        "Actual Startup Time": 0.045,
+        "Actual Total Time": 0.045,
+        "Actual Rows": 0,
+        "Actual Loops": 1,
+        "Shared Hit Blocks": 0,
+        "Shared Read Blocks": 3,
+        "Shared Dirtied Blocks": 0,
+        "Shared Written Blocks": 0,
+        "Local Hit Blocks": 0,
+        "Local Read Blocks": 0,
+        "Local Dirtied Blocks": 0,
+        "Local Written Blocks": 0,
+        "Temp Read Blocks": 0,
+        "Temp Written Blocks": 0,
+        "Plans": [
+          {
+            "Node Type": "Index Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Scan Direction": "Forward",
+            "Index Name": "analyst_active",
+            "Relation Name": "tickets",
+            "Alias": "tickets",
+            "Startup Cost": 0.26,
+            "Total Cost": 11.74,
+            "Plan Rows": 2,
+            "Plan Width": 34,
+            "Actual Startup Time": 0.044,
+            "Actual Total Time": 0.044,
+            "Actual Rows": 0,
+            "Actual Loops": 1,
+            "Index Cond": "((brand = 'InfinitePay'::text) AND (team = 'Atendimento'::text))",
+            "Rows Removed by Index Recheck": 0,
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 3,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          }
+        ]
+      },
+      "Planning": {
+        "Shared Hit Blocks": 249,
+        "Shared Read Blocks": 1,
+        "Shared Dirtied Blocks": 0,
+        "Shared Written Blocks": 0,
+        "Local Hit Blocks": 0,
+        "Local Read Blocks": 0,
+        "Local Dirtied Blocks": 0,
+        "Local Written Blocks": 0,
+        "Temp Read Blocks": 0,
+        "Temp Written Blocks": 0
+      },
+      "Planning Time": 0.809,
+      "Triggers": [],
+      "Execution Time": 0.061
+    }
+  ]
+}

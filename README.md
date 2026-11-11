@@ -8,6 +8,7 @@ O problema operacional é mudar a distribuição de chamados sem depender de des
 |---|---|
 | A operação consegue prever e conferir uma alteração de regra? | [Comparação da prévia com os dois encaminhamentos auditados](results/PERFIL-VARIADO.md) |
 | O sistema aceita novas conversas durante um pico com atendimento humano ativo? | [120.000 conversas em cinco minutos, com 24.000 encerramentos humanos](results/CARGA-MISTA-OTIMIZADA.md) |
+| O histórico de seis meses afeta a fila ativa e o tempo para assumir um caso? | [Comparação a 400 conversas/s, por prioridade](results/HISTORICO-E-FILA.md) |
 | O fluxo preserva contexto e recupera trabalho durante uma falha? | [6.160 clientes distintos, quatro assuntos e interrupção do agente durante o pico](results/PERFIL-VARIADO.md#resultado) |
 
 ## Início rápido no Mac
