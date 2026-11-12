@@ -31,6 +31,8 @@ func (q *request) handle() any {
 		}
 		q.exec("UPDATE session SET sess=$2 WHERE sid=$1", q.sid, encode(object{"client": q.client, "staff": q.staff}))
 		return ok
+	case "POST /api/tickets/claim-next":
+		return q.claimNext()
 	case "POST /api/tickets":
 		return q.create()
 	case "GET /api/tickets":
@@ -211,6 +213,25 @@ func (q *request) status(id string) object {
 	delete(t, "client")
 	return t
 }
+func (q *request) claimNext() object {
+	require(q.staff["role"] == "analyst")
+	// The request transaction holds this lock through assignment and audit.
+	t := q.one(`SELECT id,priority FROM tickets
+		WHERE phase='Humano' AND status='Aguardando analista' AND owner IS NULL
+		  AND brand=$1 AND team=$2 AND ($3='' OR queue=$3)
+		ORDER BY CASE priority WHEN 'Urgente' THEN 1 WHEN 'Alta' THEN 2 ELSE 3 END,updated,id
+		LIMIT 1 FOR UPDATE SKIP LOCKED`, q.staff["brand"], q.staff["team"], str(q.body, "queue"))
+	if t != nil {
+		q.assign(t["id"])
+	}
+	return object{"ticket": t}
+}
+
+func (q *request) assign(id any) {
+	q.exec("UPDATE tickets SET owner=$2,status='Em atendimento',updated=now() WHERE id=$1", id, q.client)
+	q.audit(id, "Caso assumido", fields{"analista": q.staff["name"]})
+}
+
 func (q *request) action(id string) any {
 	t := q.ticket(id, true)
 	action := str(q.body, "action")
@@ -233,8 +254,9 @@ func (q *request) action(id string) any {
 		if t["owner"] != nil && t["owner"] != q.client {
 			fail(409, "Outro analista assumiu.")
 		}
-		q.exec("UPDATE tickets SET owner=$2,status='Em atendimento',updated=now() WHERE id=$1", id, q.client)
-		q.audit(id, "Caso assumido", fields{"analista": q.staff["name"]})
+		if t["owner"] == nil {
+			q.assign(id)
+		}
 	case "close", "reply":
 		if t["owner"] != q.client {
 			fail(409, "Assuma o caso primeiro.")

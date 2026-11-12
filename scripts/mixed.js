@@ -7,6 +7,7 @@ import { writeFileSync } from "node:fs";
 const exec = promisify(execFile);
 const project = process.env.MIXED_PROJECT || "central-mixed";
 const port = {
+  "central-history-dispatch": 4395,
   "central-history-empty": 4393,
   "central-history-aged": 4394,
   "central-mixed": 4383,
@@ -40,7 +41,8 @@ const sql = async (query) =>
   );
 assert.equal(await dc("port", "web", "3000"), "127.0.0.1:" + port);
 const comparison = project.startsWith("central-history-");
-const historical = project === "central-history-aged" ? 360000 : 0;
+const dispatch = project === "central-history-dispatch";
+const historical = dispatch || project === "central-history-aged" ? 360000 : 0;
 assert.equal(await sql("SELECT count(*) FROM tickets"), historical);
 if (historical)
   assert.equal(
@@ -109,6 +111,11 @@ async function call(session, label, path, body, priority) {
     }
     if (comparison && label === "claim")
       observe("claim" + priority, performance.now() - at);
+    if (label === "claimNext") {
+      if (data.ticket)
+        observe("claim" + data.ticket.priority, performance.now() - at);
+      else report.emptyClaims = (report.emptyClaims || 0) + 1;
+    }
     return data;
   } catch (e) {
     const key = label + " " + (status === "network" ? e.name : status);
@@ -268,7 +275,44 @@ async function staff(a) {
     await sleep(400);
   }
 }
-const processes = [...Array.from({ length: 96 }, follow), ...agents.map(staff)];
+async function staffNext(a) {
+  while (running) {
+    const list = await call(a, "queue", "tickets");
+    const waiting = (list || []).filter(
+      (t) => t.status === "Aguardando analista",
+    ).length;
+    for (let i = 0; running && i < waiting; i++) {
+      const assignment = await call(a, "claimNext", "tickets/claim-next", {});
+      if (!assignment?.ticket) break;
+      const path = "tickets/" + assignment.ticket.id;
+      const detail = await call(a, "staffRead", path);
+      if (
+        !detail?.summary ||
+        detail.brand !== a.brand ||
+        detail.team !== "Atendimento" ||
+        detail.messages.length < 4
+      ) {
+        report.invalidContext = (report.invalidContext || 0) + 1;
+        break;
+      }
+      if (
+        (await call(a, "reply", path + "/action", {
+          action: "reply",
+          text: "Conferi o Pix fictício.",
+        })) &&
+        (await call(a, "close", path + "/action", { action: "close" }))
+      ) {
+        a.handled++;
+        closedByStaff++;
+      }
+    }
+    await sleep(400);
+  }
+}
+const processes = [
+  ...Array.from({ length: 96 }, follow),
+  ...agents.map(dispatch ? staffNext : staff),
+];
 const sample = () => ({
   second: +elapsed().toFixed(2),
   attempted,
@@ -411,6 +455,15 @@ if (comparison) {
     report.events.bridgeLag === 0 &&
     report.handoff?.length === 3 &&
     report.handoff.every((row) => row.claims === 8000);
+}
+if (dispatch) {
+  report.assignments =
+    await sql(`SELECT json_build_object('auditRows',count(*),'distinctTickets',count(DISTINCT a.ticket))
+    FROM audit a JOIN tickets t ON t.id=a.ticket WHERE kind='Caso assumido' AND t.client NOT LIKE 'archive-%'`);
+  report.pass &&=
+    Object.keys(report.errors).length === 0 &&
+    report.assignments.auditRows === 24000 &&
+    report.assignments.distinctTickets === 24000;
 }
 writeFileSync(
   comparison

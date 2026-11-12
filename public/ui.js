@@ -150,7 +150,7 @@ function desks() {
         esc(meta.staff.brand) +
         " · " +
         esc(meta.staff.team) +
-        '</span> <button id="change">Trocar perfil</button><label>Filtrar por fila<select id="queueFilter"><option value="">Todas</option></select></label><label>Exibir<select id="caseState"><option value="active">Em aberto</option><option value="closed">Encerrados</option></select></label></div>') +
+        '</span> <button id="change">Trocar perfil</button><label>Filtrar por fila<select id="queueFilter"><option value="">Todas</option></select></label><label>Exibir<select id="caseState"><option value="active">Em aberto</option><option value="closed">Encerrados</option></select></label><button class="primary" id="claimNext">Assumir próximo caso</button></div>') +
     '<div class="card inbox"><div class="eyebrow">CAIXA DE ENTRADA</div><h2>' +
     (cli ? "Minhas conversas" : "Casos da equipe") +
     '</h2><div id="list"></div></div></section><section class="card" id="conversation"><div id="conversationBody"><div class="empty"><div class="empty-icon" aria-hidden="true">↗</div><h2>Selecione um caso</h2><p>As mensagens e o histórico do caso aparecerão aqui.</p></div></div>' +
@@ -209,8 +209,22 @@ function desks() {
       pageOffset += 250;
       refresh();
     });
+    on("#claimNext", async (event) => {
+      const button = event.currentTarget;
+      button.disabled = true;
+      try {
+        const { ticket } = await api("tickets/claim-next", { queue: filter });
+        if (!button.isConnected) return;
+        if (ticket) selected = ticket.id;
+        else note("Nenhum caso disponível nesta fila agora.");
+        await refresh(true);
+      } finally {
+        button.disabled = false;
+      }
+    });
     $("#caseState").onchange = () => {
       pageOffset = 0;
+      $("#claimNext").hidden = $("#caseState").value === "closed";
       refresh();
     };
     on("#change", login);
@@ -369,7 +383,7 @@ async function refresh(force = false) {
           (!cli ? '<button id="close" type="button">Encerrar</button>' : "") +
           "</div></form>"
         : !t.owner
-          ? '<button id="claim" class="primary">Assumir caso</button>'
+          ? "<p>Aguardando atribuição. Use Assumir próximo caso para atender por prioridade.</p>"
           : "<p>Outro analista assumiu este caso.</p>");
   if (!cli) {
     const history = $("#decisionHistory");
@@ -396,7 +410,6 @@ async function refresh(force = false) {
     await api("tickets/" + id + "/action", { action, text });
     await refresh(true);
   };
-  on("#claim", () => act("claim"));
   on("#close", () => act("close"));
   if ($("#reply")) {
     if (last === id) {

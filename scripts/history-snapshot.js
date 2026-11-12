@@ -4,7 +4,13 @@ import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 
 const project = process.env.MIXED_PROJECT;
-assert.ok(["central-history-empty", "central-history-aged"].includes(project));
+assert.ok(
+  [
+    "central-history-empty",
+    "central-history-aged",
+    "central-history-dispatch",
+  ].includes(project),
+);
 const compose = (...args) =>
   execFileSync("docker", ["compose", "-p", project, "exec", "-T", ...args], {
     encoding: "utf8",
