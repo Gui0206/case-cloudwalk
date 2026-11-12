@@ -30,7 +30,7 @@ Para parar e manter conversas, regras e histórico: `docker compose stop`. Para 
 2. Clique em **Simular impacto → Só alterações**. No estado inicial, seis cenários mudam: duas marcas × três prioridades. A fila *Repasses BR* receberia também casos JIM. Nada foi publicado ou enviado ao agente.
 3. Corrija a marca para **InfinitePay**, simule novamente: agora só três cenários mudam. Confira a regra vencedora em cada linha. Publique. Fila de destino e equipe podem ser editadas pela própria operação.
 4. Após publicar, clique em **Abrir os dois casos de teste**. O painel abre duas conversas de repasse pelo chat, com prioridade normal e o mesmo relato. O agente pede a referência da venda e recebe `VENDA-42`. Compare a previsão com o destino registrado em cada transferência. A InfinitePay deve chegar a **Repasses BR / Repasses** e a JIM a **Suporte EUA / Atendimento**. Abra **Conversa e decisão** para conferir mensagens, resumo, regra e versão.
-5. Em **Analista**, entre como **InfinitePay / Repasses**, assuma o caso, responda e encerre. Troque o perfil para **JIM / Atendimento** para conferir a segunda escalação. O roteiro usa dados sintéticos e deixa os casos nas respectivas filas até que um analista os encerre.
+5. Em **Analista**, entre como **InfinitePay / Repasses**, clique em **Assumir próximo caso**, responda e encerre. O servidor atribui um caso disponível por vez, priorizando Urgente, Alta e Normal e respeitando o filtro de fila escolhido. Troque o perfil para **JIM / Atendimento** para conferir a segunda escalação. O roteiro usa dados sintéticos e deixa os casos nas respectivas filas até que um analista os encerre.
 
 ![Dois atendimentos de repasse com a previsão e o destino confirmado](results/demonstracao-repasses.png)
 

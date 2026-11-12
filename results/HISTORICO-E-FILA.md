@@ -41,6 +41,30 @@ O teste cobre uma execução por condição, com o banco analisado e o históric
 
 [Dados sem histórico](central-history-empty.json) · [Dados com histórico](central-history-aged.json) · [Verificação final sem histórico](central-history-empty-snapshot.json) · [Verificação final com histórico](central-history-aged-snapshot.json)
 
+## Reteste com atribuição do próximo caso pelo servidor
+
+Na primeira rodada com histórico, vários analistas podiam identificar o mesmo chamado em listagens anteriores e tentar assumi-lo depois. O painel passou a enviar uma solicitação de próximo caso, com o filtro de fila selecionado. Em uma transação PostgreSQL, a API escolhe uma linha disponível da marca e equipe da sessão, ordena por prioridade e antiguidade e usa `FOR UPDATE SKIP LOCKED` para pular linhas que outro analista já está assumindo. Atribuição e auditoria são confirmadas juntas. Se nenhum caso estiver disponível naquele instante, a API devolve uma resposta sem chamado.
+
+Repetimos a rodada com uma nova instalação e a mesma carga, partindo do mesmo histórico sintético. Os 16 analistas ainda consultam a listagem pública de sua equipe; agora usam os IDs devolvidos pela atribuição e então abrem o histórico, verificam o contexto, respondem e encerram. Nenhum coordenador em memória reserva IDs entre os analistas nesse fluxo. A conferência final exige zero erros HTTP e exatamente uma atribuição por caso humano.
+
+| Medida | Escolha por ID na lista | Próximo caso pelo servidor |
+|---|---:|---:|
+| Conversas encerradas | 120.000 | 120.000 |
+| Tentativas de assumir com HTTP 409 | 26.281 | 0 |
+| Listar fila, p95 (ms) | 8,92 | 11,02 |
+| Assumir Urgente, p95 HTTP (ms) | 9,06 | 11,06 |
+| Transferência até assumir Urgente, p95 (ms) | 398,68 | 364,68 |
+| Assumir Alta, p95 HTTP (ms) | 9,50 | 12,38 |
+| Transferência até assumir Alta, p95 (ms) | 423,48 | 383,93 |
+| Assumir Normal, p95 HTTP (ms) | 9,26 | 11,80 |
+| Transferência até assumir Normal, p95 (ms) | 445,89 | 405,32 |
+
+A auditoria registrou 24.000 atribuições para 24.000 chamados distintos. Houve 10.056 consultas de próximo caso sem trabalho disponível. O tempo de atribuição HTTP considera apenas respostas com chamado. Os 240 mil eventos tiveram retorno confirmado; a outbox, a defasagem dos dois consumidores e o tópico de falhas terminaram zerados. Uma execução por versão permite comparar o comportamento observado nesta máquina.
+
+[Medições da nova rodada](central-history-dispatch.json) · [Verificação final do banco e do tópico de falhas](central-history-dispatch-snapshot.json)
+
+Para reproduzir, use os comandos da rodada com histórico abaixo, substituindo o projeto por `central-history-dispatch` e a porta por `4395`.
+
 ## Reprodução
 
 Partindo da raiz do projeto com Docker, Node 22+, dependências e o arquivo local `.env`:

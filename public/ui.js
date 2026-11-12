@@ -253,18 +253,21 @@ async function refresh(force = false) {
     $("#nextPage").disabled = rows.length < 250;
   }
   if ($("#queueFilter")) {
-    const ids = [...new Set(rows.map((t) => t.queue))];
+    const queues = new Map(rows.map((t) => [t.queue, t.queue_name]));
+    if (filter && !queues.has(filter)) {
+      queues.set(filter, $("#queueFilter").selectedOptions[0]?.text || filter);
+    }
     $("#queueFilter").innerHTML =
       '<option value="">Todas</option>' +
-      ids
+      [...queues]
         .map(
-          (id) =>
+          ([id, name]) =>
             '<option value="' +
             esc(id) +
             '" ' +
             (id === filter ? "selected" : "") +
             ">" +
-            esc(rows.find((t) => t.queue === id).queue_name) +
+            esc(name) +
             "</option>",
         )
         .join("");
