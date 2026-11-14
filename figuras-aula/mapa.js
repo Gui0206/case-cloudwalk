@@ -4,18 +4,7 @@
   const links = [...document.querySelectorAll('nav a')];
   const layers = [...map.querySelectorAll('[data-from]')];
   const [back, next] = map.querySelectorAll('button');
-  const changes = [
-    'Primeiro desenho',
-    'Entra o PostgreSQL',
-    'Entram a outbox e o worker',
-    'Entram a ponte, o broker e o agente',
-    'Entra a inbox',
-    'Entram as regras e o simulador',
-    'Muda a tomada do caso',
-    'Entra o índice dos pendentes',
-    'Teste do desenho acumulado',
-    'Arquitetura final'
-  ];
+  const order = new Map(chapters.map((chapter, i) => [chapter.id, i]));
   let index;
   function render() {
     const found = chapters.findIndex(section => '#' + section.id === location.hash);
@@ -27,14 +16,19 @@
       else links[i].removeAttribute('aria-current');
     });
     layers.forEach(layer => {
-      const first = Number(layer.dataset.from);
-      layer.toggleAttribute('hidden', first > stage);
-      layer.classList.toggle('new', first === stage);
+      const first = order.get(layer.dataset.from);
+      const last = layer.dataset.until ? order.get(layer.dataset.until) : chapters.length - 1;
+      layer.toggleAttribute('hidden', index < first || index > last);
+      layer.classList.toggle('new', first === index);
     });
     map.querySelector('.map-controls strong').textContent = 'Evolução do desenho · ' + stage + ' de ' + chapters.length;
     chapters[index].querySelector('.map-slot').append(map);
     map.querySelector('#map-description').textContent = layers.filter(l => !l.hasAttribute('hidden')).map(l => l.getAttribute('aria-label')).join('. ');
-    map.querySelector('figcaption').textContent = stage < 9 ? 'Traço verde em negrito · ' + changes[index] : stage === 9 ? 'Teste de carga sobre a arquitetura da etapa anterior.' : 'Desenho completo com as peças nas posições originais.';
+    map.querySelector('figcaption').textContent = chapters[index].dataset.caption;
+    const activeLink = links[index];
+    if (nav.offsetHeight && (activeLink.offsetTop < nav.scrollTop || activeLink.offsetTop + activeLink.offsetHeight > nav.scrollTop + nav.clientHeight)) {
+      nav.scrollTop = activeLink.offsetTop - nav.clientHeight / 2;
+    }
     back.disabled = !index;
     next.disabled = index === chapters.length - 1;
   }
