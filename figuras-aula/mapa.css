@@ -3,7 +3,7 @@
 .map-controls strong { margin-right: auto; font-size: 15px }
 .map-controls button { background: #fff; border: 1px solid #aaa; border-radius: 4px; padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer }
 .map-controls button:disabled { opacity: .43; cursor: default }
-.map-status { font-size: 16px; line-height: 1.5; min-height: 3em; margin: 12px 0 0 }
+
 .map-canvas { overflow-x: auto }
 .map svg { display: block; width: min(100%, 800px); margin: auto }
 .map svg text { font-family: "Chalkboard SE", "Comic Sans MS", sans-serif; fill: #242424 }
@@ -13,5 +13,10 @@
 .map figcaption { border-bottom: 1px solid #dedede; padding-bottom: 12px }
 .map figcaption strong { color: #12543e }
 .map + section h2 { margin-top: 22px }
-@media(max-width:800px) { .map svg { min-width: 615px } .map-status { min-height: 4.5em } }
+@media(max-width:800px) { .map svg { min-width: 615px }  }
 @media print { .chapter-view section[hidden] { display:block } .map-controls { display:none } .map svg [data-from][hidden] { display:inline } }
+
+.stage-goal { border-left: 3px solid #62bf9e; padding: 4px 14px; margin: 16px 0 }
+.stage-goal strong { display: block; color: #27664e; font-size: 14px }
+.stage-next { display: block; margin-top: 24px; padding: 12px 0; border-top: 1px solid #dedede }
+@media print { .stage-next, .map-slot { display: none } }
