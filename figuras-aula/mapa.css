@@ -20,3 +20,5 @@
 .stage-goal strong { display: block; color: #27664e; font-size: 14px }
 .stage-next { display: block; margin-top: 24px; padding: 12px 0; border-top: 1px solid #dedede }
 @media print { .stage-next, .map-slot { display: none } }
+.map-slot .map { margin-bottom: 0 }
+.map-challenge { margin: 10px 0; padding: 8px 14px; border-left: 3px solid #ab792d }

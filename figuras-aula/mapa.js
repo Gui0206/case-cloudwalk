@@ -22,7 +22,9 @@
       layer.classList.toggle('new', first === index);
     });
     map.querySelector('.map-controls strong').textContent = 'Evolução do desenho · ' + stage + ' de ' + chapters.length;
-    chapters[index].querySelector('.map-slot').append(map);
+    const slot = chapters[index].querySelector('.map-slot');
+    slot.prepend(map);
+    map.querySelector('#map-probe').setAttribute('transform', 'translate(' + slot.dataset.x + ' ' + slot.dataset.y + ')');
     map.querySelector('#map-description').textContent = layers.filter(l => !l.hasAttribute('hidden')).map(l => l.getAttribute('aria-label')).join('. ');
     map.querySelector('figcaption').textContent = chapters[index].dataset.caption;
     const activeLink = links[index];
@@ -49,7 +51,7 @@
     const link = document.createElement('a');
     link.className = 'stage-next';
     link.href = links[i + 1].hash;
-    link.textContent = 'Continuar → ' + chapters[i + 1].querySelector('h2').textContent;
+    link.textContent = 'Continuar →';
     link.onclick = event => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
