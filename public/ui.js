@@ -40,7 +40,7 @@ const label = {
   ],
 };
 const head = () =>
-  `<section class="hero"><div class="kicker">${label[tab][0]}</div><h1>${label[tab][1]}</h1><p>${label[tab][2]}</p></section>`;
+  `<section class="page-heading"><h1>${label[tab][1]}</h1><p>${label[tab][2]}</p></section>`;
 const opts = (arr, v, any = false) =>
   (any ? '<option value="">Qualquer</option>' : "") +
   arr
@@ -140,18 +140,19 @@ function desks() {
     head() +
     '<div class="grid"><section class="desk-side">' +
     (cli
-      ? '<form id="new" class="card stack"><div class="eyebrow">ABERTURA DE CASO</div><h2>Novo atendimento</h2><div class="row">' +
+      ? '<form id="new" class="card stack"><h2>Novo atendimento</h2><div class="row">' +
         sel("brand", "Marca", meta.brands) +
-        sel("channel", "Canal", meta.channels) +
-        "</div>" +
+        "</div><details class='simulation-settings'><summary>Configurar canal e prioridade</summary><div class='row'>" +
+        sel("channel", "Canal simulado", meta.channels) +
         sel("priority", "Prioridade simulada", meta.priorities) +
+        "</div></details>" +
         '<label>Mensagem inicial<textarea name="text" required maxlength="1500" placeholder="Meu repasse não caiu."></textarea></label><div class="suggest"><span>Experimentar</span><button type="button" data-prompt="Meu repasse não caiu.">Repasse</button><button type="button" data-prompt="Minha maquininha não conecta.">Maquininha</button></div><button class="primary">Iniciar conversa</button></form>'
       : '<div class="card"><span class="badge">' +
         esc(meta.staff.brand) +
         " · " +
         esc(meta.staff.team) +
-        '</span> <button id="change">Trocar perfil</button><label>Filtrar por fila<select id="queueFilter"><option value="">Todas</option></select></label><label>Exibir<select id="caseState"><option value="active">Em aberto</option><option value="closed">Encerrados</option></select></label><button class="primary" id="claimNext">Assumir próximo caso</button></div>') +
-    '<div class="card inbox"><div class="eyebrow">CAIXA DE ENTRADA</div><h2>' +
+        '</span> <button id="change" class="quiet">Trocar perfil</button><button class="primary" id="claimNext">Assumir próximo caso</button><details class="queue-filters"><summary>Filtrar casos</summary><label>Filtrar por fila<select id="queueFilter"><option value="">Todas</option></select></label><label>Exibir<select id="caseState"><option value="active">Em aberto</option><option value="closed">Encerrados</option></select></label></details></div>') +
+    '<div class="card inbox"><h2>' +
     (cli ? "Minhas conversas" : "Casos da equipe") +
     '</h2><div id="list"></div></div></section><section class="card" id="conversation"><div id="conversationBody"><div class="empty"><div class="empty-icon" aria-hidden="true">↗</div><h2>Selecione um caso</h2><p>As mensagens e o histórico do caso aparecerão aqui.</p></div></div>' +
     (cli
@@ -453,18 +454,9 @@ function opsView() {
   const c = data.draft;
   out.innerHTML =
     head() +
-    '<div class="metrics"><div><small>Atendimentos</small><strong>' +
-    data.metrics.tickets +
-    "</strong></div><div><small>Escalas humanas</small><strong>" +
-    data.metrics.handoffs +
-    "</strong></div><div><small>Webhooks pendentes</small><strong>" +
-    data.metrics.pending +
-    "</strong></div><div><small>Falhas de entrega</small><strong>" +
-    data.metrics.failed +
-    "</strong></div></div>" +
-    '<div class="card"><span class="badge">Em vigor · versão ' +
+    '<details class="card policy-editor" id="policyEditor" open><summary>Editar regras <span class="badge">Em vigor · versão ' +
     data.version +
-    "</span><h2>Editor de regras</h2><p>A primeira regra compatível vence. Alterações só afetam decisões futuras após a publicação.</p><div class='row actions'><button id='example'>Exemplo: repasses</button><button id='sim' class='primary'>Simular impacto →</button></div><details><summary>Filas e equipes (" +
+    "</span></summary><p>A primeira regra compatível vence. Simule o rascunho antes de publicar.</p><div class='row actions'><button id='example'>Exemplo: repasses</button><button id='sim' class='primary'>Simular impacto →</button></div><details><summary>Filas e equipes (" +
     c.queues.length +
     ')</summary><div id="queues">' +
     c.queues
@@ -516,7 +508,18 @@ function opsView() {
           "</div></details>",
       )
       .join("") +
-    '<div class="row actions"><button id="addR">Adicionar regra no topo</button></div><div class="row"><button id="save">Salvar rascunho</button></div></div><div id="preview"></div>';
+    '<div class="row actions"><button id="addR">Adicionar regra no topo</button></div><div class="row"><button id="save">Salvar rascunho</button></div></details><div id="preview"></div>' +
+    '<details class="operational-status"><summary>Saúde da integração</summary>' +
+    '<div class="metrics"><div><small>Atendimentos</small><strong>' +
+    data.metrics.tickets +
+    "</strong></div><div><small>Escalas humanas</small><strong>" +
+    data.metrics.handoffs +
+    "</strong></div><div><small>Webhooks pendentes</small><strong>" +
+    data.metrics.pending +
+    "</strong></div><div><small>Falhas de entrega</small><strong>" +
+    data.metrics.failed +
+    "</strong></div></div>" +
+    "</details>";
   const mutate = (el) => {
     const p = el.closest("[data-queue],[data-rule]");
     if (!p) return;
@@ -599,6 +602,7 @@ function opsView() {
           x.before.name !== x.after.name,
       ),
     );
+    $("#policyEditor").open = false;
     $("#preview").scrollIntoView({ behavior: "smooth" });
   });
 }
@@ -623,7 +627,7 @@ function renderPreview(changedOnly = false) {
           " alterações",
       )
       .join(" &nbsp;|&nbsp; ") +
-    '</p><div class="row"><button id="toggle">' +
+    '</p><div class="row"><button id="editDraft">Voltar às regras</button><button id="toggle">' +
     (changedOnly ? "Ver todos" : "Só alterações") +
     '</button><button class="primary" id="publish">Publicar como v' +
     (data.version + 1) +
@@ -648,6 +652,10 @@ function renderPreview(changedOnly = false) {
       )
       .join("") +
     "</table></div></div>";
+  on("#editDraft", () => {
+    $("#policyEditor").open = true;
+    $("#policyEditor").scrollIntoView({ behavior: "smooth" });
+  });
   on("#toggle", () => renderPreview(!changedOnly));
   on("#publish", async () => {
     const cases = preview.rows.filter(
