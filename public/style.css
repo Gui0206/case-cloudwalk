@@ -701,3 +701,148 @@ footer {
 .operational-status .metrics {
   margin-top: 12px;
 }
+
+/* Operação: uma tarefa por área, revisão antes da publicação. */
+.ops-nav {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 24px;
+}
+.ops-nav button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #666;
+  padding: 12px 0;
+  border-bottom: 3px solid transparent;
+}
+.ops-nav button[aria-pressed="true"] {
+  color: #111;
+  border-bottom-color: #111;
+}
+.ops-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+.ops-section-heading .badge {
+  white-space: nowrap;
+}
+.ops-toolbar {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0;
+}
+.ops-rule-list .policy {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+}
+.ops-rule-list .policy > summary {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  padding: 20px 8px;
+  cursor: pointer;
+}
+.ops-rule-list .policy > summary::before {
+  display: none;
+}
+.ops-rule-list .policy > summary::after {
+  content: "Editar";
+  grid-column: 3;
+  grid-row: 2;
+  font-size: 12px;
+  color: #666;
+  text-align: right;
+}
+.ops-rule-list .policy[open] > summary::after {
+  content: "Fechar";
+}
+.ops-rule-list .rule-condition {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+}
+.ops-rule-list .rule-index {
+  color: #666;
+  background: none;
+}
+.ops-rule-list .rule-dest {
+  color: #111;
+  font-size: 13px;
+}
+.ops-rule-list .policy > .row {
+  padding: 0 12px 16px;
+}
+.ops-rule-list .policy[open] {
+  background: #f6f5f2;
+}
+.ops-rule-list .policy > .row:last-child {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.ops-review-bar {
+  border-top: 1px solid var(--line);
+  margin-top: 24px;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.ops-review-bar > span,
+.ops-review-bar > p {
+  color: #666;
+  font-size: 13px;
+}
+.preview-step {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #666;
+}
+#preview .scroll {
+  max-height: 460px;
+  margin-top: 24px;
+}
+#preview th {
+  position: sticky;
+  top: 0;
+  background: #f6f5f2;
+}
+#healthPanel .metrics {
+  margin-top: 28px;
+}
+@media (max-width: 700px) {
+  .ops-nav {
+    gap: 16px;
+  }
+  .ops-nav button {
+    font-size: 13px;
+  }
+  .ops-section-heading,
+  .ops-review-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ops-rule-list .policy > summary {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+  .ops-rule-list .rule-dest {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  .ops-rule-list .policy > summary::after {
+    display: none;
+  }
+  .ops-rule-list .policy > .row:last-child {
+    grid-template-columns: 1fr;
+  }
+}

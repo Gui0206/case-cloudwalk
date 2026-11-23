@@ -35,8 +35,8 @@ const label = {
   ],
   ops: [
     "03 / OPERAÇÃO",
-    "Laboratório de filas",
-    "Edite as regras, confira o impacto e publique quando os destinos estiverem corretos.",
+    "Roteamento de atendimentos",
+    "Defina para onde vai cada atendimento e confira o impacto antes de publicar.",
   ],
 };
 const head = () =>
@@ -454,11 +454,8 @@ function opsView() {
   const c = data.draft;
   out.innerHTML =
     head() +
-    '<details class="card policy-editor" id="policyEditor" open><summary>Editar regras <span class="badge">Em vigor · versão ' +
-    data.version +
-    "</span></summary><p>A primeira regra compatível vence. Simule o rascunho antes de publicar.</p><div class='row actions'><button id='example'>Exemplo: repasses</button><button id='sim' class='primary'>Simular impacto →</button></div><details><summary>Filas e equipes (" +
-    c.queues.length +
-    ')</summary><div id="queues">' +
+    `<div class="ops-nav" aria-label="Áreas da operação"><button data-ops="rules" aria-pressed="true">Regras</button><button data-ops="queues" aria-pressed="false">Filas e equipes</button><button data-ops="health" aria-pressed="false">Monitoramento</button></div>
+    <section class="card" id="queuePanel" hidden><h2>Filas e equipes</h2><p>Cada fila reúne atendimentos para uma equipe. As regras abaixo escolhem a fila de destino.</p><div id="queues">` +
     c.queues
       .map(
         (q, i) =>
@@ -470,12 +467,13 @@ function opsView() {
           "</div>",
       )
       .join("") +
-    '</div><button id="addQ">Adicionar fila</button></details><h3>Regras em ordem de aplicação</h3>' +
+    `</div><button id="addQ">Adicionar fila</button><p class="muted">As mudanças nas filas fazem parte do rascunho. Revise o impacto na aba Regras para publicá-las.</p></section>
+    <section class="card policy-editor" id="policyEditor"><div class="ops-section-heading"><div><h2>Regras de encaminhamento</h2><p>A primeira regra que combinar com o atendimento define o destino.</p></div><span class="badge">Publicada · v${data.version}</span></div><div class="ops-toolbar"><button id="addR">Adicionar regra</button><button id="example">Exemplo: repasses</button></div><div class="ops-rule-list">` +
     c.rules
       .map(
         (r, i) =>
-          `<details class="rule policy" data-rule="${i}" ${i === 0 ? "open" : ""}><summary><span class="rule-index">${String(i + 1).padStart(2, "0")}</span> <span class="rule-title">${esc(r.name)}</span> <small class="rule-dest">→ ${esc(c.queues.find((q) => q.id === r.queue)?.name)}</small></summary><div class="row">` +
-          input("name", "Regra " + (i + 1), r.name) +
+          `<details class="rule policy" data-rule="${i}" ><summary><span class="rule-index">${String(i + 1).padStart(2, "0")}</span> <span class="rule-title">${esc(r.name)}</span> <small class="rule-dest">→ ${esc(c.queues.find((q) => q.id === r.queue)?.name)}</small><span class="rule-condition">${esc([r.brand || "Todas as marcas", r.category || "Todos os assuntos", r.phase || "Todas as etapas", r.priority || "Todas as prioridades"].join(" · "))}</span></summary><div class="row">` +
+          input("name", "Nome da regra", r.name) +
           '<button data-up="' +
           i +
           '" ' +
@@ -508,8 +506,8 @@ function opsView() {
           "</div></details>",
       )
       .join("") +
-    '<div class="row actions"><button id="addR">Adicionar regra no topo</button></div><div class="row"><button id="save">Salvar rascunho</button></div></details><div id="preview"></div>' +
-    '<details class="operational-status"><summary>Saúde da integração</summary>' +
+    '</div><div class="ops-review-bar"><span id="draftStatus" role="status">Rascunho · ainda não publicado</span><div class="row"><button id="save">Salvar rascunho</button><button id="sim" class="primary">Simular impacto →</button></div></div></section><div id="preview" hidden></div>' +
+    '<section class="card operational-status" id="healthPanel" hidden><h2>Monitoramento</h2><p>Volume de atendimentos e situação das entregas da integração.</p>' +
     '<div class="metrics"><div><small>Atendimentos</small><strong>' +
     data.metrics.tickets +
     "</strong></div><div><small>Escalas humanas</small><strong>" +
@@ -519,7 +517,7 @@ function opsView() {
     "</strong></div><div><small>Falhas de entrega</small><strong>" +
     data.metrics.failed +
     "</strong></div></div>" +
-    "</details>";
+    "</section>";
   const mutate = (el) => {
     const p = el.closest("[data-queue],[data-rule]");
     if (!p) return;
@@ -542,10 +540,40 @@ function opsView() {
     }
     preview = null;
     $("#preview").innerHTML = "";
+    $("#draftStatus").textContent = "Alterações não salvas";
+    if (p.hasAttribute("data-rule"))
+      p.querySelector(".rule-condition").textContent = [
+        obj.brand || "Todas as marcas",
+        obj.category || "Todos os assuntos",
+        obj.phase || "Todas as etapas",
+        obj.priority || "Todas as prioridades",
+      ].join(" · ");
   };
   out
     .querySelectorAll("[data-field]")
     .forEach((el) => (el.oninput = () => mutate(el)));
+  const showPanel = (area) => {
+    $("#policyEditor").hidden = area !== "rules";
+    $("#queuePanel").hidden = area !== "queues";
+    $("#healthPanel").hidden = area !== "health";
+    $("#preview").hidden = true;
+    out
+      .querySelectorAll("[data-ops]")
+      .forEach((b) =>
+        b.setAttribute("aria-pressed", String(b.dataset.ops === area)),
+      );
+  };
+  out
+    .querySelectorAll("[data-ops]")
+    .forEach((b) => (b.onclick = () => showPanel(b.dataset.ops)));
+  out.querySelectorAll("details.policy").forEach((rule) =>
+    rule.addEventListener("toggle", () => {
+      if (rule.open)
+        out.querySelectorAll("details.policy").forEach((other) => {
+          if (other !== rule) other.open = false;
+        });
+    }),
+  );
   const reset = (fn) => {
     fn();
     preview = null;
@@ -559,7 +587,7 @@ function opsView() {
         team: "Atendimento",
       }),
     );
-    $("#queues").closest("details").open = true;
+    showPanel("queues");
     $("#queues .rule:last-child input").focus();
   });
   const newRule = (example) => ({
@@ -571,8 +599,14 @@ function opsView() {
     priority: "",
     queue: example ? "rep" : "br",
   });
-  on("#addR", () => reset(() => c.rules.unshift(newRule(false))));
-  on("#example", () => reset(() => c.rules.unshift(newRule(true))));
+  const addRule = (example) => {
+    reset(() => c.rules.unshift(newRule(example)));
+    const first = out.querySelector("details.policy");
+    first.open = true;
+    first.querySelector("input").focus();
+  };
+  on("#addR", () => addRule(false));
+  on("#example", () => addRule(true));
   out.querySelectorAll("[data-up]").forEach(
     (b) =>
       (b.onclick = () =>
@@ -589,6 +623,7 @@ function opsView() {
   const save = () => api("draft", { base: data.version, config: c });
   on("#save", async () => {
     await save();
+    $("#draftStatus").textContent = "Rascunho salvo · ainda não publicado";
     note("Rascunho salvo. A versão ativa não mudou.");
   });
   on("#sim", async () => {
@@ -602,7 +637,8 @@ function opsView() {
           x.before.name !== x.after.name,
       ),
     );
-    $("#policyEditor").open = false;
+    $("#policyEditor").hidden = true;
+    $("#preview").hidden = false;
     $("#preview").scrollIntoView({ behavior: "smooth" });
   });
 }
@@ -613,7 +649,7 @@ function renderPreview(changedOnly = false) {
       x.before.team !== x.after.team ||
       x.before.name !== x.after.name;
   $("#preview").innerHTML =
-    '<div class="card"><div class="kicker">PRÉVIA · SEM ALTERAR CONVERSAS</div><h2>' +
+    '<div class="card"><p class="preview-step">REVISÃO DO RASCUNHO</p><h2>' +
     rows.filter(changed).length +
     " de " +
     rows.length +
@@ -629,8 +665,6 @@ function renderPreview(changedOnly = false) {
       .join(" &nbsp;|&nbsp; ") +
     '</p><div class="row"><button id="editDraft">Voltar às regras</button><button id="toggle">' +
     (changedOnly ? "Ver todos" : "Só alterações") +
-    '</button><button class="primary" id="publish">Publicar como v' +
-    (data.version + 1) +
     '</button></div><div class="scroll"><table><tr><th>CENÁRIO</th><th>ANTES</th><th>DEPOIS</th><th>REGRA DO RASCUNHO</th></tr>' +
     rows
       .filter((x) => !changedOnly || changed(x))
@@ -651,9 +685,10 @@ function renderPreview(changedOnly = false) {
           "</td></tr>",
       )
       .join("") +
-    "</table></div></div>";
+    `</table></div><div class="ops-review-bar"><p>Publicar aplica este rascunho às próximas decisões de roteamento.</p><button class="primary" id="publish">Publicar versão ${data.version + 1}</button></div></div>`;
   on("#editDraft", () => {
-    $("#policyEditor").open = true;
+    $("#preview").hidden = true;
+    $("#policyEditor").hidden = false;
     $("#policyEditor").scrollIntoView({ behavior: "smooth" });
   });
   on("#toggle", () => renderPreview(!changedOnly));
@@ -680,7 +715,9 @@ function showRoutingCheck(cases, version) {
     "<h2>Conferir repasses na versão " +
     esc(version) +
     '</h2><p>Abra um caso de teste em cada marca. Ambos entram pelo chat com a mesma prioridade e ficam disponíveis para os analistas após a escalação.</p><button class="primary">Abrir os dois casos de teste</button><div class="routing-comparison" aria-live="polite"></div>';
-  out.querySelector(".metrics").after(proof);
+  $("#preview").hidden = false;
+  $("#policyEditor").hidden = true;
+  $("#preview").append(proof);
   proof.scrollIntoView({ block: "start" });
   const button = proof.querySelector("button");
   button.onclick = async () => {
