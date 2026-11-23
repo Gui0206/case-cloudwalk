@@ -108,7 +108,11 @@ async function switchTab(t) {
     await api("profile", { role: "client" });
     meta.staff = null;
   }
-  if (t !== "client" && meta.staff?.role !== t) return login();
+  if (
+    t !== "client" &&
+    (meta.staff?.role !== t || (t === "ops" && !meta.staff?.id))
+  )
+    return login();
   if (t === "ops") {
     data = await api("config");
     data.metrics = await api("metrics");
@@ -126,7 +130,13 @@ function login() {
       ? '<label>Nome de exibição<input name="name" required value="Analista Demo" maxlength="60"></label>' +
         sel("brand", "Marca", meta.brands) +
         sel("team", "Equipe", meta.teams)
-      : "") +
+      : '<label>Identidade de demonstração<select name="operator">' +
+        Object.entries(meta.operators)
+          .map(
+            ([id, name]) => `<option value="${esc(id)}">${esc(name)}</option>`,
+          )
+          .join("") +
+        "</select></label>") +
     '<label>Código da equipe<input type="password" required name="code"></label><button class="primary">Entrar</button></form>';
   $("#login").onsubmit = async (e) => {
     e.preventDefault();
@@ -144,7 +154,11 @@ function desks() {
         sel("brand", "Marca", meta.brands) +
         "</div><details class='simulation-settings'><summary>Configurar canal e prioridade</summary><div class='row'>" +
         sel("channel", "Canal simulado", meta.channels) +
-        sel("priority", "Prioridade simulada", meta.priorities) +
+        sel(
+          "priority",
+          "Prioridade informada (a política decide)",
+          meta.priorities,
+        ) +
         "</div></details>" +
         '<label>Mensagem inicial<textarea name="text" required maxlength="1500" placeholder="Meu repasse não caiu."></textarea></label><div class="suggest"><span>Experimentar</span><button type="button" data-prompt="Meu repasse não caiu.">Repasse</button><button type="button" data-prompt="Minha maquininha não conecta.">Maquininha</button></div><button class="primary">Iniciar conversa</button></form>'
       : '<div class="card"><span class="badge">' +
@@ -454,7 +468,7 @@ function opsView() {
   const c = data.draft;
   out.innerHTML =
     head() +
-    `<div class="ops-nav" aria-label="Áreas da operação"><button data-ops="rules" aria-pressed="true">Regras</button><button data-ops="queues" aria-pressed="false">Filas e equipes</button><button data-ops="health" aria-pressed="false">Monitoramento</button></div>
+    `<div class="ops-nav" aria-label="Áreas da operação"><button data-ops="rules" aria-pressed="true">Regras</button><button data-ops="queues" aria-pressed="false">Filas e equipes</button><button data-ops="health" aria-pressed="false">Monitoramento</button><button data-ops="audit" aria-pressed="false">Publicações</button></div>
     <section class="card" id="queuePanel" hidden><h2>Filas e equipes</h2><p>Cada fila reúne atendimentos para uma equipe. As regras abaixo escolhem a fila de destino.</p><div id="queues">` +
     c.queues
       .map(
@@ -468,11 +482,11 @@ function opsView() {
       )
       .join("") +
     `</div><button id="addQ">Adicionar fila</button><p class="muted">As mudanças nas filas fazem parte do rascunho. Revise o impacto na aba Regras para publicá-las.</p></section>
-    <section class="card policy-editor" id="policyEditor"><div class="ops-section-heading"><div><h2>Regras de encaminhamento</h2><p>A primeira regra que combinar com o atendimento define o destino.</p></div><span class="badge">Publicada · v${data.version}</span></div><div class="ops-toolbar"><button id="addR">Adicionar regra</button><button id="example">Exemplo: repasses</button></div><div class="ops-rule-list">` +
+    <section class="card policy-editor" id="policyEditor"><div class="ops-section-heading"><div><h2>Regras de encaminhamento</h2><p>A primeira regra que combinar com o atendimento define a fila e a prioridade efetiva. Sem definição, a prioridade é Normal.</p></div><span class="badge">Publicada · v${data.version}</span></div><div class="ops-toolbar"><button id="addR">Adicionar regra</button><button id="example">Exemplo: repasses</button></div><div class="ops-rule-list">` +
     c.rules
       .map(
         (r, i) =>
-          `<details class="rule policy" data-rule="${i}" ><summary><span class="rule-index">${String(i + 1).padStart(2, "0")}</span> <span class="rule-title">${esc(r.name)}</span> <small class="rule-dest">→ ${esc(c.queues.find((q) => q.id === r.queue)?.name)}</small><span class="rule-condition">${esc([r.brand || "Todas as marcas", r.category || "Todos os assuntos", r.phase || "Todas as etapas", r.priority || "Todas as prioridades"].join(" · "))}</span></summary><div class="row">` +
+          `<details class="rule policy" data-rule="${i}" ><summary><span class="rule-index">${String(i + 1).padStart(2, "0")}</span> <span class="rule-title">${esc(r.name)}</span> <small class="rule-dest">→ ${esc(c.queues.find((q) => q.id === r.queue)?.name)} · ${esc(r.setPriority || "Normal")}</small><span class="rule-condition">${esc([r.brand || "Todas as marcas", r.category || "Todos os assuntos", r.phase || "Todas as etapas", r.priority || "Todas as prioridades"].join(" · "))}</span></summary><div class="row">` +
           input("name", "Nome da regra", r.name) +
           '<button data-up="' +
           i +
@@ -484,7 +498,19 @@ function opsView() {
           select("brand", "Marca", meta.brands, r.brand, true) +
           select("category", "Assunto", meta.categories, r.category, true) +
           select("phase", "Etapa", meta.phases, r.phase, true) +
-          select("priority", "Prioridade", meta.priorities, r.priority, true) +
+          select(
+            "priority",
+            "Se prioridade informada for",
+            meta.priorities,
+            r.priority,
+            true,
+          ) +
+          select(
+            "setPriority",
+            "Definir prioridade efetiva",
+            meta.priorities,
+            r.setPriority || "Normal",
+          ) +
           field(
             "queue",
             "Destino",
@@ -517,7 +543,7 @@ function opsView() {
     "</strong></div><div><small>Falhas de entrega</small><strong>" +
     data.metrics.failed +
     "</strong></div></div>" +
-    "</section>";
+    '<\/section><section class="card" id="publicationPanel" hidden><h2>Histórico de publicações</h2><p>Identidades de demonstração; não equivalem a autenticação individual de produção.</p><div id="publicationList"></div></section>';
   const mutate = (el) => {
     const p = el.closest("[data-queue],[data-rule]");
     if (!p) return;
@@ -528,14 +554,21 @@ function opsView() {
     if (p.hasAttribute("data-rule")) {
       p.querySelector(".rule-title").textContent = obj.name;
       p.querySelector(".rule-dest").textContent =
-        "→ " + (c.queues.find((q) => q.id === obj.queue)?.name ?? "");
+        "→ " +
+        (c.queues.find((q) => q.id === obj.queue)?.name ?? "") +
+        " · " +
+        (obj.setPriority || "Normal");
     } else if (el.dataset.field === "name") {
       out.querySelectorAll("select[data-field=queue] option").forEach((o) => {
         if (o.value === obj.id) o.textContent = obj.name;
       });
       out.querySelectorAll("[data-rule]").forEach((row) => {
         if (c.rules[row.dataset.rule].queue === obj.id)
-          row.querySelector(".rule-dest").textContent = "→ " + obj.name;
+          row.querySelector(".rule-dest").textContent =
+            "→ " +
+            obj.name +
+            " · " +
+            (c.rules[row.dataset.rule].setPriority || "Normal");
       });
     }
     preview = null;
@@ -552,16 +585,30 @@ function opsView() {
   out
     .querySelectorAll("[data-field]")
     .forEach((el) => (el.oninput = () => mutate(el)));
-  const showPanel = (area) => {
+  const showPanel = async (area) => {
     $("#policyEditor").hidden = area !== "rules";
     $("#queuePanel").hidden = area !== "queues";
     $("#healthPanel").hidden = area !== "health";
+    $("#publicationPanel").hidden = area !== "audit";
     $("#preview").hidden = true;
     out
       .querySelectorAll("[data-ops]")
       .forEach((b) =>
         b.setAttribute("aria-pressed", String(b.dataset.ops === area)),
       );
+    if (area === "audit") {
+      const target = $("#publicationList");
+      const entries = await api("publications");
+      if (!target.isConnected) return;
+      $("#publicationList").innerHTML = entries.length
+        ? entries
+            .map(
+              (e) =>
+                `<details class="rule"><summary>Versão ${esc(e.detail.version)} · ${esc(e.detail.actor?.name || "Autor não registrado (legado)")} · ${esc(new Date(e.created).toLocaleString("pt-BR"))}</summary><p>Versão anterior: ${esc(e.detail.previousVersion ?? "não registrada")} · Correlação: ${esc(e.detail.correlationId || "legado")}</p>${publicationChanges(e.detail.changes || [])}</details>`,
+            )
+            .join("")
+        : "<p>Nenhuma publicação registrada.</p>";
+    }
   };
   out
     .querySelectorAll("[data-ops]")
@@ -597,6 +644,7 @@ function opsView() {
     category: example ? "Repasse" : "",
     phase: "Humano",
     priority: "",
+    setPriority: example ? "Alta" : "Normal",
     queue: example ? "rep" : "br",
   });
   const addRule = (example) => {
@@ -634,7 +682,8 @@ function opsView() {
         (x) =>
           x.before.queue !== x.after.queue ||
           x.before.team !== x.after.team ||
-          x.before.name !== x.after.name,
+          x.before.name !== x.after.name ||
+          x.before.priority !== x.after.priority,
       ),
     );
     $("#policyEditor").hidden = true;
@@ -647,13 +696,14 @@ function renderPreview(changedOnly = false) {
     changed = (x) =>
       x.before.queue !== x.after.queue ||
       x.before.team !== x.after.team ||
-      x.before.name !== x.after.name;
+      x.before.name !== x.after.name ||
+      x.before.priority !== x.after.priority;
   $("#preview").innerHTML =
     '<div class="card"><p class="preview-step">REVISÃO DO RASCUNHO</p><h2>' +
     rows.filter(changed).length +
     " de " +
     rows.length +
-    " cenários mudam de destino</h2><p>" +
+    " cenários mudam de fila ou prioridade</h2><p>" +
     meta.brands
       .map(
         (brand) =>
@@ -663,7 +713,19 @@ function renderPreview(changedOnly = false) {
           " alterações",
       )
       .join(" &nbsp;|&nbsp; ") +
-    '</p><div class="row"><button id="editDraft">Voltar às regras</button><button id="toggle">' +
+    "</p>" +
+    `<section class="policy-alerts"><h3>Revisão da política · ${(preview.alerts || []).length} ${(preview.alerts || []).length === 1 ? "aviso" : "avisos"}</h3><p>${esc(preview.coverage)}</p>${(
+      preview.alerts || []
+    )
+      .filter((a) => ["cross_brand", "shadowed_rule"].includes(a.code))
+      .map((a) => `<p class="policy-warning">${esc(a.message)}</p>`)
+      .join("")}<details><summary>Cobertura das filas</summary>${
+      (preview.alerts || [])
+        .filter((a) => !["cross_brand", "shadowed_rule"].includes(a.code))
+        .map((a) => `<p>${esc(a.message)}</p>`)
+        .join("") || "<p>Sem avisos adicionais.</p>"
+    }</details></section>` +
+    '<div class="row"><button id="editDraft">Voltar às regras</button><button id="toggle">' +
     (changedOnly ? "Ver todos" : "Só alterações") +
     '</button></div><div class="scroll"><table><tr><th>CENÁRIO</th><th>ANTES</th><th>DEPOIS</th><th>REGRA DO RASCUNHO</th></tr>' +
     rows
@@ -676,10 +738,16 @@ function renderPreview(changedOnly = false) {
           esc(x.before.name) +
           "<br>" +
           esc(x.before.team) +
+          "<br><strong>" +
+          esc(x.before.priority) +
+          "</strong>" +
           "</td><td>" +
           esc(x.after.name) +
           "<br>" +
           esc(x.after.team) +
+          "<br><strong>" +
+          esc(x.after.priority) +
+          "</strong>" +
           "</td><td>" +
           esc(x.after.reason) +
           "</td></tr>",
@@ -782,3 +850,32 @@ setInterval(async () => {
     }
   }
 }, 1600);
+
+function publicationChanges(changes) {
+  const labels = {
+    name: "Nome",
+    brand: "Marca",
+    category: "Assunto",
+    phase: "Etapa",
+    priority: "Prioridade informada",
+    setPriority: "Prioridade efetiva",
+    queue: "Fila",
+    team: "Equipe",
+  };
+  return (
+    changes
+      .map((c) => {
+        const heading = c.after?.name || c.before?.name || c.id;
+        const action = !c.before
+          ? "Adicionada"
+          : !c.after
+            ? "Removida"
+            : "Alterada";
+        const fields = Object.keys(labels).filter(
+          (k) => (c.before?.[k] || "") !== (c.after?.[k] || ""),
+        );
+        return `<section class="rule"><strong>${esc(action)} · ${esc(heading)}</strong>${fields.map((k) => `<p>${labels[k]}: ${esc(c.before?.[k] || "—")} → ${esc(c.after?.[k] || "—")}</p>`).join("")}${c.before && c.after && c.beforePosition !== c.afterPosition ? `<p>Posição: ${c.beforePosition + 1} → ${c.afterPosition + 1}</p>` : ""}</section>`;
+      })
+      .join("") || "<p>Nenhuma alteração de configuração.</p>"
+  );
+}

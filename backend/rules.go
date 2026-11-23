@@ -44,6 +44,9 @@ func (c Config) validate() error {
 					return errors.New("Equipe inválida")
 				}
 			} else {
+				if v := item["setPriority"]; v != "" && !slices.Contains(priorities, v) {
+					return errors.New("Prioridade efetiva inválida")
+				}
 				if !queues[item["queue"]] {
 					return errors.New("Fila inexistente")
 				}
@@ -70,6 +73,7 @@ func (c Config) route(x fields) fields {
 		id = "us"
 	}
 	rule, reason := "fallback", "Destino padrão da marca e da etapa"
+	priority := "Normal"
 	for _, r := range c.Rules {
 		match := true
 		parts := []string{}
@@ -85,6 +89,9 @@ func (c Config) route(x fields) fields {
 		}
 		if match {
 			id = r["queue"]
+			if r["setPriority"] != "" {
+				priority = r["setPriority"]
+			}
 			rule = r["id"]
 			reason = r["name"] + " · " + strings.Join(parts, " / ")
 			break
@@ -92,7 +99,7 @@ func (c Config) route(x fields) fields {
 	}
 	for _, q := range c.Queues {
 		if q["id"] == id {
-			return fields{"queue": id, "name": q["name"], "team": q["team"], "priority": x["priority"], "rule": rule, "reason": reason}
+			return fields{"queue": id, "name": q["name"], "team": q["team"], "priority": priority, "declaredPriority": x["priority"], "priorityReason": "Prioridade definida pela política: " + rule, "rule": rule, "reason": reason}
 		}
 	}
 	panic("invalid stored configuration")

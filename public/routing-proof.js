@@ -42,7 +42,7 @@ export async function checkBrandRoute(
     messages: ticket.messages,
     matches:
       actual.version === version &&
-      ["queue", "team", "rule"].every(
+      ["queue", "team", "rule", "priority"].every(
         (key) => actual[key] === forecast.after[key],
       ),
   };

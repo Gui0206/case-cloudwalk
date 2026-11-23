@@ -7,6 +7,7 @@ import { writeFileSync } from "node:fs";
 const exec = promisify(execFile);
 const project = process.env.MIXED_PROJECT || "central-mixed";
 const port = {
+  "central-policy-capacity": 4398,
   "central-history-dispatch": 4395,
   "central-history-empty": 4393,
   "central-history-aged": 4394,
@@ -41,8 +42,13 @@ const sql = async (query) =>
   );
 assert.equal(await dc("port", "web", "3000"), "127.0.0.1:" + port);
 const comparison = project.startsWith("central-history-");
-const dispatch = project === "central-history-dispatch";
-const historical = dispatch || project === "central-history-aged" ? 360000 : 0;
+const dispatch =
+  project === "central-history-dispatch" ||
+  project === "central-policy-capacity";
+const historical =
+  project === "central-history-dispatch" || project === "central-history-aged"
+    ? 360000
+    : 0;
 assert.equal(await sql("SELECT count(*) FROM tickets"), historical);
 if (historical)
   assert.equal(
@@ -144,6 +150,48 @@ for (const a of agents)
       brand: a.brand,
     }),
   );
+if (project === "central-policy-capacity") {
+  const operator = {};
+  assert.ok(
+    await call(operator, "policyLogin", "profile", {
+      role: "ops",
+      operator: "ops-ana",
+      code: process.env.STAFF_CODE || "demo-local",
+    }),
+  );
+  const config = await call(operator, "policyRead", "config");
+  assert.equal(config.version, 1);
+  config.draft.rules.unshift(
+    ...brands.map((brand, i) => ({
+      id: "policy-" + i,
+      name: "Prioridade de Pix " + brand,
+      brand,
+      category: "Pix",
+      phase: "Humano",
+      queue: i ? "us" : "br",
+      setPriority: i ? "Alta" : "Urgente",
+    })),
+  );
+  assert.ok(
+    await call(operator, "policySave", "draft", {
+      base: 1,
+      config: config.draft,
+    }),
+  );
+  const preview = await call(operator, "policySimulate", "simulate", {});
+  assert.ok(
+    await call(operator, "policyPublish", "publish", {
+      base: 1,
+      hash: preview.hash,
+    }),
+  );
+  report.policy = {
+    version: 2,
+    hash: preview.hash,
+    outputs: { InfinitePay: "Urgente", JIM: "Alta" },
+    default: "Normal",
+  };
+}
 async function diagnostics() {
   const result = await dc(
     "exec",
@@ -416,7 +464,7 @@ report.pass =
   v.secondP95Ms <= 2000 &&
   report.atStop.opened - report.atStop.followed <= rate * 3 &&
   report.atStop.requestedHuman - report.atStop.closedByStaff <= rate * 0.2 * 3;
-if (comparison) {
+if (comparison || project === "central-policy-capacity") {
   report.historicalTickets = historical;
   report.panel = Object.fromEntries(
     Object.entries(samplesByGroup).map(([k, v]) => [k, summarize(v)]),
@@ -453,8 +501,11 @@ if (comparison) {
     report.events.missingCallback === 0 &&
     report.events.agentLag === 0 &&
     report.events.bridgeLag === 0 &&
-    report.handoff?.length === 3 &&
-    report.handoff.every((row) => row.claims === 8000);
+    (project === "central-policy-capacity"
+      ? report.handoff?.length === 2 &&
+        report.handoff.every((row) => row.claims === 12000)
+      : report.handoff?.length === 3 &&
+        report.handoff.every((row) => row.claims === 8000));
 }
 if (dispatch) {
   report.assignments =
@@ -465,8 +516,16 @@ if (dispatch) {
     report.assignments.auditRows === 24000 &&
     report.assignments.distinctTickets === 24000;
 }
+if (project === "central-policy-capacity") {
+  report.policyIntegrity = await sql(
+    `SELECT json_build_object('wrongPriority',count(*) FILTER(WHERE priority <> CASE WHEN phase='Humano' AND brand='InfinitePay' THEN 'Urgente' WHEN phase='Humano' THEN 'Alta' ELSE 'Normal' END),'publications',(SELECT count(*) FROM audit WHERE kind='Publicação')) FROM tickets`,
+  );
+  report.pass &&=
+    report.policyIntegrity.wrongPriority === 0 &&
+    report.policyIntegrity.publications === 1;
+}
 writeFileSync(
-  comparison
+  comparison || project === "central-policy-capacity"
     ? "results/" + project + ".json"
     : project === "central-mixed-capacity"
       ? "results/mixed-capacity.json"
@@ -480,3 +539,5 @@ writeFileSync(
 console.log(
   JSON.stringify({ pass: report.pass, integrity: v, errors: report.errors }),
 );
+
+if (!report.pass) process.exitCode = 1;

@@ -846,3 +846,26 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+.policy-alerts {
+  margin: 20px 0;
+  padding: 18px;
+  background: #f6f5f2;
+}
+.policy-alerts h3 {
+  margin-top: 0;
+}
+.policy-alerts p {
+  font-size: 13px;
+}
+.policy-warning {
+  color: #813400;
+  font-weight: 600;
+}
+#publicationPanel pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.ops-nav {
+  flex-wrap: wrap;
+}

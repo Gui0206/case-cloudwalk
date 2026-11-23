@@ -126,3 +126,10 @@ A API HTTP, o motor de regras, o simulador, a ponte Kafka e o atendente determin
 ## Identidade da demonstração
 
 A interface usa o [site institucional da CloudWalk](https://www.cloudwalk.io/) como referência: logotipo institucional, base em preto e branco e acentos em laranja. O grafismo orbital é original do projeto. Os arquivos visuais são servidos localmente; esta aplicação é uma demonstração acadêmica, sem vínculo com sistemas de produção.
+
+
+## Prioridade por política e publicação auditada
+
+A operação configura a prioridade **efetiva** junto à fila de destino. A prioridade informada pelo cliente fica separada e, por padrão, não eleva a urgência: sem uma saída explícita na regra, vale Normal. O simulador compara fila e prioridade, avisa sobre regras encobertas, efeitos em ambas as marcas e cobertura das filas. Em **Operação → Publicações**, é possível conferir autor de demonstração, versões e diferenças de cada publicação.
+
+As identidades de Operação são fixas no ambiente de demonstração e usam a credencial compartilhada da equipe; não substituem autenticação individual de produção. A publicação não altera retroativamente a prioridade de casos já na fila. Consulte [semântica, testes e limites](results/POLITICA-E-AUDITORIA.md).

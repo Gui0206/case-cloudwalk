@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-23T18:00:53.165Z",
+  "pass": true,
+  "database": {
+    "tickets": 120000,
+    "closed": 120000,
+    "wrongPriority": 0,
+    "pendingOutbox": 0,
+    "failedOutbox": 0,
+    "missingCallback": 0,
+    "sent": 240000,
+    "human": 24000,
+    "assignments": 24000,
+    "assignedTickets": 24000,
+    "publications": 1,
+    "publicationActor": "ops-ana"
+  },
+  "lag": {
+    "agent": 0,
+    "bridge": 0
+  },
+  "failedTopicOffsets": [
+    {
+      "partition": 0,
+      "log_start_offset": 0,
+      "high_watermark": 0
+    },
+    {
+      "partition": 1,
+      "log_start_offset": 0,
+      "high_watermark": 0
+    },
+    {
+      "partition": 2,
+      "log_start_offset": 0,
+      "high_watermark": 0
+    }
+  ],
+  "sourceSHA256": {
+    "backend/rules.go": "9674f0ccaf678e8ac3ccb27926c8200a9ebdeb313ba41420a4941c198ddc49b2",
+    "backend/policy.go": "c4888a6a84f2154acceb7d06fcabd519c77f22d30fa047cc5128532e84bc7e80",
+    "backend/handlers.go": "7b33acb25be2fc1d5f55457960356487f21d95ab91e235181aa8f3d17701442b",
+    "schema.sql": "dd55a5548032017df3d24f7dca8a17073fb0d12da6f0326bf30fa13b2f185af0"
+  }
+}

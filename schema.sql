@@ -11,3 +11,8 @@ CREATE INDEX IF NOT EXISTS audit_ticket ON audit(ticket,n);
 CREATE TABLE IF NOT EXISTS outbox(id uuid PRIMARY KEY,ticket uuid REFERENCES tickets(id),payload jsonb NOT NULL,tries int DEFAULT 0,state text DEFAULT 'pending',due timestamptz DEFAULT now());
 CREATE INDEX IF NOT EXISTS outbox_pending_due ON outbox(due,id) WHERE state='pending';
 CREATE TABLE IF NOT EXISTS inbox(id uuid PRIMARY KEY,created timestamptz DEFAULT now());
+
+ALTER TABLE tickets ADD COLUMN IF NOT EXISTS declared_priority text;
+UPDATE tickets SET declared_priority=priority WHERE declared_priority IS NULL;
+ALTER TABLE tickets ALTER COLUMN declared_priority SET DEFAULT 'Normal';
+ALTER TABLE tickets ALTER COLUMN declared_priority SET NOT NULL;

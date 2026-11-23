@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-23T17:52:04.724Z",
+  "pass": true,
+  "checks": [
+    "Simulação sem publicação; alertas de alcance e regra encoberta",
+    "48 prioridades previstas contra expectativa independente; prévia obsoleta rejeitada",
+    "Publicação concorrente: uma versão, autor da sessão, diff, horário e correlação",
+    "Pedido Urgente não eleva prioridade; handoff aplica política e deduplica reentrega",
+    "Política InfinitePay não eleva prioridade da JIM",
+    "Atribuição usa prioridade efetiva; três analistas sem atribuição duplicada",
+    "Reordenação auditada com identidade estável de outro operador"
+  ],
+  "scenarios": 48,
+  "publicationCount": 2,
+  "scope": "API + PostgreSQL + outbox + webhook + Kafka + agente simulado; instalação isolada"
+}

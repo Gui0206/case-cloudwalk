@@ -5,13 +5,19 @@ import assert from "node:assert/strict";
 const dc = (...args) =>
     execFileSync(
       "docker",
-      ["compose", "-p", process.env.TEST_PROJECT || "central-helpdesk-test", ...args],
+      [
+        "compose",
+        "-p",
+        process.env.TEST_PROJECT || "central-helpdesk-test",
+        ...args,
+      ],
       { encoding: "utf8" },
     ),
   sql = (q) =>
     dc("exec", "-T", "db", "psql", "-U", "helpdesk", "-At", "-c", q).trim(),
   delay = (n) => new Promise((r) => setTimeout(r, n));
-const base = "http://localhost:4381/api/";
+const base = (process.env.TEST_URL || "http://localhost:4381") + "/api/";
+assert.notEqual(new URL(base).port, "4380", "Use uma instalação isolada.");
 let cookie = "";
 async function http(p, b) {
   const r = await fetch(base + p, {

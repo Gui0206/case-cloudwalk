@@ -16,7 +16,7 @@ func (q *request) handle() any {
 	path := q.r.Method + " " + q.r.URL.Path
 	switch path {
 	case "GET /api/meta":
-		return object{"brands": brands, "channels": channels, "teams": teams, "staff": q.staff, "phases": phases, "categories": categories, "priorities": priorities}
+		return object{"brands": brands, "channels": channels, "teams": teams, "staff": q.staff, "phases": phases, "categories": categories, "priorities": priorities, "operators": operators}
 	case "GET /api/health":
 		return ok
 	case "POST /api/profile":
@@ -25,6 +25,15 @@ func (q *request) handle() any {
 		if role != "client" {
 			require(str(b, "code") == os.Getenv("STAFF_CODE"))
 			q.staff = fields{"role": role}
+			if role == "ops" {
+				operator := str(b, "operator")
+				if operator == "" {
+					operator = "ops-demo"
+				}
+				name, valid := operators[operator]
+				require(valid)
+				q.staff = fields{"role": role, "id": operator, "name": name}
+			}
 			if role == "analyst" {
 				q.staff = fields{"role": role, "name": message(str(b, "name")), "id": q.client, "team": pick(str(b, "team"), teams), "brand": pick(str(b, "brand"), brands)}
 			}
@@ -78,6 +87,9 @@ func (q *request) handle() any {
 	if path == "GET /api/metrics" {
 		return q.one("SELECT (SELECT count(*) FROM tickets) tickets,(SELECT count(*) FROM outbox WHERE state='pending') pending,(SELECT count(*) FROM outbox WHERE state='failed') failed,(SELECT count(*) FROM inbox) received,(SELECT count(*) FROM audit WHERE kind='Transferência humana') handoffs")
 	}
+	if path == "GET /api/publications" {
+		return q.rows("SELECT n,created,detail FROM audit WHERE kind='Publicação' ORDER BY n DESC LIMIT 50")
+	}
 	q.exec("SELECT pg_advisory_xact_lock(781)")
 	active := q.active()
 	draft := q.one("SELECT * FROM drafts WHERE id=1")
@@ -113,7 +125,8 @@ func (q *request) handle() any {
 			v := int(active["v"].(float64)) + 1
 			q.exec("INSERT INTO configs(v,config) VALUES($1,$2)", v, encode(draft["config"]))
 			q.exec("DELETE FROM drafts")
-			q.audit(nil, "Publicação", object{"version": v})
+			require(q.staff["id"] != "")
+			q.audit(nil, "Publicação", object{"version": v, "previousVersion": active["v"], "actor": q.staff, "session": q.client, "correlationId": uuid(), "hash": hash, "changes": configDiff(configuration(active), configuration(draft))})
 			return object{"version": v}
 		}
 		before, after := configuration(active), configuration(draft)
@@ -128,7 +141,7 @@ func (q *request) handle() any {
 				}
 			}
 		}
-		return object{"base": active["v"], "hash": hash, "rows": rows}
+		return object{"base": active["v"], "hash": hash, "rows": rows, "alerts": after.alerts(before), "coverage": "48 combinações: marca, assunto, etapa e prioridade informada. Não representa frequência real."}
 	}
 	fail(404, "Rota inexistente.")
 	return nil
@@ -164,7 +177,7 @@ func (q *request) create() any {
 	a := q.active()
 	d := configuration(a).route(x)
 	id := uuid()
-	q.exec("INSERT INTO tickets(id,client,brand,channel,category,priority,phase,status,queue,team,version,revision) VALUES($1,$2,$3,$4,$5,$6,'IA','Aberto',$7,$8,$9,1)", id, q.client, x["brand"], pick(str(b, "channel"), channels), x["category"], priority, d["queue"], d["team"], a["v"])
+	q.exec("INSERT INTO tickets(id,client,brand,channel,category,priority,phase,status,queue,team,version,revision,declared_priority) VALUES($1,$2,$3,$4,$5,$6,'IA','Aberto',$7,$8,$9,1,$10)", id, q.client, x["brand"], pick(str(b, "channel"), channels), x["category"], d["priority"], d["queue"], d["team"], a["v"], priority)
 	q.msg(id, "Cliente", text)
 	detail := object{"version": a["v"]}
 	for k, v := range d {
@@ -289,7 +302,7 @@ func (q *request) callback() any {
 	}
 	if e["type"] == "handoff" {
 		a := q.active()
-		d := configuration(a).route(fields{"phase": "Humano", "brand": str(t, "brand"), "category": str(t, "category"), "priority": str(t, "priority")})
+		d := configuration(a).route(fields{"phase": "Humano", "brand": str(t, "brand"), "category": str(t, "category"), "priority": str(t, "declared_priority")})
 		detail := object{"version": a["v"], "event": e["id"], "motivo": e["motive"]}
 		for k, v := range d {
 			detail[k] = v
@@ -300,8 +313,8 @@ func (q *request) callback() any {
 			INSERT INTO audit(ticket,kind,detail) VALUES($1,'Transferência humana',$8)
 		)
 		UPDATE tickets SET phase='Humano',status='Aguardando analista',queue=$2,team=$3,
-			summary=$4,motive=$5,version=$6,updated=now() WHERE id=$1`,
-			id, d["queue"], d["team"], e["summary"], e["motive"], a["v"], str(e, "text"), encode(detail))
+			summary=$4,motive=$5,version=$6,priority=$9,updated=now() WHERE id=$1`,
+			id, d["queue"], d["team"], e["summary"], e["motive"], a["v"], str(e, "text"), encode(detail), d["priority"])
 	} else {
 		status := "Aberto"
 		if e["type"] == "close" {

@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-23T17:59:48.494Z",
+  "unavailableAgent": "mensagem persistida enquanto agente desligado",
+  "recovery": "escalação após reinício",
+  "duplicate": "uma transferência e uma resposta",
+  "lateReturn": "ignorado após handoff"
+}

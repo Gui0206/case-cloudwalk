@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-23T17:59:12.564Z",
+  "scenarios": 48,
+  "tickets": 24,
+  "concurrency": 6,
+  "decisionsChecked": 48,
+  "expectedMatches": 48,
+  "wrongDraftChanges": 6,
+  "correctedDraftChanges": 3,
+  "seconds": 1.91,
+  "p95OpenToHandoffMs": 1208,
+  "handoffReplyAndClose": "ok",
+  "crossBrandAccess": "blocked",
+  "obsoletePreview": "blocked"
+}

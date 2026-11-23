@@ -38,7 +38,7 @@ Capturas do painel local; dados de demonstração.
 
 ## Slide 2 · Arquitetura
 
-**0:20–0:55 · 35 segundos**
+**0:20–0:50 · 30 segundos**
 
 ### Fala
 
@@ -54,19 +54,20 @@ Percorra a ida e a volta sem enumerar todas as caixas. Termine apontando para o 
 
 ## Slide 3 · Simulador em um print
 
-**0:55–1:10 · 15 segundos**
+**0:50–1:10 · 20 segundos**
 
 ### Fala
 
-Para a operação, construí também esta revisão antes da publicação. Ela mostra quais atendimentos mudariam de fila, evitando que uma regra destinada à InfinitePay desvie casos da JIM. A previsão usa o mesmo motor que decide o destino no atendimento.
+A operação define fila e prioridade por política. Antes de publicar, o simulador avisa se uma regra afeta as duas marcas ou fica encoberta por outra. A publicação registra autor e alterações. Testei as previsões contra o atendimento real e a disputa entre duas publicações simultâneas.
 
 ### No slide
 
-Mostre a comparação. Não leia as contagens nem os campos da tabela.
+Aponte o aviso de alcance entre marcas e a prioridade efetiva. Não leia os cenários. As identidades são de demonstração; o teste exercita o backend real com agente simulado.
 
 ### Evidências
 
-Captura do painel local; resultados do simulador de 48 cenários.
+[Política, alertas e auditoria](results/POLITICA-E-AUDITORIA.md) · [Verificação funcional](results/policy-check.json)
+
 
 ## Slide 4 · A espera escondida depois da API
 
@@ -134,7 +135,7 @@ Aponte a operação SQL e depois o zero de conflitos. Dê mais tempo à mudança
 
 ### Fala
 
-Na rodada final com histórico, foram 120 mil conversas abertas e encerradas, sem chegadas puladas e sem conflitos. Depois da drenagem, conferi que os eventos tiveram retorno e não restou trabalho pendente.
+A rodada anterior com histórico encerrou 120 mil conversas. Depois das novas políticas, repeti a carga com banco vazio: outras 120 mil, sem chegadas puladas, conflitos ou prioridades incorretas. Após a drenagem, conferi as atribuições e o retorno de todos os eventos.
 
 É um teste local do backend real, com agente, canais e analistas simulados; não é uma garantia de escala em produção.
 
@@ -146,7 +147,7 @@ Encerre até 4:30, deixando 30 segundos de margem. Na última frase, olhe para a
 
 ### Evidências
 
-[results/HISTORICO-E-FILA.md](results/HISTORICO-E-FILA.md) · [results/central-history-dispatch.json](results/central-history-dispatch.json) · [results/central-history-dispatch-snapshot.json](results/central-history-dispatch-snapshot.json)
+[results/HISTORICO-E-FILA.md](results/HISTORICO-E-FILA.md) · [results/central-history-dispatch.json](results/central-history-dispatch.json) · [results/central-history-dispatch-snapshot.json](results/central-history-dispatch-snapshot.json) · [Reteste com políticas](results/central-policy-capacity.json) · [Integridade das políticas](results/policy-capacity-snapshot.json)
 
 ## Perguntas técnicas
 
