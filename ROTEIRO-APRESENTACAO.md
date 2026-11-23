@@ -1,126 +1,139 @@
 # Roteiro da apresentação à banca
 
-Meta de 4min30s, com 30 segundos de margem até o limite de cinco minutos. Sete slides na sequência principal e quatro slides ocultos para perguntas. Avanço manual.
+**Duração: 4min40s, com 20 segundos de margem.** Sete slides principais; quatro slides ocultos para perguntas. Sem demonstração ao vivo durante o pitch.
 
-[Abrir o PowerPoint](Central-HelpDesk-Banca.pptx)
+[Abrir os slides](Central-HelpDesk-Banca.pptx)
+
+## Tese do pitch
+
+Eu construí o fluxo, aumentei a exigência dos testes, encontrei os gargalos e conferi a integridade após as correções. A arquitetura explica as decisões; os resultados sustentam a apresentação.
+
+**Ênfase:** 3min35s para testes, diagnóstico e resultados. Narre em primeira pessoa e use cada número para explicar uma decisão.
 
 ## Preparação
 
-- Abra o painel em http://localhost:4380 e entre em Operação com o perfil de demonstração.
-- Prepare **Exemplo: repasses** com a marca **Qualquer** e clique em **Simular impacto**. Confira seis mudanças antes de começar. A contagem pressupõe as regras iniciais.
-- Deixe o PowerPoint em modo de apresentação e o painel pronto em outra janela.
-- Use o cronômetro do modo apresentador. Faça uma única saída para o navegador, no slide 3.
+- Abra o PowerPoint em modo apresentador, com as notas e o cronômetro.
+- Os prints já estão incorporados: a apresentação não depende do servidor ou do navegador.
+- Deixe o repositório e os relatórios disponíveis para as perguntas. O painel é opcional.
 
-## Slide 1 · Problema
+## Slide 1 · Fluxo em prints
 
-0:00–0:20 · 20 segundos · Permanecer nos slides.
+**0:00–0:15 · 15 segundos**
 
 ### Fala
 
+Eu construí um help desk que leva o relato do cliente até o analista com o contexto preservado. Mas a interface funcionando era só o começo. Minha principal pergunta foi: esse fluxo continua correto quando entram centenas de conversas por segundo?
 
-“A lojista relata o problema uma vez. O agente faz a triagem e, quando precisa de ajuda humana, o analista assume com o histórico na equipe correta. Construí essa plataforma e testei tanto as decisões de roteamento quanto o atendimento sob carga.”
+### No slide
 
-### Antes de começar
+Aponte o relato à esquerda e o histórico à direita. Não saia dos slides.
 
-Deixe o painel em http://localhost:4380 aberto em Operação, autenticado. Prepare o exemplo de repasses com marca Qualquer e a prévia de seis mudanças, partindo das regras iniciais. Confira isso antes de iniciar o cronômetro. O próximo slide é a arquitetura.
-Meta do roteiro completo · 4min30s. Margem até o limite · 30 segundos. Trocas manuais.
+### Evidências
+
+Capturas do painel local; dados de demonstração.
 
 ## Slide 2 · Arquitetura
 
-0:20–1:20 · 60 segundos · Permanecer nos slides.
+**0:15–0:50 · 35 segundos**
 
 ### Fala
 
+Para responder, eu testei este caminho inteiro. A API em Go grava a mensagem e a outbox juntas no PostgreSQL. O worker envia o webhook; a ponte publica no Kafka; o agente simulado responde; e a ponte devolve o resultado para gravação. A inbox protege contra reentregas. Essas peças permitem retomar trabalho, mas também criam pontos de espera. Então eu medi desde a entrada até a resposta persistida, além da latência da API.
 
-“Acompanhe ‘meu repasse não caiu’. A API em Go salva a fala no PostgreSQL. Na mesma transação, grava o envio na outbox. Se a API cair depois, o worker ainda encontra o que falta entregar.
-O worker envia um webhook. A ponte traduz HTTP para Kafka e publica o pedido no Redpanda. O agente pode ler depois, inclusive após uma pausa. Ele recebe o histórico e publica a resposta em outro tópico.
-A ponte entrega o retorno à API. A inbox reconhece o ID quando uma entrega se repete, evitando duplicar a fala. Quando há transferência, a API aplica as regras e o caso aparece para a equipe responsável. O agente e os canais são simulados neste protótipo.”
+### No slide
 
-### Ação
+Acompanhe a ida e a volta no diagrama.
 
-Aponte a ida e a volta no desenho. Avance para o slide do simulador e faça uma única saída para o navegador.
+### Evidências
 
-## Slide 3 · Simulador de regras
+[results/CARGA-SUSTENTADA.md](results/CARGA-SUSTENTADA.md) · [results/CARGA-MISTA-OTIMIZADA.md](results/CARGA-MISTA-OTIMIZADA.md)
 
-1:20–2:05 · 45 segundos, incluindo a saída e a volta do painel.
+## Slide 3 · Simulador em um print
 
-### Fala e cliques
-
-
-“Quero mandar os repasses da InfinitePay para especialistas.”
-
-Saia para o painel já preparado em Operação. Mostre Simular impacto com a marca Qualquer e Só alterações.
-
-“Essa regra também afeta a JIM. O simulador mostra seis destinos alterados.”
-
-Clique em **Voltar às regras**, troque a marca para InfinitePay e clique em Simular impacto.
-
-“Com o filtro, mudam três destinos. A operação compara a política publicada com o rascunho antes de publicar. O mesmo motor decide o destino no atendimento, e a auditoria guarda a regra e a versão.”
-
-Volte aos slides até 2:05 e avance para o gráfico de latência.
-Se o painel estiver indisponível, use os valores seis e três deste slide e prossiga no mesmo horário. A publicação e a abertura de casos podem ser demonstradas nas perguntas.
-
-## Slide 4 · Investigação da latência
-
-2:05–3:00 · 55 segundos · Permanecer nos slides.
+**0:50–1:05 · 15 segundos**
 
 ### Fala
 
+Também construí um simulador de regras: consigo conferir quem muda de fila antes de publicar. Neste print, três cenários da InfinitePay mudam, sem afetar a JIM. O simulador e o atendimento usam o mesmo motor de decisão.
 
-“A 400 aberturas por segundo, a API aceitava em 14 milissegundos no p95, mas a primeira resposta levava 14,252 segundos. O p95 é o limite de tempo observado para 95% dos casos.
-Investigamos cada espera. Limitamos o pool de conexões e passamos a ler três partições de respostas em paralelo. O p95 caiu para 3,038 segundos.
-Ainda havia pedidos parados. Dos 1.185 casos sem resposta, 1.184 aguardavam na outbox. O banco varria registros antigos para localizar o próximo envio. Um índice só dos pendentes reduziu essa busca. Na rodada seguinte, o p95 foi de 75 milissegundos.”
+### No slide
 
-### Ação
+Aponte a comparação e siga. A demonstração ao vivo fica opcional para as perguntas.
 
-Aponte as barras conforme descreve as intervenções. São rodadas sequenciais em ambiente local, com históricos diferentes. Avance para a atribuição do próximo caso.
+### Evidências
 
-## Slide 5 · Disputa entre analistas
+Captura do painel local; resultados do simulador de 48 cenários.
 
-3:00–3:30 · 30 segundos · Permanecer nos slides.
+## Slide 4 · Primeiro gargalo: primeira resposta
 
-### Fala
-
-
-“Na fila humana, Ana e Bruno podiam carregar a mesma lista e escolher o mesmo chamado. O banco protegia o responsável, mas um deles recebia conflito e precisava tentar novamente.
-O painel passou a pedir o próximo caso. A API escolhe por marca, equipe e prioridade. FOR UPDATE SKIP LOCKED permite pular uma linha que outro analista já está reservando. Atribuição e auditoria são confirmadas juntas.”
-
-### Ação
-
-Aponte a consulta e avance para o resultado do reteste.
-
-## Slide 6 · Resultado do reteste
-
-3:30–3:50 · 20 segundos · Permanecer nos slides.
+**1:05–2:05 · 60 segundos**
 
 ### Fala
 
+Primeiro, eu aumentei a carga até encontrar uma falha. A 400 aberturas por segundo, a API respondia em 14 milissegundos no p95, mas o cliente esperava 14,252 segundos pela resposta persistida. Medir só o endpoint teria escondido o problema. Nos logs, encontrei conexões esgotadas; no Kafka, atraso no retorno. Limitei o pool e distribuí a leitura pelas três partições. O p95 caiu para 3,038 segundos, mas ainda havia pendência. Conferi onde os eventos estavam: 1.184 de 1.185 casos sem resposta aguardavam na outbox. O plano SQL mostrou uma varredura de registros antigos. Criei um índice parcial dos pendentes e repeti: 75 milissegundos. São rodadas locais com históricos diferentes; os contadores e o plano de execução sustentam o diagnóstico.
 
-“Repetimos a carga com 360 mil casos encerrados de histórico sintético. Os conflitos caíram de 26.281 para zero. A auditoria confirmou exatamente uma atribuição para cada um dos 24 mil casos humanos. Conferimos também que os eventos novos terminaram processados.”
+### No slide
 
-### Ação
+Aponte cada barra e depois a contagem de pendências na outbox.
 
-Aponte o antes e depois e avance para o resultado de vazão.
+### Evidências
 
-## Slide 7 · Vazão e alcance da evidência
+[results/CARGA-SUSTENTADA.md](results/CARGA-SUSTENTADA.md) · [results/retest-400-parallel.json](results/retest-400-parallel.json) · [results/retest-400-indexed.json](results/retest-400-indexed.json)
 
-3:50–4:30 · 40 segundos · Encerrar neste slide.
+## Slide 5 · Carga mista: consultas e gravação
+
+**2:05–3:05 · 60 segundos**
 
 ### Fala
 
+Depois eu tornei o teste mais exigente: cinco minutos a 400 novas conversas por segundo, duas mensagens por cliente e dezesseis analistas simultâneos. O sistema voltou a falhar: p95 de 123,9 segundos e mais de 32 mil respostas pendentes no corte. Investiguei as consultas de histórico e a gravação do retorno. Troquei leituras repetidas por uma consulta leve de estado com espera adaptativa, agrupei as gravações SQL e passei a confirmar offsets em intervalos de cem milissegundos. No reteste, observei 707 milissegundos e zero respostas pendentes ao final. Não atribuo o ganho a uma única mudança: o padrão de consulta também mudou. E não considerei a rodada aprovada: o gerador tinha pulado 143 chegadas. Eu precisava comprovar as 120 mil conversas, não apenas as que ele conseguiu enviar.
 
-“No fluxo completo, cada cliente enviou duas mensagens e os analistas trabalharam ao mesmo tempo. A primeira rodada otimizada encerrou 119.857 conversas. As 143 restantes tinham sido puladas pelo próprio gerador.
-Ajustamos o limite de aberturas simultâneas e repetimos. Foram 120 mil conversas abertas e encerradas em uma janela de cinco minutos de chegadas, com mais 1,74 segundo para terminar o trabalho em andamento.
-A evidência é de um ambiente Docker local com PostgreSQL e Redpanda de nó único, agente e canais simulados. O case reúne previsão das regras, decisões auditáveis e testes reproduzíveis do fluxo completo.”
+### No slide
 
-### Encerramento
+Leia as três linhas da tabela; explique a mudança e reconheça o critério que ainda falhou.
 
-Pare até 4:30. Os 30 segundos restantes absorvem pausas e transições. Os próximos quatro slides estão ocultos e disponíveis para aprofundar respostas às perguntas.
+### Evidências
 
-## Slides de apoio
+[results/CARGA-MISTA-OTIMIZADA.md](results/CARGA-MISTA-OTIMIZADA.md) · [results/mixed-fixed.json](results/mixed-fixed.json) · [results/mixed-optimized.json](results/mixed-optimized.json)
 
-Os slides 8 a 11 estão ocultos na apresentação normal. Abra-os manualmente durante as perguntas para detalhar consistência, gargalos da carga mista, recuperação do agente e limites do ambiente medido.
+## Slide 6 · Concorrência dos analistas
 
-## Se a demonstração atrasar
+**3:05–4:00 · 55 segundos**
 
-Até 2:05, volte ao PowerPoint. O slide 3 contém os dois resultados da simulação e permite continuar a explicação. Termine o roteiro até 4:30 e use a margem de 30 segundos para transições.
+### Fala
+
+Também testei a fila com seis meses de histórico sintético: 360 mil casos encerrados. A carga revelou mais de 26 mil conflitos entre analistas que escolhiam o mesmo chamado numa lista desatualizada. O banco já impedia a dupla atribuição, mas o fluxo desperdiçava tentativas. Eu mudei a operação: agora o servidor reserva o próximo caso por marca, equipe e prioridade. FOR UPDATE SKIP LOCKED permite pular linhas que outro analista está reservando, e a auditoria é gravada na mesma transação. Repeti a carga com histórico: zero conflitos e exatamente uma atribuição em cada um dos 24 mil casos humanos. Eu também medi o custo: a listagem ficou um pouco mais lenta, enquanto a espera dos urgentes caiu.
+
+### No slide
+
+Aponte SQL, conflitos e auditoria. Não descreva conflito anterior como dupla atribuição: a proteção já existia.
+
+### Evidências
+
+[results/HISTORICO-E-FILA.md](results/HISTORICO-E-FILA.md) · [results/central-history-aged.json](results/central-history-aged.json) · [results/central-history-dispatch.json](results/central-history-dispatch.json)
+
+## Slide 7 · Resultado e limites
+
+**4:00–4:40 · 40 segundos**
+
+### Fala
+
+Na rodada final com histórico, eu confirmei 120 mil conversas abertas e encerradas, sem chegadas puladas nem conflitos. Conferi também os 240 mil eventos: todos tiveram retorno, e outbox, lag e tópico de falhas terminaram zerados após a drenagem. O teste percorre o backend real; agente, canais e analistas são simulados. Isso não prova escala em produção. O que eu entrego é uma implementação com evidência reproduzível: consigo explicar onde ela falhou, por que fiz cada mudança e como verifiquei que o resultado continuou correto.
+
+### No slide
+
+Encerre até 4:40. Os 20 segundos restantes absorvem pausas.
+
+### Evidências
+
+[results/HISTORICO-E-FILA.md](results/HISTORICO-E-FILA.md) · [results/central-history-dispatch.json](results/central-history-dispatch.json) · [results/central-history-dispatch-snapshot.json](results/central-history-dispatch-snapshot.json)
+
+## Perguntas técnicas
+
+Use os quatro slides ocultos para consistência, detalhes da carga mista, recuperação e limites da evidência. Os relatórios em `results/` contêm método, comandos e arquivos brutos.
+
+- **O teste provou escala em produção?** Não. Mediu uma instalação local e um perfil sintético.
+- **400/s significa requisições HTTP?** Não: novas conversas por segundo. Cada uma provoca várias requisições, eventos e gravações.
+- **O teste simulou o front?** Exercitou as APIs e o fluxo de negócio; não mediu renderização do navegador.
+- **Aumentar o teto do gerador explica a aprovação?** Não isoladamente: na confirmação, o pico observado ficou abaixo do teto antigo. Houve variação entre rodadas.
+- **A entrega é exatamente uma vez?** Há possibilidade de reentrega. A inbox transacional deduplica o efeito no banco.
