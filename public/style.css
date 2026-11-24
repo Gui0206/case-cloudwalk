@@ -3,7 +3,7 @@
   --paper: #f6f5f2;
   --line: #deddd8;
   --muted: #646362;
-  --orange: #e25813;
+  --orange: #737373;
   --edge: clamp(18px, 3vw, 48px);
   color-scheme: light;
 }
@@ -140,7 +140,7 @@ th {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #ff8747;
+  background: #bcbcbc;
   margin-left: auto;
 }
 .rail svg {
@@ -372,7 +372,7 @@ textarea {
 }
 .empty-icon {
   font-size: 32px;
-  color: #ad420b;
+  color: #444444;
 }
 .case {
   display: block;
@@ -382,7 +382,7 @@ textarea {
 }
 .case.active {
   box-shadow: inset 3px 0 var(--orange);
-  background: #fff5eb;
+  background: #ededed;
 }
 .case small,
 small {
@@ -418,7 +418,7 @@ small {
   margin-bottom: 3px;
 }
 .note {
-  background: #fff2e6;
+  background: #ededed;
   border-left: 3px solid var(--orange);
   padding: 12px 15px;
   margin: 12px 0;
@@ -858,7 +858,7 @@ footer {
   font-size: 13px;
 }
 .policy-warning {
-  color: #813400;
+  color: #333333;
   font-weight: 600;
 }
 #publicationPanel pre {
