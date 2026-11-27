@@ -1,27 +1,42 @@
-# Central · nova apresentação CloudWalk
+# Central · Engenharia sob carga
 
-Versão alternativa em HTML. O arquivo `Central-HelpDesk-Banca.pptx` não foi alterado.
+Apresentação de sete slides principais e quatro apoios. O PowerPoint `Central-HelpDesk-Banca.pptx` permanece intacto.
 
-## Abrir
+## Abrir e apresentar
 
-Dê dois cliques em `abrir.command` nesta pasta, ou execute na raiz do repositório:
+Abra **index.html** diretamente no navegador: imagens, fontes, estilos e navegação estão incorporados. Não exige rede, servidor ou instalação. Para usar o mesmo endereço da demonstração dos slides, execute `abrir.command` ou:
 
 ```sh
 python3 -m http.server 4399 --bind 127.0.0.1 --directory apresentacao-cloudwalk
 ```
 
-Abra http://127.0.0.1:4399. Não abra `index.html` diretamente pelo Finder: os módulos JavaScript precisam do servidor HTTP. Fontes, bibliotecas, logos e prints estão locais; o deck não depende de acesso à internet.
+Acesse http://127.0.0.1:4399/.
 
-- Setas ou espaço: navegar. `F`: tela cheia. Sem animações decorativas ou dependência de WebGL.
-- Sete slides principais, na ordem do roteiro existente de 4min30s.
-- O botão **Apoio** abre os quatro slides de perguntas em uma sequência separada. Eles não entram no pitch.
-- `#4` abre o slide 4. `?apoio#1` abre o primeiro apoio.
-- O roteiro pessoal continua no arquivo local ignorado pelo Git. Nenhuma fala privada foi incorporada ao HTML.
+- Setas, espaço ou deslize lateral: navegar. `F`: tela cheia. `S`: suspender animações.
+- Os controles aparecem ao mover o ponteiro e desaparecem após uma pausa.
+- **Apoio** abre uma sequência separada de quatro slides para perguntas. O pitch termina no sétimo slide.
+- `?static#4` abre o gráfico de latência sem animação. `?apoio#1` abre o primeiro apoio.
+- `E` ativa edição local de títulos e textos selecionados. `Esc` encerra a edição. As alterações ficam no armazenamento desse navegador; **Salvar HTML** ou `Ctrl/Cmd+S` baixa uma cópia independente com o texto editado.
+- O roteiro pessoal continua local e ignorado pelo Git, sem falas privadas incorporadas ao HTML. A sequência acompanha o roteiro de 4min30s.
 
-## Direção visual e conteúdo
+## Direção visual
 
-A versão atual usa composição editorial em preto, cinza e papel claro, tipografia Arial/Helvetica e números em Courier New. Os layouts e a navegação estão em `editorial.css` e `presentation.js`. Não carrega partículas, three.js, Lucide, fontes ou estilos da skill.
+Aplicação da skill aberta [Frontend Slides, de Zara Zhang](https://github.com/zarazhangrui/frontend-slides), sob licença MIT. Foram usados o palco fixo 1920×1080, princípios de tipografia, animação, composição e validação da skill. A direção visual foi criada para este case: superfícies escuras, prata e ciano, tipos Sora, DM Sans e DM Mono, e uma capa com arte própria.
 
-A primeira versão foi construída com a skill [deck-cloudwalk](https://github.com/PedroJorgeSA/skill/tree/main/deck-cloudwalk). Seus arquivos permanecem como referência de origem, sem serem carregados pela página atual. Os logos oficiais fornecidos pelo template são usados neste case para a CloudWalk. O símbolo Central vem do produto. Prints reais do protótipo são exibidos em cinza.
+O HTML é autossuficiente. Não carrega o motor, as partículas ou os estilos da skill do colega. Os arquivos anteriores permanecem no diretório e no histórico como referência, mas não são carregados. Logos oficiais foram preservados a partir da primeira versão, usados neste case para a CloudWalk; o símbolo Central vem do produto.
 
-Sete slides principais e quatro apoios separados. A narrativa acompanha o roteiro pessoal de 4min30s. Os números vêm dos relatórios em `../results/`; as diferenças entre rodadas continuam explícitas. O resultado com histórico pertence à versão anterior; o reteste com novas políticas começou com banco vazio. O gráfico usa escala linear em segundos.
+Prints são capturas reais do protótipo, exibidas em cinza. Diagramas e gráficos são elementos vetoriais/HTML. A imagem abstrata da capa é ilustrativa e não representa a topologia do sistema.
+
+Fontes sob SIL Open Font License; licenças e atribuição da skill em `assets/signal/`.
+
+## Arte da capa
+
+Arquivo original: `assets/signal/fluxo.png`, também incorporado ao HTML. Criado com a ferramenta integrada de geração de imagens; não foi usada API externa por script.
+
+Prompt utilizado:
+
+> Create a premium photorealistic CGI artwork for a technical keynote presentation about reliable message processing. Wide 16:9 composition, high resolution. Pure near-black studio background #080c12. On the RIGHT TWO THIRDS only: one elegant large sculptural continuous ribbon made of satin brushed aluminum and smoked optical glass, bent in a tall ascending loop with two parallel trajectories, like a precision engineered fluid conduit, light cyan edge illumination subtle rather than neon. Beautiful complex material reflections, silver highlights, cyan transmitted light through glass, dark areas with genuine depth, gallery-quality product photography. The left THIRD must be completely dark empty negative space for type. View slightly from above, object floating with no pedestal, diagonal orientation, tightly art-directed, crisp silhouette. This is abstract cover art, not a literal architecture diagram. No text, no letters, no numbers, no charts, no logos, no particles, no dotted terrain, no purple, no orange, no lime green. Editorial quality technological sculpture, sophisticated minimal lighting, physically based rendering, confident and understated.
+
+## Evidências
+
+Os dados vêm dos relatórios em `../results/`; as diferenças entre rodadas permanecem explícitas. O resultado com histórico pertence à versão anterior, enquanto o reteste com novas políticas começou com banco vazio. O gráfico de latência usa escala linear em segundos; o destaque de 75 ms corresponde a 0,075 s. As 48 combinações do simulador não representam proporções do tráfego real. Dados sintéticos, agente e analistas simulados não equivalem a capacidade comprovada em produção.
