@@ -389,7 +389,7 @@ class SlidePresentation {
   this.current=Math.max(0,Math.min(this.slides.length-1,index));
   this.slides.forEach((slide,i)=>{slide.classList.toggle('active',i===this.current);slide.classList.toggle('visible',i===this.current);slide.setAttribute('aria-hidden',String(i!==this.current));slide.inert=i!==this.current;});
   document.querySelector('#ch').textContent=this.slides[this.current].dataset.ch;
-  document.querySelector('#num').textContent=`${String(this.current+1).padStart(2,'0')} / ${this.slides.length}`;
+  document.querySelector('#num').textContent=this.current < firstSupport-1 ? `${String(this.current+1).padStart(2,'0')} / ${firstSupport-1}` : '';
   document.querySelector('#prev').disabled=this.current===0;
   document.querySelector('#next').disabled=this.current===this.slides.length-1;
   if(update)history.replaceState(null,'',`#${this.current+1}`);
