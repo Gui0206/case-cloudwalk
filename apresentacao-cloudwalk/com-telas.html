@@ -330,14 +330,14 @@ svg {
  <div class="bar-row"><span>Três leitores</span><div class="track"><i style="--w:20.253333%"></i></div><strong>3,038</strong></div>
  <div class="bar-row final"><span>Índice parcial</span><div class="track"><i style="--w:.5%"></i></div><strong>0,075</strong></div>
  <div class="chart-axis"><span>0</span><span>5</span><span>10</span><span>15 s</span></div></div>
- <aside class="latency-result reveal"><div class="result-value">75<span>ms</span></div><p>p95 após o índice parcial</p><div class="finding"><strong>1.184 / 1.185</strong><p>casos ainda sem resposta<br>esperavam na outbox<br>após o ajuste dos leitores.</p></div><div class="sql-note"><span>Plano SQL</span><b>Varredura do histórico<br>→ busca só nos pendentes</b></div></aside>
+ <aside class="latency-result reveal"><div class="result-value">75<span>ms</span></div><p>p95 após o índice parcial</p><div class="finding"><strong>1.184 / 1.185</strong><p>casos ainda sem resposta<br>esperavam na outbox<br>após o ajuste dos leitores.</p></div><div class="sql-note"><span>Índice parcial</span><b>Busca organizada<br>só entre os pendentes</b></div></aside>
  <p class="source">400 aberturas/s. Rodadas sequenciais com históricos diferentes; não isolam o ganho de cada ajuste.<br>CARGA-SUSTENTADA.md · retest-400-parallel.json · retest-400-indexed.json</p>
 </section>
 <section class="slide mixed" data-ch="Teste 2 · fluxo completo">
  <header><h2 class="reveal">A pendência zerou.<br><span class="muted">O teste ainda reprovou.</span></h2><p class="deck-sub reveal">400 aberturas/s · 5 min · 2 mensagens por cliente · 16 analistas simulados</p></header>
  <div class="comparison reveal"><div class="comparison-head"><span></span><span>Antes</span><span>Após otimizações</span></div><div class="comparison-row"><p>Primeira resposta<small>p95 até persistir</small></p><strong>123,9<span>s</span></strong><b>707<span>ms</span></b></div><div class="comparison-row"><p>Respostas pendentes<small>no corte final</small></p><strong>32.485</strong><b>0</b></div><div class="comparison-row"><p>Leituras de histórico<small>consultas completas</small></p><strong>1.659.152</strong><b>119.857</b></div></div>
  <aside class="generator reveal"><div class="generator-number">143</div><p>chegadas não enviadas<br>pelo gerador.</p><div class="generator-line"></div><strong>Conferir o sistema.<br>E o próprio teste.</strong></aside>
- <p class="source">Consulta leve + espera adaptativa + SQL agrupado + offsets em lotes. Ganho do conjunto.<br>Drenagens diferentes; antes, o p95 excluía respostas pendentes. CARGA-MISTA-OTIMIZADA.md</p>
+ <p class="source">Menos consultas e gravações agrupadas. Ganho do conjunto de otimizações.<br>Drenagens diferentes; antes, o p95 excluía respostas pendentes. CARGA-MISTA-OTIMIZADA.md</p>
 </section>
 <section class="slide concurrency" data-ch="Teste 3 · atribuição concorrente">
  <header><h2 class="reveal">Reservar o próximo.<br><span class="cyan">Eliminar a disputa.</span></h2><p class="deck-sub reveal">Reteste com 360 mil casos encerrados de histórico sintético.</p></header>
@@ -367,15 +367,11 @@ svg {
  <p class="source">Fontes: results/faults.json · results/policy-regression-faults.json</p>
 </section>
 <section class="slide support-slide" data-scene="off" data-ch="Apoio · diagnóstico da carga mista">
- <div class="pad"><h2>A fila e o retorno<br>tinham gargalos diferentes.</h2><div class="support-columns"><article><span>Fila humana</span><h3>250 posições ocupadas</h3><p>Casos encerrados tomavam os lugares visíveis. A consulta passou a filtrar estados ativos antes de paginar.</p></article><article><span>Retorno da IA</span><h3 class="mono">56.764 eventos</h3><p>Maior acúmulo observado na ponte sem offset confirmado. Pools e processamento SQL foram investigados.</p></article><article><span>Consultas repetidas</span><h3 class="mono">1,66 milhão</h3><p>Leituras de histórico no reteste. Status leve e espera adaptativa reduziram consultas completas.</p></article></div><p class="support-summary">O ganho posterior combina mudanças na aplicação e no padrão de consultas.</p></div>
+ <div class="pad"><h2>A fila e o retorno<br>tinham gargalos diferentes.</h2><div class="support-columns"><article><span>Fila humana</span><h3>Mostrar quem espera</h3><p>Casos encerrados ocupavam a lista. Corrigi a consulta para selecionar os ativos antes de limitar os resultados.</p></article><article><span>Gravação das respostas</span><h3>Menos idas ao banco</h3><p>As respostas acumulavam no retorno. Agrupei gravações para reduzir o trabalho de salvar cada resposta.</p></article><article><span>Atualização da conversa</span><h3>Consultar só o necessário</h3><p>O cliente verifica se algo mudou antes de baixar o histórico. Sem mudança, as consultas ficam mais espaçadas.</p></article></div><p class="support-summary">Diagnósticos de rodadas diferentes. A melhora veio do conjunto de mudanças.</p></div>
  <p class="source">Fontes: CARGA-MISTA.md · CARGA-MISTA-RETESTE.md · CARGA-MISTA-OTIMIZADA.md</p>
 </section>
-<section class="slide support-slide" data-scene="quiet" data-ch="Apoio · recuperação">
- <div class="pad"><h2>255 casos chegaram<br>com o agente desligado.</h2><div class="support-columns"><article><span>Durante a falha</span><h3 class="mono">5,10 s</h3><p>A API aceitou 255 casos. Todos aguardavam a primeira resposta.</p></article><article><span>Após o reinício</span><h3 class="mono">573 ms</h3><p>Na consulta feita após o comando de inicialização retornar, os 255 casos já tinham resposta.</p></article><article><span>Na rodada inteira</span><h3 class="mono">6.160 clientes</h3><p>Quatro assuntos, até cinco mensagens para a IA e todas as conversas encerradas.</p></article></div><p class="support-summary">573 ms é o instante de observação, não a latência individual de cada resposta.</p></div>
- <p class="source">Perfil separado, até 50 novas conversas/s. Fonte: PERFIL-VARIADO.md</p>
-</section>
 <section class="slide support-slide" data-scene="off" data-ch="Apoio · alcance da evidência">
- <div class="pad"><h2>Os resultados são reproduzíveis.<br>O alcance é local.</h2><div class="support-columns"><article><span>Roteamento</span><h3>Previsão × runtime</h3><p>Conferir fila, prioridade e versão contra expectativas independentes do motor.</p></article><article><span>Concorrência</span><h3 class="mono">400 novas conversas/s</h3><p>Repetir o perfil de cinco minutos, conferir atribuições e drenar todos os eventos.</p></article><article><span>Limite</span><h3>Um ambiente Docker</h3><p>PostgreSQL e Redpanda de nó único. Não mede produtividade humana, LLM real ou alta disponibilidade.</p></article></div><p class="support-summary">Histórico sintético acumulado não equivale a seis meses de operação contínua.</p></div>
+ <div class="pad"><h2>Os resultados são reproduzíveis.<br>O alcance é local.</h2><div class="support-columns"><article><span>Roteamento</span><h3>Prévia × atendimento</h3><p>Conferir fila, prioridade e versão contra expectativas independentes do motor.</p></article><article><span>Concorrência</span><h3 class="mono">400 novas conversas/s</h3><p>Repetir o perfil de cinco minutos, conferir atribuições e drenar todos os eventos.</p></article><article><span>Limite</span><h3>Um ambiente Docker</h3><p>PostgreSQL e Redpanda de nó único. Não mede produtividade humana, LLM real ou alta disponibilidade.</p></article></div><p class="support-summary">Histórico sintético acumulado não equivale a seis meses de operação contínua.</p></div>
  <p class="source">Métodos, comandos e dados brutos em results/ e README.md do repositório.</p>
 </section>
 </template>
@@ -405,7 +401,7 @@ class SlidePresentation {
   this.staticMode = params.has('static') || matchMedia('(prefers-reduced-motion: reduce)').matches;
   this.fields = [...this.stage.querySelectorAll('h1,h2,.deck-sub,.hero-lede,.hero-quote p,.final-caption')];
   this.fields.forEach((field,i) => field.dataset.edit = String(i));
-  this.storageKey = 'central-signal-com-telas-v1-' + (params.has('apoio') ? 'apoio' : 'pitch');
+  this.storageKey = 'central-signal-com-telas-v2-' + (params.has('apoio') ? 'apoio' : 'pitch');
   try { const saved = JSON.parse(localStorage.getItem(this.storageKey) || '{}'); this.fields.forEach((field,i) => { if (typeof saved[i] === 'string') field.innerHTML = saved[i]; }); } catch {}
   this.resize(); this.setStatic(this.staticMode); this.fromHash();
   addEventListener('resize', () => this.resize());
