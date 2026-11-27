@@ -238,6 +238,14 @@ svg {
 @media print{.foot{display:none}.reveal{opacity:1!important;transform:none!important;animation:none!important}.track i{transform:none!important}*{print-color-adjust:exact;-webkit-print-color-adjust:exact}@page{size:1920px 1080px;margin:0}}
 /* === AJUSTES DE ENQUADRAMENTO === */
 .hero-proof{left:900px;top:230px;width:900px}
+/* Flutuação da arte: só roda enquanto a capa está visível. */
+.hero.visible .hero-art{animation:hero-float 12s ease-in-out infinite;transform-origin:70% 45%;will-change:transform}
+@keyframes hero-float{
+  0%,100%{transform:translate3d(-8px,38px,0) rotate(-.5deg) scale(1.025)}
+  50%{transform:translate3d(8px,6px,0) rotate(.5deg) scale(1.04)}
+}
+@media(prefers-reduced-motion:reduce){.hero.visible .hero-art{animation:none;will-change:auto}}
+@media print{.hero.visible .hero-art{animation:none;transform:none;will-change:auto}}
 .allocation{top:385px}.allocation svg{height:220px}.allocation pre{margin-top:24px}
 .deck-controls{max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center}
 @media(max-width:700px){.deck-controls .hint{display:none}.deck-controls{bottom:10px}.deck-controls button,.deck-controls a{font-size:11px;padding:6px 8px}}
