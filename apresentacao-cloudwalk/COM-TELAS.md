@@ -12,7 +12,7 @@ A versão original, `index.html`, foi preservada. A variante mantém a direção
 
 Os sete slides principais mantêm o foco nos testes. A explicação do índice e das otimizações foi simplificada. Os três apoios tratam de consistência, diagnóstico e alcance da evidência; o apoio de recuperação dos 573 ms foi retirado. Os recortes do protótipo ilustram o uso; os números de desempenho continuam vindo dos relatórios dos testes do backend.
 
-As falas ficam no roteiro privado, ignorado pelo Git, adaptado para apresentação online. A estimativa é de 4min32s a 4min51s, incluindo 15 segundos de pausas e trocas, a confirmar em ensaio. Não há passos extras nem demonstração ao vivo obrigatória.
+As falas ficam no roteiro privado, ignorado pelo Git, adaptado para apresentação online. A estimativa é de 4min27s a 4min46s, incluindo 15 segundos de pausas e trocas, a confirmar em ensaio. Não há passos extras nem demonstração ao vivo obrigatória.
 
 ## Controles
 

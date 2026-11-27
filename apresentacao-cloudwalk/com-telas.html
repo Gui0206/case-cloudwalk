@@ -336,8 +336,8 @@ svg {
 <section class="slide mixed" data-ch="Teste 2 · fluxo completo">
  <header><h2 class="reveal">A pendência zerou.<br><span class="muted">O teste ainda reprovou.</span></h2><p class="deck-sub reveal">400 aberturas/s · 5 min · 2 mensagens por cliente · 16 analistas simulados</p></header>
  <div class="comparison reveal"><div class="comparison-head"><span></span><span>Antes</span><span>Após otimizações</span></div><div class="comparison-row"><p>Primeira resposta<small>p95 até persistir</small></p><strong>123,9<span>s</span></strong><b>707<span>ms</span></b></div><div class="comparison-row"><p>Respostas pendentes<small>no corte final</small></p><strong>32.485</strong><b>0</b></div><div class="comparison-row"><p>Leituras de histórico<small>consultas completas</small></p><strong>1.659.152</strong><b>119.857</b></div></div>
- <aside class="generator reveal"><div class="generator-number">143</div><p>chegadas não enviadas<br>pelo gerador.</p><div class="generator-line"></div><strong>Conferir o sistema.<br>E o próprio teste.</strong></aside>
- <p class="source">Menos consultas e gravações agrupadas. Ganho do conjunto de otimizações.<br>Drenagens diferentes; antes, o p95 excluía respostas pendentes. CARGA-MISTA-OTIMIZADA.md</p>
+ <aside class="generator reveal"><div class="generator-number">143</div><p>aberturas puladas<br>ao atingir o limite.</p><div class="generator-line"></div><strong>Reteste: 120 mil enviadas.<br>Limite maior, sozinho,<br>não explica a aprovação.</strong></aside>
+ <p class="source">Gerador: limite de 160 → 1.024 aberturas simultâneas; pico de 97 no reteste.<br>Menos consultas e gravações agrupadas. Ganho do conjunto; drenagens diferentes.<br>Antes, o p95 excluía respostas pendentes. CARGA-MISTA-OTIMIZADA.md</p>
 </section>
 <section class="slide concurrency" data-ch="Teste 3 · atribuição concorrente">
  <header><h2 class="reveal">Reservar o próximo.<br><span class="cyan">Eliminar a disputa.</span></h2><p class="deck-sub reveal">Reteste com 360 mil casos encerrados de histórico sintético.</p></header>
