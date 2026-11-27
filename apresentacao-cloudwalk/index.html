@@ -340,11 +340,20 @@ svg {
 <nav class="deck-controls" aria-label="Controles da apresentação"><button id="prev" aria-label="Slide anterior">←</button><button id="next" aria-label="Próximo slide">→</button><a id="support-link" href="?apoio#1">Apoio</a><button id="motion" aria-pressed="false">Sem animação</button><button id="edit" aria-pressed="false">Editar</button><button id="save">Salvar HTML</button><span class="hint">setas · F tela cheia · S sem animação</span></nav>
 <script>/* === NAVIGAÇÃO, PALCO FIXO E EDIÇÃO LOCAL === */
 const params = new URLSearchParams(location.search);
+const supportTemplate = document.querySelector('#support');
+if (supportTemplate) {
+ document.querySelector('#foot').before(supportTemplate.content);
+ supportTemplate.remove();
+}
+const allSlides = [...document.querySelectorAll('#stage > .slide')];
+const firstSupport = allSlides.findIndex(slide => slide.classList.contains('support-slide')) + 1;
+document.querySelector('#support-link').href = `#${firstSupport}`;
+// Links antigos de apoio agora abrem a posição correspondente na sequência única.
 if (params.has('apoio')) {
- document.querySelectorAll('#stage > .slide').forEach(el => el.remove());
- document.querySelector('#foot').before(document.querySelector('#support').content.cloneNode(true));
- document.querySelector('#support-link').href = (location.pathname.split('/').pop() || './') + '#7';
- document.querySelector('#support-link').textContent = 'Voltar ao pitch';
+ const offset = Math.max(0, Math.min(allSlides.length - firstSupport, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+ params.delete('apoio');
+ const query = params.toString();
+ history.replaceState(null, '', `${location.pathname}${query ? '?' + query : ''}#${firstSupport + offset}`);
 }
 class SlidePresentation {
  constructor() {
@@ -380,7 +389,7 @@ class SlidePresentation {
   this.current=Math.max(0,Math.min(this.slides.length-1,index));
   this.slides.forEach((slide,i)=>{slide.classList.toggle('active',i===this.current);slide.classList.toggle('visible',i===this.current);slide.setAttribute('aria-hidden',String(i!==this.current));slide.inert=i!==this.current;});
   document.querySelector('#ch').textContent=this.slides[this.current].dataset.ch;
-  document.querySelector('#num').textContent=`${params.has('apoio')?'Apoio ':''}${String(this.current+1).padStart(2,'0')} / ${this.slides.length}`;
+  document.querySelector('#num').textContent=`${String(this.current+1).padStart(2,'0')} / ${this.slides.length}`;
   document.querySelector('#prev').disabled=this.current===0;
   document.querySelector('#next').disabled=this.current===this.slides.length-1;
   if(update)history.replaceState(null,'',`#${this.current+1}`);

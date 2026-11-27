@@ -1,6 +1,6 @@
 # Central · Engenharia sob carga
 
-Apresentação de sete slides principais e quatro apoios. O PowerPoint `Central-HelpDesk-Banca.pptx` permanece intacto.
+Apresentação contínua de onze slides: sete principais e quatro apoios, acessíveis em seguida pelas mesmas setas. O PowerPoint `Central-HelpDesk-Banca.pptx` permanece intacto.
 
 ## Abrir e apresentar
 
@@ -14,8 +14,9 @@ Acesse http://127.0.0.1:4399/.
 
 - Setas, espaço ou deslize lateral: navegar. `F`: tela cheia. `S`: suspender animações.
 - Os controles aparecem ao mover o ponteiro e desaparecem após uma pausa.
-- **Apoio** abre uma sequência separada de quatro slides para perguntas. O pitch termina no sétimo slide.
-- `?static#4` abre o gráfico de latência sem animação. `?apoio#1` abre o primeiro apoio.
+- O pitch termina no sétimo slide. A próxima seta abre o primeiro apoio, no slide 8; os apoios seguem até o slide 11. A seta anterior volta normalmente ao pitch.
+- **Apoio** é um atalho para o slide 8 da mesma apresentação.
+- `?static#4` abre o gráfico de latência sem animação. `#8` abre o primeiro apoio; os links antigos `?apoio#1` a `?apoio#4` continuam funcionando e levam aos slides 8 a 11.
 - `E` ativa edição local de títulos e textos selecionados. `Esc` encerra a edição. As alterações ficam no armazenamento desse navegador; **Salvar HTML** ou `Ctrl/Cmd+S` baixa uma cópia independente com o texto editado.
 - O roteiro pessoal continua local e ignorado pelo Git, sem falas privadas incorporadas ao HTML. A sequência acompanha o roteiro de 4min30s.
 
