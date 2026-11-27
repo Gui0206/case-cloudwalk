@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Central · Engenharia sob carga</title>
+<link rel="icon" href="./mark.svg"><link rel="stylesheet" href="./deck.css"><link rel="stylesheet" href="./pitch.css">
+<script>window.DECK={name:"",flow:null};</script>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas><div id="scrim" aria-hidden="true"></div><div id="labels" aria-hidden="true"></div><div id="bar"></div>
+<main id="stage">
+<section class="slide cover" data-scene="cover" data-ch="O problema">
+ <div class="pad">
+  <div class="brand in"><img src="./mark.svg" alt="">Central</div>
+  <h1 class="in" style="--d:150">Help desk<br>sob carga</h1>
+  <p class="lede in" style="--d:300">Da mensagem do lojista<br>à resposta e à fila humana.</p>
+  <div class="logos in" style="--d:450"><span>Case para</span><img src="./brands/cloudwalk.svg" alt="CloudWalk"><i class="sep"></i><img src="./brands/infinitepay.svg" alt="InfinitePay"><img class="jim" src="./brands/jim.svg" alt="JIM"></div>
+ </div>
+ <figure class="opening-shot in" style="--d:450"><blockquote>“Meu repasse não caiu.”</blockquote><img src="./assets/analista.png" alt="Captura real do protótipo: analista recebe o caso, seu contexto e a conversa"><figcaption>Contexto e histórico no mesmo atendimento.<br>Agente e canais simulados.</figcaption></figure>
+</section>
+<section class="slide" data-scene="off" data-ch="Arquitetura">
+ <div class="pad"><h2 class="in">A mensagem fica salva.<br>O processamento pode continuar.</h2><p class="lede in" style="--d:150">PostgreSQL guarda o estado. Kafka transporta os eventos.</p></div>
+ <div class="architecture in" style="--d:300">
+  <svg viewBox="0 0 1664 440" role="img" aria-labelledby="arch-title"><title id="arch-title">Cliente envia à API Go, que grava mensagem e outbox no PostgreSQL. Worker entrega por webhook à ponte, que publica no Kafka para o agente simulado. Respostas voltam pelo Kafka e ponte à API, com inbox transacional.</title>
+   <defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="currentColor"/></marker></defs>
+   <g class="edges"><path d="M165 102H240"/><path d="M420 102H495"/><path d="M735 102H810"/><path d="M970 102H1045"/><path d="M1235 102H1310"/><path d="M1455 163V280H1235"/><path d="M1235 330H1550V163"/><path d="M1310 135H1235"/><path d="M1140 163V215H330V164"/></g>
+   <g class="box"><rect x="0" y="42" width="165" height="120"/><rect x="240" y="42" width="180" height="120"/><rect x="495" y="22" width="240" height="160" class="focus"/><rect x="810" y="42" width="160" height="120"/><rect x="1045" y="42" width="190" height="120"/><rect x="1310" y="42" width="290" height="120"/><rect x="1045" y="245" width="190" height="120"/></g>
+   <g class="label"><text x="82" y="95">Cliente</text><text x="330" y="95">API Go</text><text x="615" y="76">PostgreSQL</text><text x="890" y="95">Worker</text><text x="1140" y="95">Ponte</text><text x="1455" y="88">Kafka / Redpanda</text><text x="1140" y="291">Agente</text></g>
+   <g class="sub"><text x="82" y="125">3 canais</text><text x="330" y="125">regras + estado</text><text x="615" y="114">mensagem + outbox</text><text x="615" y="145">uma transação</text><text x="890" y="125">entrega</text><text x="1140" y="125">HTTP ↔ Kafka</text><text x="1455" y="120">pedidos / respostas</text><text x="1140" y="326">simulado</text><text x="1008" y="24">webhook</text><text x="1470" y="390">pedidos ↓ ↑ respostas</text></g>
+   <g class="return-label"><text x="0" y="310">Retorno: Kafka → ponte → webhook → API + inbox</text><text x="0" y="375" class="sub">Deduplicação, revisão e estado antes de gravar a resposta.</text></g>
+  </svg>
+ </div>
+ <div class="bottom-rule in" style="--d:450"><b class="accent">Aceita ≠ respondida</b><span>O teste acompanha a resposta até a persistência no banco.</span></div>
+</section>
+<section class="slide" data-scene="off" data-ch="Políticas">
+ <div class="pad"><h2 class="in">O impacto aparece<br>antes da publicação.</h2></div>
+ <div class="policy-left in" style="--d:150"><p>Uma regra de repasses<br>também afetaria a <b>JIM</b>.</p><div class="policy-number mono">Normal <span>→</span> <b>Alta</b></div><p class="dim">Fila e prioridade efetiva<br>definidas por política.</p></div>
+ <figure class="policy-shot in" style="--d:300"><img src="./assets/alerta.png" alt="Print real do simulador mostrando alerta de impacto entre marcas"><figcaption>Prévia do protótipo · alerta de alcance entre marcas.</figcaption></figure>
+ <div class="bottom-rule in" style="--d:450"><b>Publicação auditada</b><span>Autor, versões e alterações. Identidades de demonstração.</span></div>
+</section>
+<section class="slide" data-scene="off" data-ch="Teste 1 · onde o trabalho espera">
+ <div class="pad"><h2 class="in">A espera estava depois da API.</h2><p class="lede in" style="--d:150"><b class="mono">14 ms</b> para abrir. <b class="mono">14,252 s</b> até a primeira resposta. Ambos p95.</p></div>
+ <div class="chart in" style="--d:300">
+  <div class="chart-caption">Primeira resposta persistida · p95 em segundos · 400 aberturas/s</div>
+  <div class="bar-row"><span>Original</span><div class="track"><i style="width:95.0133%"></i></div><strong>14,252 s</strong></div>
+  <div class="bar-row"><span>Pool limitado</span><div class="track"><i style="width:33.06%"></i></div><strong>4,959 s</strong></div>
+  <div class="bar-row"><span>Três leitores</span><div class="track"><i style="width:20.2533%"></i></div><strong>3,038 s</strong></div>
+  <div class="bar-row last"><span>Índice parcial</span><div class="track"><i style="width:.5%"></i></div><strong>0,075 s</strong></div>
+  <div class="axis"><span>0</span><span>5</span><span>10</span><span>15 s</span></div>
+ </div>
+ <aside class="chart-insight in" style="--d:450"><strong class="mono">1.184<span> / 1.185</span></strong><p>casos ainda sem resposta<br>esperavam na <b>outbox</b><br>após o ajuste dos leitores.</p><div>O plano SQL revelou<br>a varredura do histórico.<br><b class="accent">O índice busca só pendentes.</b></div></aside>
+ <p class="source">Rodadas sequenciais com históricos diferentes. O gráfico não isola o ganho de cada ajuste.<br>Fonte: CARGA-SUSTENTADA.md · retest-400-parallel.json · retest-400-indexed.json</p>
+</section>
+<section class="slide" data-scene="off" data-ch="Teste 2 · conversas e analistas simultâneos">
+ <div class="pad"><h2 class="in">Zerar a pendência ainda não bastava.</h2><p class="lede in" style="--d:150">400 aberturas/s · 5 min · 2 mensagens por cliente · 16 analistas simulados</p>
+ <table class="metrics in" style="--d:300"><thead><tr><th>Métrica</th><th>Antes</th><th>Após otimizações</th></tr></thead><tbody><tr><td>Primeira resposta · p95</td><td>123,9 s</td><td>707 ms</td></tr><tr><td>Respostas pendentes no corte</td><td>32.485</td><td>0</td></tr><tr><td>Leituras completas de histórico</td><td>1.659.152</td><td>119.857</td></tr></tbody></table>
+ <div class="test-verdict in" style="--d:450"><b class="mono">143</b><p>chegadas não enviadas pelo gerador.<br><strong>A rodada ainda reprovou.</strong></p></div>
+ </div>
+ <p class="source">Consulta leve + espera adaptativa + SQL agrupado + offsets em lotes. Ganho do conjunto.<br>Drenagens diferentes; antes, o p95 excluía respostas pendentes. Fonte: CARGA-MISTA-OTIMIZADA.md</p>
+</section>
+<section class="slide" data-scene="off" data-ch="Teste 3 · concorrência com histórico">
+ <div class="pad"><h2 class="in">O servidor reserva.<br>O analista recebe um caso disponível.</h2><p class="lede in" style="--d:150">Reteste com 360 mil casos encerrados de histórico sintético.</p></div>
+ <div class="dispatch in" style="--d:300"><div class="dispatch-row"><span>Antes</span><p>Ana + Bruno <b>→ mesmo ID da lista</b></p></div><div class="dispatch-row"><span class="accent">Agora</span><p>Próximo elegível <b>→ reserva no PostgreSQL</b></p></div><pre>FOR UPDATE <span>SKIP LOCKED</span></pre><p class="dim detail">Marca, equipe e prioridade.<br>Atribuição e auditoria na mesma transação.</p></div>
+ <div class="dispatch-result in" style="--d:450"><div class="old mono">26.281 <span>→</span></div><div class="zero mono">0</div><p>conflitos HTTP 409</p><div class="audit"><b class="mono">24.000 / 24.000</b><span>casos humanos com uma atribuição auditada</span></div></div>
+ <p class="source">Listagem p95: 8,92 → 11,02 ms · espera dos urgentes p95: 398,68 → 364,68 ms.<br>Fonte: HISTORICO-E-FILA.md · central-history-dispatch-snapshot.json</p>
+</section>
+<section class="slide closing" data-scene="end" data-ch="Resultado e limites">
+ <div class="pad"><h2 class="in">O fluxo passou.<br>A integridade também.</h2><div class="closing-number mono in" style="--d:150">120.000</div><p class="closing-label in" style="--d:300">conversas abertas e encerradas após a drenagem</p>
+ <div class="closing-proof in" style="--d:450"><div><b class="mono">400/s × 5 min</b><span>zero chegadas puladas</span></div><div><b class="mono">240.000</b><span>eventos com retorno confirmado</span></div><div><b>Outbox e lag zerados</b><span>zero conflitos no reteste</span></div></div>
+ <p class="closing-limit in" style="--d:600">Backend real, teste local. Agente, canais e analistas simulados.<br>Histórico: versão anterior. Nova política: banco vazio. Sem garantia de escala em produção.</p>
+ </div>
+</section>
+<footer class="foot" id="foot"><span id="ch"></span><span class="n" id="num"></span></footer>
+</main>
+<template id="support-slides">
+<section class="slide" data-scene="quiet" data-ch="Apoio · consistência">
+ <div class="pad"><h2>Reentrega pode acontecer.<br>O efeito é deduplicado.</h2><div class="support-columns"><article><span>01 / saída</span><h3>Mensagem + outbox</h3><p>Um commit guarda o conteúdo e a intenção de envio. O worker pode retomar o pendente.</p></article><article><span>02 / retorno</span><h3>Inbox transacional</h3><p>ID do evento, efeito e auditoria na mesma transação. Revisão e estado protegem contra respostas obsoletas.</p></article><article><span>03 / transferência</span><h3>O humano recebe contexto</h3><p>Histórico, resumo e decisão versionada acompanham o chamado.</p></article></div><p class="support-summary">Teste: agente desligado e religado, reentrega explícita e retorno atrasado.</p></div>
+ <p class="source">Fontes: results/faults.json · results/policy-regression-faults.json</p>
+</section>
+<section class="slide" data-scene="off" data-ch="Apoio · diagnóstico da carga mista">
+ <div class="pad"><h2>A fila e o retorno<br>tinham gargalos diferentes.</h2><div class="support-columns"><article><span>Fila humana</span><h3>250 posições ocupadas</h3><p>Casos encerrados tomavam os lugares visíveis. A consulta passou a filtrar estados ativos antes de paginar.</p></article><article><span>Retorno da IA</span><h3 class="mono">56.764 eventos</h3><p>Maior acúmulo observado na ponte sem offset confirmado. Pools e processamento SQL foram investigados.</p></article><article><span>Consultas repetidas</span><h3 class="mono">1,66 milhão</h3><p>Leituras de histórico no reteste. Status leve e espera adaptativa reduziram consultas completas.</p></article></div><p class="support-summary">O ganho posterior combina mudanças na aplicação e no padrão de consultas.</p></div>
+ <p class="source">Fontes: CARGA-MISTA.md · CARGA-MISTA-RETESTE.md · CARGA-MISTA-OTIMIZADA.md</p>
+</section>
+<section class="slide" data-scene="quiet" data-ch="Apoio · recuperação">
+ <div class="pad"><h2>255 casos chegaram<br>com o agente desligado.</h2><div class="support-columns"><article><span>Durante a falha</span><h3 class="mono">5,10 s</h3><p>A API aceitou 255 casos. Todos aguardavam a primeira resposta.</p></article><article><span>Após o reinício</span><h3 class="mono">573 ms</h3><p>Na consulta feita após o comando de inicialização retornar, os 255 casos já tinham resposta.</p></article><article><span>Na rodada inteira</span><h3 class="mono">6.160 clientes</h3><p>Quatro assuntos, até cinco mensagens para a IA e todas as conversas encerradas.</p></article></div><p class="support-summary">573 ms é o instante de observação, não a latência individual de cada resposta.</p></div>
+ <p class="source">Perfil separado, até 50 novas conversas/s. Fonte: PERFIL-VARIADO.md</p>
+</section>
+<section class="slide" data-scene="off" data-ch="Apoio · alcance da evidência">
+ <div class="pad"><h2>Os resultados são reproduzíveis.<br>O alcance é local.</h2><div class="support-columns"><article><span>Roteamento</span><h3>Previsão × runtime</h3><p>Conferir fila, prioridade e versão contra expectativas independentes do motor.</p></article><article><span>Concorrência</span><h3 class="mono">400 novas conversas/s</h3><p>Repetir o perfil de cinco minutos, conferir atribuições e drenar todos os eventos.</p></article><article><span>Limite</span><h3>Um ambiente Docker</h3><p>PostgreSQL e Redpanda de nó único. Não mede produtividade humana, LLM real ou alta disponibilidade.</p></article></div><p class="support-summary">Histórico sintético acumulado não equivale a seis meses de operação contínua.</p></div>
+ <p class="source">Métodos, comandos e dados brutos em results/ e README.md do repositório.</p>
+</section>
+</template>
+<div id="ui"><button id="prev" aria-label="Slide anterior">←</button><button id="next" aria-label="Próximo slide">→</button><button id="static" aria-pressed="false">Sem animação</button><button id="replay">Repetir</button><a id="support-link" href="?apoio#1">Apoio</a><span class="hint">setas · F tela cheia · S sem animação</span></div>
+<script>
+if(new URLSearchParams(location.search).has('apoio')) {
+ document.querySelectorAll('#stage > .slide').forEach(el=>el.remove());
+ document.querySelector('#foot').before(document.querySelector('#support-slides').content.cloneNode(true));
+ document.querySelector('#support-link').href='./#7';document.querySelector('#support-link').textContent='Voltar ao pitch';
+}
+</script>
+<script src="./vendor/lucide.min.js"></script><script type="module" src="./deck.js"></script>
+</body>
+</html>
