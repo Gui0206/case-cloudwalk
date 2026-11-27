@@ -12,16 +12,16 @@ python3 -m http.server 4399 --bind 127.0.0.1 --directory apresentacao-cloudwalk
 
 Abra http://127.0.0.1:4399. Não abra `index.html` diretamente pelo Finder: os módulos JavaScript precisam do servidor HTTP. Fontes, bibliotecas, logos e prints estão locais; o deck não depende de acesso à internet.
 
-- Setas ou espaço: navegar. `F`: tela cheia. `S`: suspender animações. `R`: repetir entrada.
+- Setas ou espaço: navegar. `F`: tela cheia. Sem animações decorativas ou dependência de WebGL.
 - Sete slides principais, na ordem do roteiro existente de 4min30s.
 - O botão **Apoio** abre os quatro slides de perguntas em uma sequência separada. Eles não entram no pitch.
-- `?static#4` abre o slide 4 sem animação. `?apoio&static#1` abre o primeiro apoio.
+- `#4` abre o slide 4. `?apoio#1` abre o primeiro apoio.
 - O roteiro pessoal continua no arquivo local ignorado pelo Git. Nenhuma fala privada foi incorporada ao HTML.
 
-## Origem visual e conteúdo
+## Direção visual e conteúdo
 
-Design baseado na skill [deck-cloudwalk](https://github.com/PedroJorgeSA/skill/tree/main/deck-cloudwalk). `deck.js` e `scene.js` preservam o motor do template. `deck.css` usa as fontes locais; `pitch.css` contém as adaptações do case. O terreno usa tons neutros e lima para respeitar a preferência por evitar laranja. O símbolo Central vem do produto. Logos oficiais fornecidos pelo template, usados apenas neste case para a CloudWalk.
+A versão atual usa composição editorial em preto, cinza e papel claro, tipografia Arial/Helvetica e números em Courier New. Os layouts e a navegação estão em `editorial.css` e `presentation.js`. Não carrega partículas, three.js, Lucide, fontes ou estilos da skill.
 
-Bibliotecas fornecidas pelo template: three.js (MIT) e Lucide (ISC). Fontes Gabarito e IBM Plex Mono, disponíveis sob SIL Open Font License. Capturas reais do protótipo original, exibidas em tons de cinza. Não há demo em vídeo porque a apresentação prioriza testes e narração dos prints.
+A primeira versão foi construída com a skill [deck-cloudwalk](https://github.com/PedroJorgeSA/skill/tree/main/deck-cloudwalk). Seus arquivos permanecem como referência de origem, sem serem carregados pela página atual. Os logos oficiais fornecidos pelo template são usados neste case para a CloudWalk. O símbolo Central vem do produto. Prints reais do protótipo são exibidos em cinza.
 
-Os números vêm dos relatórios em `../results/`, com as diferenças entre rodadas explicitadas nos slides. O resultado com histórico pertence à versão anterior; o reteste com novas políticas começou com banco vazio. O gráfico usa escala linear em segundos.
+Sete slides principais e quatro apoios separados. A narrativa acompanha o roteiro pessoal de 4min30s. Os números vêm dos relatórios em `../results/`; as diferenças entre rodadas continuam explícitas. O resultado com histórico pertence à versão anterior; o reteste com novas políticas começou com banco vazio. O gráfico usa escala linear em segundos.

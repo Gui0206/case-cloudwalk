@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Central · Engenharia sob carga</title>
-<link rel="icon" href="./mark.svg"><link rel="stylesheet" href="./deck.css"><link rel="stylesheet" href="./pitch.css">
-<script>window.DECK={name:"",flow:null};</script>
+<link rel="icon" href="./mark.svg"><link rel="stylesheet" href="./editorial.css">
+
 </head>
 <body>
-<canvas id="gl" aria-hidden="true"></canvas><div id="scrim" aria-hidden="true"></div><div id="labels" aria-hidden="true"></div><div id="bar"></div>
+
 <main id="stage">
 <section class="slide cover" data-scene="cover" data-ch="O problema">
  <div class="pad">
@@ -19,7 +19,7 @@
  <figure class="opening-shot in" style="--d:450"><blockquote>“Meu repasse não caiu.”</blockquote><img src="./assets/analista.png" alt="Captura real do protótipo: analista recebe o caso, seu contexto e a conversa"><figcaption>Contexto e histórico no mesmo atendimento.<br>Agente e canais simulados.</figcaption></figure>
 </section>
 <section class="slide" data-scene="off" data-ch="Arquitetura">
- <div class="pad"><h2 class="in">A mensagem fica salva.<br>O processamento pode continuar.</h2><p class="lede in" style="--d:150">PostgreSQL guarda o estado. Kafka transporta os eventos.</p></div>
+ <div class="pad"><h2 class="in">Receber e processar<br>são etapas diferentes.</h2><p class="lede in" style="--d:150">PostgreSQL guarda o estado. Kafka transporta os eventos.</p></div>
  <div class="architecture in" style="--d:300">
   <svg viewBox="0 0 1664 440" role="img" aria-labelledby="arch-title"><title id="arch-title">Cliente envia à API Go, que grava mensagem e outbox no PostgreSQL. Worker entrega por webhook à ponte, que publica no Kafka para o agente simulado. Respostas voltam pelo Kafka e ponte à API, com inbox transacional.</title>
    <defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="currentColor"/></marker></defs>
@@ -33,7 +33,7 @@
  <div class="bottom-rule in" style="--d:450"><b class="accent">Aceita ≠ respondida</b><span>O teste acompanha a resposta até a persistência no banco.</span></div>
 </section>
 <section class="slide" data-scene="off" data-ch="Políticas">
- <div class="pad"><h2 class="in">O impacto aparece<br>antes da publicação.</h2></div>
+ <div class="pad"><h2 class="in">Regras sob revisão</h2></div>
  <div class="policy-left in" style="--d:150"><p>Uma regra de repasses<br>também afetaria a <b>JIM</b>.</p><div class="policy-number mono">Normal <span>→</span> <b>Alta</b></div><p class="dim">Fila e prioridade efetiva<br>definidas por política.</p></div>
  <figure class="policy-shot in" style="--d:300"><img src="./assets/alerta.png" alt="Print real do simulador mostrando alerta de impacto entre marcas"><figcaption>Prévia do protótipo · alerta de alcance entre marcas.</figcaption></figure>
  <div class="bottom-rule in" style="--d:450"><b>Publicação auditada</b><span>Autor, versões e alterações. Identidades de demonstração.</span></div>
@@ -59,13 +59,13 @@
  <p class="source">Consulta leve + espera adaptativa + SQL agrupado + offsets em lotes. Ganho do conjunto.<br>Drenagens diferentes; antes, o p95 excluía respostas pendentes. Fonte: CARGA-MISTA-OTIMIZADA.md</p>
 </section>
 <section class="slide" data-scene="off" data-ch="Teste 3 · concorrência com histórico">
- <div class="pad"><h2 class="in">O servidor reserva.<br>O analista recebe um caso disponível.</h2><p class="lede in" style="--d:150">Reteste com 360 mil casos encerrados de histórico sintético.</p></div>
+ <div class="pad"><h2 class="in">Um caso.<br>Um responsável.</h2><p class="lede in" style="--d:150">Reteste com 360 mil casos encerrados de histórico sintético.</p></div>
  <div class="dispatch in" style="--d:300"><div class="dispatch-row"><span>Antes</span><p>Ana + Bruno <b>→ mesmo ID da lista</b></p></div><div class="dispatch-row"><span class="accent">Agora</span><p>Próximo elegível <b>→ reserva no PostgreSQL</b></p></div><pre>FOR UPDATE <span>SKIP LOCKED</span></pre><p class="dim detail">Marca, equipe e prioridade.<br>Atribuição e auditoria na mesma transação.</p></div>
  <div class="dispatch-result in" style="--d:450"><div class="old mono">26.281 <span>→</span></div><div class="zero mono">0</div><p>conflitos HTTP 409</p><div class="audit"><b class="mono">24.000 / 24.000</b><span>casos humanos com uma atribuição auditada</span></div></div>
  <p class="source">Listagem p95: 8,92 → 11,02 ms · espera dos urgentes p95: 398,68 → 364,68 ms.<br>Fonte: HISTORICO-E-FILA.md · central-history-dispatch-snapshot.json</p>
 </section>
 <section class="slide closing" data-scene="end" data-ch="Resultado e limites">
- <div class="pad"><h2 class="in">O fluxo passou.<br>A integridade também.</h2><div class="closing-number mono in" style="--d:150">120.000</div><p class="closing-label in" style="--d:300">conversas abertas e encerradas após a drenagem</p>
+ <div class="pad"><h2 class="in">Carga sustentada.<br>Integridade conferida.</h2><div class="closing-number mono in" style="--d:150">120.000</div><p class="closing-label in" style="--d:300">conversas abertas e encerradas após a drenagem</p>
  <div class="closing-proof in" style="--d:450"><div><b class="mono">400/s × 5 min</b><span>zero chegadas puladas</span></div><div><b class="mono">240.000</b><span>eventos com retorno confirmado</span></div><div><b>Outbox e lag zerados</b><span>zero conflitos no reteste</span></div></div>
  <p class="closing-limit in" style="--d:600">Backend real, teste local. Agente, canais e analistas simulados.<br>Histórico: versão anterior. Nova política: banco vazio. Sem garantia de escala em produção.</p>
  </div>
@@ -90,7 +90,7 @@
  <p class="source">Métodos, comandos e dados brutos em results/ e README.md do repositório.</p>
 </section>
 </template>
-<div id="ui"><button id="prev" aria-label="Slide anterior">←</button><button id="next" aria-label="Próximo slide">→</button><button id="static" aria-pressed="false">Sem animação</button><button id="replay">Repetir</button><a id="support-link" href="?apoio#1">Apoio</a><span class="hint">setas · F tela cheia · S sem animação</span></div>
+<div id="ui"><button id="prev" aria-label="Slide anterior">←</button><button id="next" aria-label="Próximo slide">→</button><a id="support-link" href="?apoio#1">Apoio</a><span class="hint">setas para navegar · F tela cheia</span></div>
 <script>
 if(new URLSearchParams(location.search).has('apoio')) {
  document.querySelectorAll('#stage > .slide').forEach(el=>el.remove());
@@ -98,6 +98,6 @@ if(new URLSearchParams(location.search).has('apoio')) {
  document.querySelector('#support-link').href='./#7';document.querySelector('#support-link').textContent='Voltar ao pitch';
 }
 </script>
-<script src="./vendor/lucide.min.js"></script><script type="module" src="./deck.js"></script>
+<script type="module" src="./presentation.js"></script>
 </body>
 </html>
